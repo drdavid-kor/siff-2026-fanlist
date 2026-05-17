@@ -1,0 +1,786 @@
+{
+  "_comment": "Optional per-film enrichment, keyed by film id (see films.json). Any field listed here overrides the auto-generated value. To add new fields, edit this file and rerun build (no code change needed).",
+
+  "dostoyevsky-pickpocket": {
+    "director": "Robert Bresson",
+    "director_zh": "罗贝尔·布列松",
+    "country": "France",
+    "country_zh": "法国",
+    "runtime": 76,
+    "language": "French",
+    "synopsis_en": "Bresson's elliptical adaptation of Crime and Punishment as a study of a young Parisian thief — gestures of hands, the architecture of guilt.",
+    "synopsis_zh": "布列松将《罪与罚》缩进巴黎街头一位扒手的双手与目光之间。手部动作的精确编排，构成了罪与悔的几何。"
+  },
+  "dostoyevsky-the-brothers-karamazov": {
+    "director": "Ivan Pyriev",
+    "director_zh": "伊万·皮里耶夫",
+    "country": "USSR",
+    "country_zh": "苏联",
+    "runtime": 232,
+    "language": "Russian",
+    "synopsis_en": "A monumental Soviet adaptation of Dostoyevsky's final novel — the four sons, the father, the lacerating question of who is responsible for what.",
+    "synopsis_zh": "苏联电影对陀思妥耶夫斯基绝笔之作的宏大改编：四个儿子、一个父亲，以及那个反复撕咬的问题——谁该为这一切负责。"
+  },
+  "dostoyevsky-crime-and-punishment": {
+    "director": "Lev Kulidzhanov",
+    "director_zh": "列夫·库利贾诺夫",
+    "country": "USSR",
+    "country_zh": "苏联",
+    "runtime": 209,
+    "language": "Russian",
+    "synopsis_en": "Kulidzhanov's two-part Crime and Punishment, faithful to the novel's interior weather — Raskolnikov in close-up, Petersburg in fog.",
+    "synopsis_zh": "库利贾诺夫两部曲式的《罪与罚》，忠实地呈现了小说的内在天气：拉斯科尔尼科夫的特写，与雾中的彼得堡。"
+  },
+  "dostoyevsky-the-double": {
+    "director": "Richard Ayoade",
+    "director_zh": "理查德·阿尤阿德",
+    "country": "United Kingdom",
+    "country_zh": "英国",
+    "runtime": 93,
+    "language": "English",
+    "synopsis_en": "Ayoade's dread-comic riff on Dostoyevsky's novella — a meek office worker meets the man who is exactly him, only confident.",
+    "synopsis_zh": "阿尤阿德将陀思妥耶夫斯基的中篇拍成了焦虑喜剧：怯懦的办公室职员遇见了与自己一模一样、只是更加自信的他。"
+  },
+  "dostoyevsky-enemy": {
+    "director": "Denis Villeneuve",
+    "director_zh": "丹尼斯·维伦纽瓦",
+    "country": "Canada / Spain",
+    "country_zh": "加拿大／西班牙",
+    "runtime": 91,
+    "language": "English",
+    "synopsis_en": "Villeneuve's Toronto-set doppelgänger thriller, drawing on Saramago and Dostoyevsky alike — a sallow gold-lit unease that does not let go.",
+    "synopsis_zh": "维伦纽瓦在多伦多拍摄的双生人惊悚片，兼取材自萨拉马戈与陀思妥耶夫斯基。蜡黄金色的不安，一旦缠上便不肯松开。"
+  },
+
+  "tribute-wilder-monroe-double-indemnity": {
+    "director": "Billy Wilder",
+    "director_zh": "比利·怀尔德",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 107,
+    "language": "English",
+    "synopsis_en": "An insurance salesman and a discontented wife conspire toward a perfect murder. The film noir blueprint.",
+    "synopsis_zh": "一名保险推销员与一位不满的妻子合谋一桩完美谋杀。黑色电影自此有了蓝图。"
+  },
+  "tribute-wilder-monroe-the-lost-weekend": {
+    "director": "Billy Wilder",
+    "director_zh": "比利·怀尔德",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 101,
+    "language": "English",
+    "synopsis_en": "Four days inside the bender of a Manhattan writer who cannot finish anything except a drink.",
+    "synopsis_zh": "曼哈顿一位写作者四天的酗酒长夜——他什么都写不完，只能喝光每一杯。"
+  },
+  "tribute-wilder-monroe-a-foreign-affair": {
+    "director": "Billy Wilder",
+    "director_zh": "比利·怀尔德",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 116,
+    "language": "English",
+    "synopsis_en": "Postwar Berlin, half-rubble: an Iowa congresswoman, an Army captain, and a cabaret singer with a past.",
+    "synopsis_zh": "战后半成废墟的柏林：一位爱荷华女议员、一名陆军上尉，与一位带着过去的歌厅歌手。"
+  },
+  "tribute-wilder-monroe-ace-in-the-hole": {
+    "director": "Billy Wilder",
+    "director_zh": "比利·怀尔德",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 111,
+    "language": "English",
+    "synopsis_en": "A washed-up reporter milks a New Mexico cave-in for every column inch it's worth. Wilder at his most acid.",
+    "synopsis_zh": "一名失意记者把新墨西哥洞窟塌方榨成头条专栏的每一寸版面。怀尔德最酸的一次出手。"
+  },
+  "tribute-wilder-monroe-sabrina": {
+    "director": "Billy Wilder",
+    "director_zh": "比利·怀尔德",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 113,
+    "language": "English",
+    "synopsis_en": "A chauffeur's daughter returns from Paris transformed. Two brothers — one ascetic, one rakish — both notice.",
+    "synopsis_zh": "司机的女儿从巴黎归来，已是另一个人。两兄弟——一位禁欲、一位风流——都察觉到了。"
+  },
+  "tribute-wilder-monroe-some-like-it-hot": {
+    "director": "Billy Wilder",
+    "director_zh": "比利·怀尔德",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 121,
+    "language": "English",
+    "synopsis_en": "Two Chicago musicians witness a massacre and flee in drag with an all-girl orchestra to Florida. Nobody's perfect.",
+    "synopsis_zh": "两名芝加哥乐手目击屠杀，乔装成女子，混入一支女子乐团逃往佛罗里达。没人完美。"
+  },
+  "tribute-wilder-monroe-the-apartment": {
+    "director": "Billy Wilder",
+    "director_zh": "比利·怀尔德",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 125,
+    "language": "English",
+    "synopsis_en": "An ambitious clerk lends out his apartment to executives, then begins to lose what he thought he wanted.",
+    "synopsis_zh": "一名向上爬的小职员把公寓借给上司幽会，渐渐失去了他以为想要的一切。"
+  },
+  "tribute-wilder-monroe-the-misfits": {
+    "director": "John Huston",
+    "director_zh": "约翰·休斯顿",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 124,
+    "language": "English",
+    "synopsis_en": "Nevada divorcée meets three drifting cowboys. Monroe's last finished film, written by Arthur Miller.",
+    "synopsis_zh": "内华达的离婚女子遇见三名漂泊的牛仔。梦露最后完成的电影，剧本出自阿瑟·米勒之手。"
+  },
+
+  "tribute-ken-loach-kes": {
+    "director": "Ken Loach",
+    "director_zh": "肯·洛奇",
+    "country": "United Kingdom",
+    "country_zh": "英国",
+    "runtime": 110,
+    "language": "English",
+    "synopsis_en": "A Yorkshire schoolboy from a hard family finds a kestrel chick and, briefly, something to be proud of.",
+    "synopsis_zh": "约克郡一户艰难家庭的少年，发现了一只茶隼幼鸟，从此短暂地有了可以骄傲的东西。"
+  },
+  "tribute-ken-loach-family-life": {
+    "director": "Ken Loach",
+    "director_zh": "肯·洛奇",
+    "country": "United Kingdom",
+    "country_zh": "英国",
+    "runtime": 108,
+    "language": "English",
+    "synopsis_en": "A young woman's breakdown, and the institutions — family, psychiatry, the state — that converge on her.",
+    "synopsis_zh": "一位年轻女子的崩溃，以及向她聚拢的所有机制：家庭、精神病学、国家。"
+  },
+  "tribute-ken-loach-ladybird-ladybird": {
+    "director": "Ken Loach",
+    "director_zh": "肯·洛奇",
+    "country": "United Kingdom",
+    "country_zh": "英国",
+    "runtime": 102,
+    "language": "English",
+    "synopsis_en": "A working-class mother in Liverpool fights social services for her own children. Based on a true story.",
+    "synopsis_zh": "利物浦一位工人阶级母亲，与社会福利机构争夺自己的孩子。改编自真人真事。"
+  },
+  "tribute-ken-loach-i-daniel-blake": {
+    "director": "Ken Loach",
+    "director_zh": "肯·洛奇",
+    "country": "United Kingdom",
+    "country_zh": "英国",
+    "runtime": 100,
+    "language": "English",
+    "synopsis_en": "A Newcastle carpenter, after a heart attack, is told by an algorithm that he is fit to work. Palme d'Or, 2016.",
+    "synopsis_zh": "纽卡斯尔一位木匠心脏病发后，被一套算法判定为'适合工作'。2016 年金棕榈。"
+  },
+  "tribute-ken-loach-sorry-we-missed-you": {
+    "director": "Ken Loach",
+    "director_zh": "肯·洛奇",
+    "country": "United Kingdom",
+    "country_zh": "英国",
+    "runtime": 101,
+    "language": "English",
+    "synopsis_en": "A gig-economy delivery driver and his care-worker wife try to hold a family together one shift at a time.",
+    "synopsis_zh": "一名零工经济快递员，与照护工作的妻子，一班一班地试图把家庭维系在一起。"
+  },
+  "tribute-ken-loach-the-old-oak": {
+    "director": "Ken Loach",
+    "director_zh": "肯·洛奇",
+    "country": "United Kingdom",
+    "country_zh": "英国",
+    "runtime": 113,
+    "language": "English",
+    "synopsis_en": "In a former Durham mining village, a pub landlord and a young Syrian photographer try to make a community.",
+    "synopsis_zh": "在德罕一座旧矿村，酒馆老板与一位年轻的叙利亚摄影师，尝试重新拼出一个社区。"
+  },
+  "tribute-ken-loach-versus-the-life-and-films-of-ken-loach": {
+    "director": "Louise Osmond",
+    "director_zh": "路易丝·奥斯蒙",
+    "country": "United Kingdom",
+    "country_zh": "英国",
+    "runtime": 93,
+    "language": "English",
+    "synopsis_en": "A documentary portrait of Ken Loach — fifty years of films, principles, and arguments.",
+    "synopsis_zh": "一部肯·洛奇的纪录肖像：五十年的电影、原则与争论。"
+  },
+
+  "sci-fi-week-ai-artificial-intelligence": {
+    "director": "Steven Spielberg",
+    "director_zh": "史蒂文·斯皮尔伯格",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 146,
+    "language": "English",
+    "synopsis_en": "A small android boy is left in a future where humanity has thinned to coastal cities. He looks for his mother.",
+    "synopsis_zh": "未来人类退缩至沿海少数城市，一个小小的机械男孩被遗下。他出门去找他的母亲。"
+  },
+  "sci-fi-week-fantastic-planet": {
+    "director": "René Laloux",
+    "director_zh": "雷内·拉鲁",
+    "country": "France / Czechoslovakia",
+    "country_zh": "法国／捷克斯洛伐克",
+    "runtime": 72,
+    "language": "French",
+    "synopsis_en": "A 1973 animated parable: blue giants keep miniature humans as pets, until the small ones learn to read.",
+    "synopsis_zh": "1973 年的动画寓言：蓝色巨人将人类当作宠物豢养，直到这些'小东西'学会了阅读。"
+  },
+  "sci-fi-week-the-masters-of-time": {
+    "director": "René Laloux",
+    "director_zh": "雷内·拉鲁",
+    "country": "France",
+    "country_zh": "法国",
+    "runtime": 78,
+    "language": "French",
+    "synopsis_en": "On the desert planet Perdide, a stranded boy waits to be rescued by a voice across space. Designed by Mœbius.",
+    "synopsis_zh": "沙漠星球佩尔迪德上，一个孤独的男孩等待来自太空的声音救援。墨比斯设计美术。"
+  },
+  "sci-fi-week-gandahar": {
+    "director": "René Laloux",
+    "director_zh": "雷内·拉鲁",
+    "country": "France",
+    "country_zh": "法国",
+    "runtime": 83,
+    "language": "French",
+    "synopsis_en": "An idyllic kingdom is invaded by metal men, sent — perhaps — by the kingdom's own future.",
+    "synopsis_zh": "一座田园王国遭遇金属人入侵，而那些机器或许来自王国自身的未来。"
+  },
+
+  "new-horizons-imax-tommy": {
+    "director": "Ken Russell",
+    "director_zh": "肯·罗素",
+    "country": "United Kingdom",
+    "country_zh": "英国",
+    "runtime": 111,
+    "language": "English",
+    "synopsis_en": "Ken Russell's hallucinatory rock opera based on The Who's album. Deaf, dumb, blind kid sure plays a mean pinball.",
+    "synopsis_zh": "肯·罗素根据 The Who 同名专辑拍摄的迷幻摇滚歌剧。又聋又哑又盲，却把弹珠台打得震天响。"
+  },
+  "new-horizons-imax-rolling-stones-at-the-max": {
+    "director": "Julien Temple",
+    "director_zh": "朱利安·坦普尔",
+    "country": "United Kingdom",
+    "country_zh": "英国",
+    "runtime": 89,
+    "language": "English",
+    "synopsis_en": "The Rolling Stones' Urban Jungle tour, shot in IMAX. The first concert film made for the format.",
+    "synopsis_zh": "滚石乐队 Urban Jungle 巡演的 IMAX 现场。该格式上第一部演唱会电影。"
+  },
+  "new-horizons-imax-cave-of-forgotten-dreams": {
+    "director": "Werner Herzog",
+    "director_zh": "维尔纳·赫尔佐格",
+    "country": "Germany / USA",
+    "country_zh": "德国／美国",
+    "runtime": 90,
+    "language": "English",
+    "synopsis_en": "Herzog enters the Chauvet caves with 3D cameras. Thirty-two thousand years of charcoal horses.",
+    "synopsis_zh": "赫尔佐格带 3D 摄影机走进肖维洞穴。三万两千年前的炭笔群马。"
+  },
+  "new-horizons-imax-dune-part-one": {
+    "director": "Denis Villeneuve",
+    "director_zh": "丹尼斯·维伦纽瓦",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 155,
+    "language": "English",
+    "synopsis_en": "House Atreides arrives on Arrakis. Villeneuve's first half of Herbert's epic — sandstorms, ornithopters, prophecy.",
+    "synopsis_zh": "厄崔迪家族抵达阿拉基斯。维伦纽瓦版赫伯特史诗的上半部——沙暴、扑翼机、预言。"
+  },
+  "new-horizons-imax-dune-part-two": {
+    "director": "Denis Villeneuve",
+    "director_zh": "丹尼斯·维伦纽瓦",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 166,
+    "language": "English",
+    "synopsis_en": "Paul among the Fremen. Vengeance, holy war, the choice that becomes a religion.",
+    "synopsis_zh": "保罗加入弗雷曼人。复仇、圣战，以及一个选择如何成为一种信仰。"
+  },
+  "new-horizons-imax-epic-elvis-presley-in-concert": {
+    "director": "—",
+    "director_zh": "—",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 92,
+    "language": "English",
+    "synopsis_en": "A new IMAX concert document built from restored archival footage of Elvis Presley in performance.",
+    "synopsis_zh": "由修复档案影像构成的 IMAX 演唱会纪录：埃尔维斯·普雷斯利的现场。"
+  },
+  "new-horizons-imax-stormbound": {
+    "director": "—",
+    "director_zh": "—",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": null,
+    "language": "English",
+    "synopsis_en": "A 2025 IMAX feature; full credits to be confirmed at festival.",
+    "synopsis_zh": "2025 年 IMAX 长片，详细资料待电影节公布。"
+  },
+  "new-horizons-imax-weapons": {
+    "director": "Zach Cregger",
+    "director_zh": "扎克·克莱格",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 128,
+    "language": "English",
+    "synopsis_en": "A small town. Seventeen children walk out of their houses at exactly 2:17 a.m. None of them comes back.",
+    "synopsis_zh": "一座小镇。十七个孩子在凌晨 2 点 17 分整一齐离家出走，无一归来。"
+  },
+
+  "new-horizons-dolby-the-transformers-the-movie": {
+    "director": "Nelson Shin",
+    "director_zh": "辛能澈",
+    "country": "USA / Japan",
+    "country_zh": "美国／日本",
+    "runtime": 84,
+    "language": "English",
+    "synopsis_en": "The 1986 animated feature in Dolby Vision — Autobots, Decepticons, Unicron the planet-eater.",
+    "synopsis_zh": "1986 年动画长片的杜比视界版本——汽车人、霸天虎，与吞噬星球的宇宙大帝。"
+  },
+  "new-horizons-dolby-novocaine": {
+    "director": "Dan Berk, Robert Olsen",
+    "director_zh": "丹·伯克、罗伯特·奥尔森",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 110,
+    "language": "English",
+    "synopsis_en": "A man who feels no pain is the wrong person to rob. An action comedy in Dolby Vision HDR.",
+    "synopsis_zh": "对一个感觉不到痛的人下手抢劫，是糟糕的选择。杜比视界 HDR 的动作喜剧。"
+  },
+
+  "auteurs-new-father-mother-sister-brother": {
+    "director": "Jim Jarmusch",
+    "director_zh": "吉姆·贾木许",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": null,
+    "language": "English",
+    "synopsis_en": "Jarmusch's family triptych — three pairs of adult siblings visiting their parents, on three continents.",
+    "synopsis_zh": "贾木许的家庭三联画：三对成年手足，分别在三大洲探访父母。"
+  },
+  "auteurs-new-bugonia": {
+    "director": "Yorgos Lanthimos",
+    "director_zh": "约戈斯·兰西莫斯",
+    "country": "Greece / USA",
+    "country_zh": "希腊／美国",
+    "runtime": null,
+    "language": "English",
+    "synopsis_en": "Two conspiracy theorists kidnap a pharmaceutical CEO they believe to be a saboteur from outer space.",
+    "synopsis_zh": "两个阴谋论者绑架了一名药企首席执行官，因为他们坚信她是来自外太空的破坏者。"
+  },
+  "auteurs-new-magellan": {
+    "director": "Lav Diaz",
+    "director_zh": "拉夫·达兹",
+    "country": "Philippines",
+    "country_zh": "菲律宾",
+    "runtime": null,
+    "language": "Tagalog",
+    "synopsis_en": "Lav Diaz follows Ferdinand Magellan from Lisbon to the beach at Mactan. History at the pace of memory.",
+    "synopsis_zh": "拉夫·达兹跟随麦哲伦的脚步，从里斯本一路至麦克坦海滩。以记忆的步速重走历史。"
+  },
+  "auteurs-new-mirrors-no-3": {
+    "director": "Christian Petzold",
+    "director_zh": "克里斯蒂安·佩措尔德",
+    "country": "Germany",
+    "country_zh": "德国",
+    "runtime": null,
+    "language": "German",
+    "synopsis_en": "A young woman survives a car crash and is taken in by a stranger's family. Petzold's third 'mirror' story.",
+    "synopsis_zh": "一位年轻女子在车祸中幸存，被一户陌生人家接纳。佩措尔德的第三则'镜面'故事。"
+  },
+
+  "film-history-intolerance": {
+    "director": "D.W. Griffith",
+    "director_zh": "大卫·格里菲斯",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 197,
+    "language": "Silent",
+    "synopsis_en": "Four stories of intolerance braided together across millennia — Babylon, Judea, Renaissance France, modern America.",
+    "synopsis_zh": "四段跨越千年的'不宽容'故事彼此交织——巴比伦、犹太、文艺复兴时期的法国，与现代美国。"
+  },
+  "film-history-mother": {
+    "director": "Vsevolod Pudovkin",
+    "director_zh": "弗谢沃洛德·普多夫金",
+    "country": "USSR",
+    "country_zh": "苏联",
+    "runtime": 89,
+    "language": "Silent",
+    "synopsis_en": "Pudovkin's 1926 adaptation of Gorky's novel — a woman in revolutionary Russia learns whose side she is on.",
+    "synopsis_zh": "普多夫金 1926 年改编自高尔基的同名小说：革命中的俄罗斯，一位母亲学到了她该站在哪一边。"
+  },
+  "film-history-its-a-wonderful-life": {
+    "director": "Frank Capra",
+    "director_zh": "弗兰克·卡普拉",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 130,
+    "language": "English",
+    "synopsis_en": "On Christmas Eve, a small-town banker sees what his town would have been without him.",
+    "synopsis_zh": "圣诞夜，小镇银行家看到了一个没有他的世界会是何模样。"
+  },
+  "film-history-the-searchers": {
+    "director": "John Ford",
+    "director_zh": "约翰·福特",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 119,
+    "language": "English",
+    "synopsis_en": "Ford's Monument Valley elegy — Ethan Edwards walks for years looking for his niece, and for whatever's still in him.",
+    "synopsis_zh": "福特拍下的纪念碑谷挽歌：伊森·爱德华兹走了多年，去找他的侄女，也去找他体内还剩下什么。"
+  },
+  "film-history-come-drink-with-me": {
+    "director": "King Hu",
+    "director_zh": "胡金铨",
+    "country": "Hong Kong, China",
+    "country_zh": "中国香港",
+    "runtime": 91,
+    "language": "Mandarin",
+    "synopsis_en": "King Hu's wuxia milestone — Golden Swallow, the inn, the bandits, the choreography that became a vocabulary.",
+    "synopsis_zh": "胡金铨的武侠里程碑——金燕子、客栈、群匪，与日后成为类型语汇的动作编排。"
+  },
+  "film-history-the-cassandra-crossing": {
+    "director": "George P. Cosmatos",
+    "director_zh": "乔治·P·考斯马图斯",
+    "country": "United Kingdom / Italy",
+    "country_zh": "英国／意大利",
+    "runtime": 129,
+    "language": "English",
+    "synopsis_en": "A transcontinental train carries a contagion toward a condemned bridge. Sophia Loren, Richard Harris.",
+    "synopsis_zh": "一列跨洲列车载着一种瘟疫，驶向一座废弃的桥。索菲娅·罗兰、理查德·哈里斯主演。"
+  },
+  "film-history-the-english-patient": {
+    "director": "Anthony Minghella",
+    "director_zh": "安东尼·明格拉",
+    "country": "USA / UK",
+    "country_zh": "美国／英国",
+    "runtime": 162,
+    "language": "English",
+    "synopsis_en": "A burned man in a Tuscan villa remembers North Africa, a wife, and a desert that owes him nothing.",
+    "synopsis_zh": "托斯卡纳别墅中的烧伤者，回忆起北非、一位妻子，以及一片对他毫无亏欠的沙漠。"
+  },
+
+  "tribute-memorial-the-bucket-list": {
+    "director": "Rob Reiner",
+    "director_zh": "罗伯·莱纳",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 97,
+    "language": "English",
+    "synopsis_en": "Two terminally ill men leave the hospital with a list. Jack Nicholson, Morgan Freeman.",
+    "synopsis_zh": "两位末期病人带着一份清单离开医院。杰克·尼科尔森、摩根·弗里曼主演。"
+  },
+  "tribute-memorial-flipped": {
+    "director": "Rob Reiner",
+    "director_zh": "罗伯·莱纳",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 90,
+    "language": "English",
+    "synopsis_en": "Two narrators, one street. He thinks she's strange. She knows he's the boy from the day she moved in.",
+    "synopsis_zh": "两位旁白，一条街道。他觉得她奇怪；她从搬进来那天就认定，是他。"
+  },
+  "tribute-memorial-stand-by-me": {
+    "director": "Rob Reiner",
+    "director_zh": "罗伯·莱纳",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 89,
+    "language": "English",
+    "synopsis_en": "Four boys walk along the train tracks to find a body. A coming-of-age dispatch.",
+    "synopsis_zh": "四个男孩沿着铁路寻找一具尸体。一篇成长报告。"
+  },
+  "tribute-memorial-when-harry-met-sally": {
+    "director": "Rob Reiner",
+    "director_zh": "罗伯·莱纳",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 96,
+    "language": "English",
+    "synopsis_en": "Twelve years of meeting, missing, becoming friends, and the famous deli scene in between.",
+    "synopsis_zh": "十二年的相遇与擦身、成为朋友——以及那场著名的熟食店戏。"
+  },
+  "tribute-memorial-misery": {
+    "director": "Rob Reiner",
+    "director_zh": "罗伯·莱纳",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 107,
+    "language": "English",
+    "synopsis_en": "A writer's number-one fan saves him from a snowstorm and into something worse.",
+    "synopsis_zh": "一位作家'第一粉丝'将他从暴风雪中救起，却把他带向更糟的处境。"
+  },
+  "tribute-memorial-a-few-good-men": {
+    "director": "Rob Reiner",
+    "director_zh": "罗伯·莱纳",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 138,
+    "language": "English",
+    "synopsis_en": "Two Marines in Guantanamo, a court martial, and a colonel asked whether he can handle the truth.",
+    "synopsis_zh": "关塔那摩两名海军陆战队员、一场军事法庭，与一位被问及'能否承受真相'的上校。"
+  },
+  "tribute-memorial-annie-hall": {
+    "director": "Woody Allen",
+    "director_zh": "伍迪·艾伦",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 93,
+    "language": "English",
+    "synopsis_en": "Alvy Singer, neurotic New York comedian, looks back on a relationship that didn't last but mattered.",
+    "synopsis_zh": "纽约神经质喜剧演员阿尔维·辛格回望一段未能持续、却至关重要的关系。"
+  },
+  "tribute-memorial-contempt": {
+    "director": "Jean-Luc Godard",
+    "director_zh": "让-吕克·戈达尔",
+    "country": "France / Italy",
+    "country_zh": "法国／意大利",
+    "runtime": 102,
+    "language": "French",
+    "synopsis_en": "A screenwriter in Capri loses his wife between scenes. Bardot, Piccoli, Fritz Lang as himself.",
+    "synopsis_zh": "卡普里岛上，一位编剧在两场戏之间失去了妻子。芭铎、皮科利，弗里茨·朗本色出演。"
+  },
+  "tribute-memorial-sorrows-and-joys-of-a-middle-aged-man": {
+    "director": "Sang Hu",
+    "director_zh": "桑弧",
+    "country": "China",
+    "country_zh": "中国",
+    "runtime": 110,
+    "language": "Mandarin",
+    "synopsis_en": "Shanghai, 1949. A widowed teacher and the women, students, and obligations around him.",
+    "synopsis_zh": "1949 年的上海。丧偶教师与他身边的女性、学生、责任。"
+  },
+  "tribute-memorial-phony-phoenixes": {
+    "director": "Huang Zuolin",
+    "director_zh": "黄佐临",
+    "country": "China",
+    "country_zh": "中国",
+    "runtime": 92,
+    "language": "Mandarin",
+    "synopsis_en": "A 1947 Shanghai screwball: two impostors meet at a marriage broker's, each convinced the other is rich.",
+    "synopsis_zh": "1947 年的上海闹剧：两个冒名顶替者在媒人处相遇，各自以为对方是富翁。"
+  },
+  "tribute-memorial-murder-in-405": {
+    "director": "Shen Yaoting",
+    "director_zh": "沈耀庭",
+    "country": "China",
+    "country_zh": "中国",
+    "runtime": 109,
+    "language": "Mandarin",
+    "synopsis_en": "An early-Reform-era Chinese mystery: a hospital ward, a corpse, an investigator from Shanghai.",
+    "synopsis_zh": "改革开放初年的中国推理：医院 405 病房、一具尸体，与来自上海的调查者。"
+  },
+  "tribute-memorial-family-nest": {
+    "director": "Béla Tarr",
+    "director_zh": "贝拉·塔尔",
+    "country": "Hungary",
+    "country_zh": "匈牙利",
+    "runtime": 100,
+    "language": "Hungarian",
+    "synopsis_en": "Tarr's first feature: a young couple in a tiny Budapest flat shared with the husband's parents.",
+    "synopsis_zh": "塔尔的处女作：一对年轻夫妇，住在与丈夫父母合用的狭小布达佩斯公寓。"
+  },
+  "tribute-memorial-the-outsider": {
+    "director": "Béla Tarr",
+    "director_zh": "贝拉·塔尔",
+    "country": "Hungary",
+    "country_zh": "匈牙利",
+    "runtime": 145,
+    "language": "Hungarian",
+    "synopsis_en": "A drifting musician moves between gigs and lovers and jobs that won't keep.",
+    "synopsis_zh": "一位漂泊的乐手在演出、情人与留不住的工作之间游走。"
+  },
+  "tribute-memorial-the-prefab-people": {
+    "director": "Béla Tarr",
+    "director_zh": "贝拉·塔尔",
+    "country": "Hungary",
+    "country_zh": "匈牙利",
+    "runtime": 82,
+    "language": "Hungarian",
+    "synopsis_en": "A marriage filmed in fifteen minutes of long takes and a decade of grievance.",
+    "synopsis_zh": "一段婚姻，由十几分钟的长镜头与十年积怨拍成。"
+  },
+  "tribute-memorial-almanac-of-fall": {
+    "director": "Béla Tarr",
+    "director_zh": "贝拉·塔尔",
+    "country": "Hungary",
+    "country_zh": "匈牙利",
+    "runtime": 119,
+    "language": "Hungarian",
+    "synopsis_en": "Five people circle each other in a decaying apartment, in red and green light. Tarr's chromatic chamber drama.",
+    "synopsis_zh": "五人在一处衰败公寓内彼此盘旋，红与绿的灯光下。塔尔的色彩室内剧。"
+  },
+  "tribute-memorial-damnation": {
+    "director": "Béla Tarr",
+    "director_zh": "贝拉·塔尔",
+    "country": "Hungary",
+    "country_zh": "匈牙利",
+    "runtime": 120,
+    "language": "Hungarian",
+    "synopsis_en": "A man in a rain-soaked mining town informs on the husband of the woman he loves. Tarr finds his style.",
+    "synopsis_zh": "雨水浸透的矿镇里，一个男人向当局告发他所爱女人的丈夫。塔尔自此找到自己的风格。"
+  },
+  "tribute-memorial-satans-tango": {
+    "director": "Béla Tarr",
+    "director_zh": "贝拉·塔尔",
+    "country": "Hungary",
+    "country_zh": "匈牙利",
+    "runtime": 439,
+    "language": "Hungarian",
+    "synopsis_en": "Seven hours, twelve chapters, one collapsed collective farm. A dance, again and again, in the mud.",
+    "synopsis_zh": "七小时、十二章节、一座崩溃的集体农庄。在泥泞中反复跳起的同一支舞。"
+  },
+  "tribute-memorial-werckmeister-harmonies": {
+    "director": "Béla Tarr",
+    "director_zh": "贝拉·塔尔",
+    "country": "Hungary",
+    "country_zh": "匈牙利",
+    "runtime": 145,
+    "language": "Hungarian",
+    "synopsis_en": "A whale arrives in a Hungarian town in a wooden trailer. So does a riot. Cosmic, bleak, exact.",
+    "synopsis_zh": "一头鲸鱼装在木拖车里进了匈牙利小镇。一场骚乱随之到来。宇宙性的、阴郁的、精确的。"
+  },
+  "tribute-memorial-the-man-from-london": {
+    "director": "Béla Tarr",
+    "director_zh": "贝拉·塔尔",
+    "country": "Hungary / France / Germany",
+    "country_zh": "匈牙利／法国／德国",
+    "runtime": 132,
+    "language": "Hungarian",
+    "synopsis_en": "A harbor signalman witnesses a murder, and a suitcase changes hands in the dark.",
+    "synopsis_zh": "港口信号员目睹了一桩谋杀，黑暗中一只手提箱易主。"
+  },
+  "tribute-memorial-the-turin-horse": {
+    "director": "Béla Tarr",
+    "director_zh": "贝拉·塔尔",
+    "country": "Hungary",
+    "country_zh": "匈牙利",
+    "runtime": 146,
+    "language": "Hungarian",
+    "synopsis_en": "Six days at the end of the world. Wind, potatoes, an old man, his daughter, and a horse that will not eat.",
+    "synopsis_zh": "世界末日的六天。风、土豆、一位老人、他的女儿，以及一匹不肯进食的马。"
+  },
+
+  "siff-rhapsody-amadeus": {
+    "director": "Miloš Forman",
+    "director_zh": "米洛斯·福尔曼",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 161,
+    "language": "English",
+    "synopsis_en": "Salieri tells the story of his colleague Mozart, in confession, from an asylum.",
+    "synopsis_zh": "萨列里在疯人院里向神父告解，讲述他的同行莫扎特的故事。"
+  },
+  "siff-rhapsody-finding-vivian-maier": {
+    "director": "John Maloof, Charlie Siskel",
+    "director_zh": "约翰·马卢夫、查理·西斯凯尔",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": 84,
+    "language": "English",
+    "synopsis_en": "A box of negatives at a Chicago auction turns out to be one of the great unseen photographic archives.",
+    "synopsis_zh": "芝加哥一场拍卖中买下的一箱底片，最终被证实是有史以来最重要的隐匿摄影档案之一。"
+  },
+  "siff-rhapsody-in-i-in-motion": {
+    "director": "—",
+    "director_zh": "—",
+    "country": "United Kingdom",
+    "country_zh": "英国",
+    "runtime": null,
+    "language": "English",
+    "synopsis_en": "A 2025 dance-on-film hybrid documenting the stage work In-I.",
+    "synopsis_zh": "2025 年的舞蹈电影混合作品，记录舞台剧《In-I》的演出。"
+  },
+  "siff-rhapsody-the-yellow-tie": {
+    "director": "—",
+    "director_zh": "—",
+    "country": "—",
+    "country_zh": "—",
+    "runtime": null,
+    "language": "English",
+    "synopsis_en": "A 2025 musical portrait; details to be confirmed at festival.",
+    "synopsis_zh": "2025 年的一部音乐人物片，详情待电影节公布。"
+  },
+  "siff-rhapsody-the-great-arch": {
+    "director": "—",
+    "director_zh": "—",
+    "country": "France",
+    "country_zh": "法国",
+    "runtime": null,
+    "language": "French",
+    "synopsis_en": "The story of La Grande Arche de la Défense and the Danish architect who never quite saw it finished.",
+    "synopsis_zh": "拉德芳斯新凯旋门的故事——那位最终未能亲见落成的丹麦建筑师。"
+  },
+  "siff-rhapsody-the-moment": {
+    "director": "—",
+    "director_zh": "—",
+    "country": "—",
+    "country_zh": "—",
+    "runtime": null,
+    "language": "English",
+    "synopsis_en": "A 2026 music documentary; details to be confirmed at festival.",
+    "synopsis_zh": "2026 年的音乐纪录片，详情待电影节公布。"
+  },
+
+  "official-selection-nuremberg": {
+    "director": "James Vanderbilt",
+    "director_zh": "詹姆斯·范德比尔特",
+    "country": "USA",
+    "country_zh": "美国",
+    "runtime": null,
+    "language": "English",
+    "synopsis_en": "The 1945 Nuremberg trials told through the American psychiatrist who interviewed Hermann Göring.",
+    "synopsis_zh": "通过那位审问赫尔曼·戈林的美国精神病医师之眼，重述 1945 年的纽伦堡审判。"
+  },
+  "official-selection-case-137": {
+    "director": "Dominik Moll",
+    "director_zh": "多米尼克·莫尔",
+    "country": "France",
+    "country_zh": "法国",
+    "runtime": null,
+    "language": "French",
+    "synopsis_en": "A French police-misconduct investigator opens dossier No. 137. Procedural, exact, very cold.",
+    "synopsis_zh": "法国警察渎职调查员打开第 137 号档案。程序、精确、极冷。"
+  },
+  "official-selection-sirat": {
+    "director": "Oliver Laxe",
+    "director_zh": "奥利弗·拉克斯",
+    "country": "Spain",
+    "country_zh": "西班牙",
+    "runtime": null,
+    "language": "Spanish",
+    "synopsis_en": "A father searches for his daughter at a desert rave. The world keeps unmaking itself.",
+    "synopsis_zh": "一位父亲在沙漠锐舞派对中寻找自己的女儿。世界一直在自我解体。"
+  },
+
+  "belt-and-road-a-loose-end": {
+    "director": "—",
+    "director_zh": "—",
+    "country": "—",
+    "country_zh": "—",
+    "runtime": null,
+    "language": "—",
+    "synopsis_en": "A 2025 thriller from along the Belt and Road; full credits to be confirmed.",
+    "synopsis_zh": "2025 年来自一带一路沿线国家的惊悚片，全部主创信息待公布。"
+  },
+
+  "siff-animation-a-magnificent-life": {
+    "director": "Sylvain Chomet",
+    "director_zh": "西尔万·肖梅",
+    "country": "France",
+    "country_zh": "法国",
+    "runtime": null,
+    "language": "French",
+    "synopsis_en": "Sylvain Chomet animates the life of Marcel Pagnol, novelist and filmmaker of Provence.",
+    "synopsis_zh": "西尔万·肖梅以动画讲述普罗旺斯的小说家与电影人马塞尔·帕尼奥尔的一生。"
+  },
+  "siff-animation-the-land-of-sometimes": {
+    "director": "—",
+    "director_zh": "—",
+    "country": "—",
+    "country_zh": "—",
+    "runtime": null,
+    "language": "English",
+    "synopsis_en": "A 2026 family animated feature about a kingdom where almost anything is possible — sometimes.",
+    "synopsis_zh": "2026 年的家庭动画长片，讲述一座几乎一切皆可能——但只是有时候——的王国。"
+  }
+}
