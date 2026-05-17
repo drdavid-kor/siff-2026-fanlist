@@ -1,0 +1,8 @@
+name = "siff-2026"
+compatibility_date = "2026-05-17"
+
+# Serve site/public as static assets. The Worker has no runtime code —
+# `wrangler deploy` will publish this directory as a static site.
+[assets]
+directory = "./site/public"
+not_found_handling = "single-page-application"
