@@ -368,6 +368,36 @@
   }
   .badge.fmt { background: var(--accent); color: var(--paper); border-color: var(--accent); }
 
+  /* ---------- IMDb link ---------- */
+  .imdb-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 7px; border-radius: 2px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase; font-weight: 500;
+    border: 1px solid currentColor;
+    transition: background .12s, color .12s, border-color .12s;
+    white-space: nowrap;
+  }
+  .imdb-link.real { background: #f5c518; color: #000; border-color: #f5c518; }
+  .imdb-link.real:hover { background: #000; color: #f5c518; }
+  .imdb-link.search { color: var(--ink-mute); border-color: var(--rule); background: transparent; }
+  .imdb-link.search:hover { color: var(--ink); border-color: var(--ink); }
+
+  .m-imdb { margin: 0 0 28px; display: flex; flex-direction: column; gap: 10px; }
+  .m-imdb .imdb-link {
+    align-self: flex-start;
+    font-size: 11px; padding: 8px 14px; letter-spacing: 0.1em;
+  }
+  .m-imdb-hint {
+    font-family: var(--mono); font-size: 10px; color: var(--ink-mute);
+    letter-spacing: 0.06em; line-height: 1.5;
+    max-width: 38ch;
+  }
+  .m-imdb-hint .zh {
+    display: block; margin-top: 4px;
+    font-family: var(--zh); letter-spacing: 0.02em;
+  }
+
   .empty { padding: 80px 0; text-align: center; color: var(--ink-mute); }
   .empty .big { font-family: var(--display); font-size: 48px; line-height: 1; margin-bottom: 12px; font-style: italic; color: var(--ink-soft); }
 

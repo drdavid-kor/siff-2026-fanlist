@@ -182,14 +182,31 @@ function Poster({ film, index, big = false }) {
   return (
     <div className={(big ? "m-poster" : "poster") + (hasImg ? " has-img" : "")}
          style={{ background: hasImg ? undefined : posterBg(film.color) }}>
-      {hasImg && <img src={film.poster_url} alt={film.title_en} loading="lazy" />}
+      {hasImg && <img src={film.poster_url} alt={film.title_en} loading="lazy" referrerPolicy="no-referrer" />}
       <span className={big ? "pcorner" : "corner"}>{film.program_zh || film.program_en}</span>
       {typeof index === 'number' && <span className={big ? "pyear" : "num"}>{big ? (film.year || '—') : '№' + String(index + 1).padStart(2, '0')}</span>}
       {!big && film.year && <span className="pyear">{film.year}</span>}
-      <span className={big ? "ptag" : "ptag"}>{film.title_zh}</span>
+      <span className="ptag">{film.title_zh}</span>
     </div>
   );
 }
+
+const IMDbBadge = ({ film, compact = false }) => {
+  if (!film.imdb_url) return null;
+  const real = !!film.imdb_id;
+  const label = compact
+    ? (real ? 'IMDb ↗' : 'IMDb · find ↗')
+    : (real ? `View on IMDb · ${film.imdb_id} ↗` : 'Find on IMDb ↗');
+  return (
+    <a className={"imdb-link" + (real ? " real" : " search")}
+       href={film.imdb_url}
+       target="_blank" rel="noopener noreferrer"
+       onClick={(e) => e.stopPropagation()}
+       title={real ? "Open this film's IMDb page in a new tab" : "Search IMDb for this title (TMDB enrichment not run yet)"}>
+      {label}
+    </a>
+  );
+};
 
 function Card({ film, index, onOpen }) {
   return (
@@ -209,6 +226,7 @@ function Card({ film, index, onOpen }) {
           <span key={t} className="badge fmt">{t}</span>
         ))}
         {film.runtime && <span className="badge">{film.runtime}′</span>}
+        <IMDbBadge film={film} compact />
       </div>
       <div className="meta-row">
         {film.director && (
@@ -362,6 +380,16 @@ function Modal({ film, onClose }) {
           </div>
           <div className="col">
             <Poster film={film} index={null} big />
+
+            <div className="m-imdb">
+              <IMDbBadge film={film} />
+              {!film.imdb_id && (
+                <div className="m-imdb-hint">
+                  TMDB enrichment hasn't run yet — link goes to an IMDb search.
+                  <span className="zh">尚未运行 TMDB 数据补全 — 链接指向 IMDb 搜索。</span>
+                </div>
+              )}
+            </div>
 
             <h3>Schedule · 排片</h3>
             <div className="schedule-tba">

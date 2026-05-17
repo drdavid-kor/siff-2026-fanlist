@@ -53,7 +53,37 @@ Then rebuild: `python3 scripts/build_data.py`
 
 Edit `data/programs.json` and append a program object (id, title_en, title_zh, kind_en, kind_zh, color, blurb_en, blurb_zh). Add films referencing that `program_id`. Rebuild.
 
-### Enrich a film with director / synopsis / poster
+### Auto-enrich all films from TMDB (recommended)
+
+Posters, synopses (EN + 中文), runtimes, directors, IMDb IDs — all of this can
+be fetched in one pass from [The Movie Database](https://www.themoviedb.org):
+
+```bash
+# 1. Get a free TMDB v3 API key from
+#    https://www.themoviedb.org/settings/api
+export TMDB_API_KEY="your-key"
+
+# 2. Run the enrichment (idempotent, resumable, ~2 minutes for 105 films)
+cd site
+python3 scripts/enrich_from_tmdb.py
+
+# 3. Rebuild the bundle and commit
+python3 scripts/build_data.py
+git add data/enrichment_tmdb.json public/data.js
+git commit -m "Enrich films from TMDB"
+git push
+```
+
+Results land in `data/enrichment_tmdb.json`. `build_data.py` merges them in
+this priority: **enrichment.json (hand-curated) > enrichment_tmdb.json (auto)
+> CSV skeleton.** So hand-curated edits always win, and rerunning the script
+won't trample your work.
+
+Once enrichment has run, every film modal shows a yellow **IMDb** button
+linking straight to `imdb.com/title/{id}/`. Films without an IMDb ID (e.g.
+TMDB couldn't find them) still get a "Find on IMDb ↗" search link.
+
+### Enrich a single film by hand
 
 Edit `data/enrichment.json`, keyed by the film's `id`:
 

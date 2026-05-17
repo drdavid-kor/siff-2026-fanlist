@@ -1,13 +1,22 @@
 """
-Merge programs.json + films.json + enrichment.json -> public/data.js
+Merge programs.json + films.json + enrichment_tmdb.json + enrichment.json
+    -> public/data.js
 
-Sets `window.SIFF_DATA = { programs: [...], films: [...] }` in a single
-static JS file. The site loads /data.js with no fetches and no CORS issues.
+Priority (highest wins): enrichment.json (hand-curated) > enrichment_tmdb.json
+    (auto from TMDB) > skeleton fields from films.json.
 
-Run after parse_csv.py or after editing enrichment.json.
+Also derives `imdb_url` for every film:
+   imdb_id present -> https://www.imdb.com/title/{id}/
+   otherwise        -> https://www.imdb.com/find/?q={title}+{year}  (search fallback)
+
+Sets `window.SIFF_DATA = { festival, programs, films }` in a single static
+JS file. The site loads /data.js with no fetches and no CORS issues.
+
+Run after parse_csv.py, enrich_from_tmdb.py, or after editing enrichment.json.
 """
 
 import json
+import urllib.parse
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -16,24 +25,45 @@ DATA = ROOT / "data"
 PUB = ROOT / "public"
 
 
+def _load(path):
+    if path.exists():
+        return json.loads(path.read_text(encoding="utf-8"))
+    return {}
+
+
 def main():
     programs = json.loads((DATA / "programs.json").read_text(encoding="utf-8"))
     films = json.loads((DATA / "films.json").read_text(encoding="utf-8"))
-    enrichment = json.loads((DATA / "enrichment.json").read_text(encoding="utf-8"))
+    enrichment = _load(DATA / "enrichment.json")           # hand-curated
+    enrichment_tmdb = _load(DATA / "enrichment_tmdb.json") # auto
 
-    # Merge enrichment onto films
-    enriched = 0
+    # Merge order: TMDB first, then hand-curated overrides.
+    enriched_count = 0
     for f in films:
-        e = enrichment.get(f["id"])
-        if not e:
-            continue
-        for k, v in e.items():
-            if k.startswith("_"):
+        applied = False
+        for source in (enrichment_tmdb, enrichment):
+            e = source.get(f["id"])
+            if not e:
                 continue
-            if v is None:
-                continue
-            f[k] = v
-        enriched += 1
+            for k, v in e.items():
+                if k.startswith("_"):
+                    continue
+                if v in (None, ""):
+                    continue
+                f[k] = v
+                applied = True
+        if applied:
+            enriched_count += 1
+
+        # Derive imdb_url for every film
+        if f.get("imdb_id"):
+            f["imdb_url"] = f"https://www.imdb.com/title/{f['imdb_id']}/"
+        else:
+            q_parts = [(f.get("title_en") or f.get("title_zh") or "").strip()]
+            if f.get("year"):
+                q_parts.append(str(f["year"]))
+            q = urllib.parse.quote_plus(" ".join(p for p in q_parts if p))
+            f["imdb_url"] = f"https://www.imdb.com/find/?q={q}&s=tt&ttype=ft"
 
     payload = {
         "festival": {
@@ -45,6 +75,7 @@ def main():
         "programs": programs,
         "films": films,
     }
+    enriched = enriched_count  # back-compat name not used outside this fn
 
     PUB.mkdir(parents=True, exist_ok=True)
     out = PUB / "data.js"
@@ -54,9 +85,14 @@ def main():
         encoding="utf-8",
     )
 
+    with_imdb = sum(1 for f in films if f.get("imdb_id"))
+    with_poster = sum(1 for f in films if f.get("poster_url"))
+
     print(f"Wrote {out} ({out.stat().st_size:,} bytes)")
-    print(f"  programs: {len(programs)}")
-    print(f"  films:    {len(films)} ({enriched} with enrichment)")
+    print(f"  programs:        {len(programs)}")
+    print(f"  films:           {len(films)} ({enriched_count} enriched)")
+    print(f"  films w/ imdb:   {with_imdb}")
+    print(f"  films w/ poster: {with_poster}")
 
 
 if __name__ == "__main__":
