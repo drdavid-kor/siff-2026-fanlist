@@ -22,9 +22,20 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
-SRC = ROOT / "data" / "siff-com-2026-05-17.csv"
-OUT_PROGRAMS = ROOT / "data" / "programs.json"
-OUT_FILMS = ROOT / "data" / "films.json"
+DATA = ROOT / "data"
+
+
+def latest_csv():
+    """Return the most recent siff-com-*.csv by lexical date in filename."""
+    candidates = sorted(DATA.glob("siff-com-*.csv"))
+    if not candidates:
+        raise SystemExit("No siff-com-*.csv found in data/")
+    return candidates[-1]
+
+
+SRC = latest_csv()
+OUT_PROGRAMS = DATA / "programs.json"
+OUT_FILMS = DATA / "films.json"
 
 # ---------- helpers ----------
 
@@ -205,6 +216,62 @@ PROGRAM_META = {
         "blurb_en": "Eight titles in true IMAX presentation — including restored concert films.",
         "blurb_zh": "八部 IMAX 呈现的影片——包含修复版演唱会电影。",
         "color": "#0f5f3f",
+    },
+    # ---- added 2026-05-22 ----
+    "4K修复": {
+        "id": "4k-restoration",
+        "en": "4K Restoration",
+        "short_en": "4K Restoration",
+        "short_zh": "4K 修复",
+        "kind": "Section",
+        "kind_zh": "单元",
+        "blurb_en": "Classics returned to the screen in newly minted 4K — from postwar Shanghai to New Hollywood.",
+        "blurb_zh": "从战后上海到新好莱坞——以全新 4K 修复重回银幕的经典。",
+        "color": "#7a5045",
+    },
+    "世界首作": {
+        "id": "world-premieres",
+        "en": "World Premieres",
+        "short_en": "World Premieres",
+        "short_zh": "世界首作",
+        "kind": "Section",
+        "kind_zh": "单元",
+        "blurb_en": "First-time features making their global debut in Shanghai.",
+        "blurb_zh": "在上海全球首映的导演处女作。",
+        "color": "#1d3a8a",
+    },
+    "埃及电影周": {
+        "id": "egypt-film-week",
+        "en": "Egypt Film Week",
+        "short_en": "Egypt Week",
+        "short_zh": "埃及",
+        "kind": "Curated Program",
+        "kind_zh": "策展单元",
+        "blurb_en": "From Youssef Chahine to today — a chronological window onto Egyptian cinema.",
+        "blurb_zh": "从尤瑟夫·夏因到当代——一扇编年的埃及电影窗口。",
+        "color": "#b8743a",
+    },
+    "评委主席及评委作品展": {
+        "id": "jury-films",
+        "en": "Jury President & Jurors' Films",
+        "short_en": "Jury Films",
+        "short_zh": "评委作品",
+        "kind": "Section",
+        "kind_zh": "单元",
+        "blurb_en": "Selected works from this year's Golden Goblet jury — the films behind the verdicts.",
+        "blurb_zh": "本届金爵奖评委会成员的代表作选映——评审席背后的电影。",
+        "color": "#5a3aa6",
+    },
+    "银幕意蕴": {
+        "id": "screen-resonance",
+        "en": "Screen Resonance",
+        "short_en": "Screen Resonance",
+        "short_zh": "银幕意蕴",
+        "kind": "Section",
+        "kind_zh": "单元",
+        "blurb_en": "A curated panorama of 2025 features carrying their own slow weight.",
+        "blurb_zh": "策展精选的 2025 年长片——各自承载缓慢、厚重的分量。",
+        "color": "#3a6a5a",
     },
 }
 

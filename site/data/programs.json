@@ -15,21 +15,6 @@
     "order": 1
   },
   {
-    "id": "official-selection",
-    "title_zh": "影展精粹",
-    "title_en": "Official Selection",
-    "short_en": "Official Selection",
-    "short_zh": "影展精粹",
-    "kind_en": "Festival Highlights",
-    "kind_zh": "影展精粹",
-    "blurb_en": "Major prize-winners and most-talked-about titles from the year's leading festivals.",
-    "blurb_zh": "本年度国际重要电影节上的得奖与话题之作。",
-    "color": "#c8392a",
-    "source_url": "https://www.siff.com/content?aid=101260423202712817095844980330501467",
-    "published_date": "2026-04-24",
-    "order": 2
-  },
-  {
     "id": "belt-and-road",
     "title_zh": "“一带一路”电影周",
     "title_en": "Belt & Road Film Week",
@@ -42,22 +27,7 @@
     "color": "#b8843a",
     "source_url": "https://www.siff.com/content?aid=101260427110556818404151573614597634",
     "published_date": "2026-04-27",
-    "order": 3
-  },
-  {
-    "id": "siff-animation",
-    "title_zh": "SIFF动画",
-    "title_en": "SIFF Animation",
-    "short_en": "Animation",
-    "short_zh": "动画",
-    "kind_en": "Section",
-    "kind_zh": "单元",
-    "blurb_en": "Hand-drawn, stop-motion, and computer-animated features — for the whole family.",
-    "blurb_zh": "手绘、定格与电脑动画长片——适合全家共赏。",
-    "color": "#d4a02a",
-    "source_url": "https://www.siff.com/content?aid=101260428132927818802655823400965832",
-    "published_date": "2026-04-29",
-    "order": 4
+    "order": 2
   },
   {
     "id": "tribute-wilder-monroe",
@@ -72,37 +42,7 @@
     "color": "#d65a8f",
     "source_url": "https://www.siff.com/content?aid=101260430171813819585000419627013579",
     "published_date": "2026-04-30",
-    "order": 5
-  },
-  {
-    "id": "asian-film-of-the-year",
-    "title_zh": "年度亚洲电影",
-    "title_en": "Asian Film of the Year",
-    "short_en": "Asian Film",
-    "short_zh": "年度亚洲",
-    "kind_en": "Section",
-    "kind_zh": "单元",
-    "blurb_en": "Standout features from across the Asian production landscape.",
-    "blurb_zh": "本年度亚洲电影中的醒目之作。",
-    "color": "#2f6f6a",
-    "source_url": "https://www.siff.com/content?aid=101260507144348822082856326008837904",
-    "published_date": "2026-05-07",
-    "order": 6
-  },
-  {
-    "id": "auteurs-new",
-    "title_zh": "名导新作",
-    "title_en": "New Films by Renowned Directors",
-    "short_en": "Auteurs · New",
-    "short_zh": "名导新作",
-    "kind_en": "Section",
-    "kind_zh": "单元",
-    "blurb_en": "The latest from filmmakers whose names alone bring the room in.",
-    "blurb_zh": "重要作者导演的最新作品。",
-    "color": "#3a4a5e",
-    "source_url": "https://www.siff.com/content?aid=101260507141635822076005580541957044",
-    "published_date": "2026-05-07",
-    "order": 7
+    "order": 3
   },
   {
     "id": "blow-up",
@@ -117,7 +57,7 @@
     "color": "#4a3a2a",
     "source_url": "https://www.siff.com/content?aid=101260507144438822083066905235461219",
     "published_date": "2026-05-07",
-    "order": 8
+    "order": 4
   },
   {
     "id": "tribute-ken-loach",
@@ -132,7 +72,7 @@
     "color": "#5a4a3a",
     "source_url": "https://www.siff.com/content?aid=101260508181214822497699747074053715",
     "published_date": "2026-05-08",
-    "order": 9
+    "order": 5
   },
   {
     "id": "sci-fi-week",
@@ -147,7 +87,7 @@
     "color": "#3a3a6a",
     "source_url": "https://www.siff.com/content?aid=101260509154717822823607557165061695",
     "published_date": "2026-05-09",
-    "order": 10
+    "order": 6
   },
   {
     "id": "new-horizons-dolby",
@@ -162,22 +102,7 @@
     "color": "#1d3a8a",
     "source_url": "https://www.siff.com/content?aid=101260509155512822825602053574661668",
     "published_date": "2026-05-09",
-    "order": 11
-  },
-  {
-    "id": "tribute-memorial",
-    "title_zh": "向大师致敬｜特别纪念",
-    "title_en": "Tribute · In Memoriam",
-    "short_en": "In Memoriam",
-    "short_zh": "特别纪念",
-    "kind_en": "Tribute",
-    "kind_zh": "向大师致敬",
-    "blurb_en": "Programs of remembrance — Yi Wen, Godard, Reiner, Rob Reiner's circle, Ke Jin, Béla Tarr.",
-    "blurb_zh": "致敬过往：易文、戈达尔、罗伯·莱纳一脉，及贝拉·塔尔的全景式回顾。",
-    "color": "#3a3a3a",
-    "source_url": "https://www.siff.com/content?aid=101260424112521817321871199440901496",
-    "published_date": "2026-05-11",
-    "order": 12
+    "order": 7
   },
   {
     "id": "film-history",
@@ -192,7 +117,7 @@
     "color": "#7a5530",
     "source_url": "https://www.siff.com/content?aid=101260512162633823920652560896005012",
     "published_date": "2026-05-12",
-    "order": 13
+    "order": 8
   },
   {
     "id": "image-unlimited",
@@ -207,7 +132,7 @@
     "color": "#5a3aa6",
     "source_url": "https://www.siff.com/content?aid=101260514150129824624022640660485578",
     "published_date": "2026-05-14",
-    "order": 14
+    "order": 9
   },
   {
     "id": "siff-rhapsody",
@@ -222,7 +147,7 @@
     "color": "#a05050",
     "source_url": "https://www.siff.com/content?aid=101260514144734824620519834783749932",
     "published_date": "2026-05-14",
-    "order": 15
+    "order": 10
   },
   {
     "id": "new-horizons-imax",
@@ -237,6 +162,156 @@
     "color": "#0f5f3f",
     "source_url": "https://www.siff.com/content?aid=101260516170059825378869698629637281",
     "published_date": "2026-05-16",
+    "order": 11
+  },
+  {
+    "id": "tribute-memorial",
+    "title_zh": "向大师致敬｜特别纪念",
+    "title_en": "Tribute · In Memoriam",
+    "short_en": "In Memoriam",
+    "short_zh": "特别纪念",
+    "kind_en": "Tribute",
+    "kind_zh": "向大师致敬",
+    "blurb_en": "Programs of remembrance — Yi Wen, Godard, Reiner, Rob Reiner's circle, Ke Jin, Béla Tarr.",
+    "blurb_zh": "致敬过往：易文、戈达尔、罗伯·莱纳一脉，及贝拉·塔尔的全景式回顾。",
+    "color": "#3a3a3a",
+    "source_url": "https://www.siff.com/content?aid=101260424112521817321871199440901496",
+    "published_date": "2026-05-18",
+    "order": 12
+  },
+  {
+    "id": "4k-restoration",
+    "title_zh": "4K修复",
+    "title_en": "4K Restoration",
+    "short_en": "4K Restoration",
+    "short_zh": "4K 修复",
+    "kind_en": "Section",
+    "kind_zh": "单元",
+    "blurb_en": "Classics returned to the screen in newly minted 4K — from postwar Shanghai to New Hollywood.",
+    "blurb_zh": "从战后上海到新好莱坞——以全新 4K 修复重回银幕的经典。",
+    "color": "#7a5045",
+    "source_url": "https://www.siff.com/content?aid=101260519182406826486952378241029702",
+    "published_date": "2026-05-19",
+    "order": 13
+  },
+  {
+    "id": "egypt-film-week",
+    "title_zh": "埃及电影周",
+    "title_en": "Egypt Film Week",
+    "short_en": "Egypt Week",
+    "short_zh": "埃及",
+    "kind_en": "Curated Program",
+    "kind_zh": "策展单元",
+    "blurb_en": "From Youssef Chahine to today — a chronological window onto Egyptian cinema.",
+    "blurb_zh": "从尤瑟夫·夏因到当代——一扇编年的埃及电影窗口。",
+    "color": "#b8743a",
+    "source_url": "https://www.siff.com/content?aid=101260519183040826488603537313797955",
+    "published_date": "2026-05-19",
+    "order": 14
+  },
+  {
+    "id": "siff-animation",
+    "title_zh": "SIFF动画",
+    "title_en": "SIFF Animation",
+    "short_en": "Animation",
+    "short_zh": "动画",
+    "kind_en": "Section",
+    "kind_zh": "单元",
+    "blurb_en": "Hand-drawn, stop-motion, and computer-animated features — for the whole family.",
+    "blurb_zh": "手绘、定格与电脑动画长片——适合全家共赏。",
+    "color": "#d4a02a",
+    "source_url": "https://www.siff.com/content?aid=101260428132927818802655823400965832",
+    "published_date": "2026-05-19",
+    "order": 15
+  },
+  {
+    "id": "jury-films",
+    "title_zh": "评委主席及评委作品展",
+    "title_en": "Jury President & Jurors' Films",
+    "short_en": "Jury Films",
+    "short_zh": "评委作品",
+    "kind_en": "Section",
+    "kind_zh": "单元",
+    "blurb_en": "Selected works from this year's Golden Goblet jury — the films behind the verdicts.",
+    "blurb_zh": "本届金爵奖评委会成员的代表作选映——评审席背后的电影。",
+    "color": "#5a3aa6",
+    "source_url": "https://www.siff.com/content?aid=101260520152156826803496694059013308",
+    "published_date": "2026-05-20",
     "order": 16
+  },
+  {
+    "id": "world-premieres",
+    "title_zh": "世界首作",
+    "title_en": "World Premieres",
+    "short_en": "World Premieres",
+    "short_zh": "世界首作",
+    "kind_en": "Section",
+    "kind_zh": "单元",
+    "blurb_en": "First-time features making their global debut in Shanghai.",
+    "blurb_zh": "在上海全球首映的导演处女作。",
+    "color": "#1d3a8a",
+    "source_url": "https://www.siff.com/content?aid=101260521164617827187109956685829098",
+    "published_date": "2026-05-21",
+    "order": 17
+  },
+  {
+    "id": "asian-film-of-the-year",
+    "title_zh": "年度亚洲电影",
+    "title_en": "Asian Film of the Year",
+    "short_en": "Asian Film",
+    "short_zh": "年度亚洲",
+    "kind_en": "Section",
+    "kind_zh": "单元",
+    "blurb_en": "Standout features from across the Asian production landscape.",
+    "blurb_zh": "本年度亚洲电影中的醒目之作。",
+    "color": "#2f6f6a",
+    "source_url": "https://www.siff.com/content?aid=101260507144348822082856326008837904",
+    "published_date": "2026-05-21",
+    "order": 18
+  },
+  {
+    "id": "official-selection",
+    "title_zh": "影展精粹",
+    "title_en": "Official Selection",
+    "short_en": "Official Selection",
+    "short_zh": "影展精粹",
+    "kind_en": "Festival Highlights",
+    "kind_zh": "影展精粹",
+    "blurb_en": "Major prize-winners and most-talked-about titles from the year's leading festivals.",
+    "blurb_zh": "本年度国际重要电影节上的得奖与话题之作。",
+    "color": "#c8392a",
+    "source_url": "https://www.siff.com/content?aid=101260423202712817095844980330501467",
+    "published_date": "2026-05-21",
+    "order": 19
+  },
+  {
+    "id": "screen-resonance",
+    "title_zh": "银幕意蕴",
+    "title_en": "Screen Resonance",
+    "short_en": "Screen Resonance",
+    "short_zh": "银幕意蕴",
+    "kind_en": "Section",
+    "kind_zh": "单元",
+    "blurb_en": "A curated panorama of 2025 features carrying their own slow weight.",
+    "blurb_zh": "策展精选的 2025 年长片——各自承载缓慢、厚重的分量。",
+    "color": "#3a6a5a",
+    "source_url": "https://www.siff.com/content?aid=101260522183159827576097683017733715",
+    "published_date": "2026-05-22",
+    "order": 20
+  },
+  {
+    "id": "auteurs-new",
+    "title_zh": "名导新作",
+    "title_en": "New Films by Renowned Directors",
+    "short_en": "Auteurs · New",
+    "short_zh": "名导新作",
+    "kind_en": "Section",
+    "kind_zh": "单元",
+    "blurb_en": "The latest from filmmakers whose names alone bring the room in.",
+    "blurb_zh": "重要作者导演的最新作品。",
+    "color": "#3a4a5e",
+    "source_url": "https://www.siff.com/content?aid=101260507141635822076005580541957044",
+    "published_date": "2026-05-22",
+    "order": 21
   }
 ]
