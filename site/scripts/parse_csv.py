@@ -409,6 +409,95 @@ PROGRAM_META = {
 }
 
 
+GOBLET_SRC = DATA / "SIFF_2026_Golden_Goblet_Films.csv"
+
+GOBLET_PROGRAMS = {
+    "Main Competition": {
+        "id": "goblet-main",
+        "en": "Golden Goblet · Main Competition",
+        "zh": "金爵奖主竞赛",
+        "short_en": "Main Competition",
+        "short_zh": "金爵主竞赛",
+        "kind": "Competition",
+        "kind_zh": "金爵奖竞赛",
+        "blurb_en": "Twelve feature films competing for the Golden Goblet — the festival's flagship award.",
+        "blurb_zh": "12部角逐金爵奖的剧情长片——电影节最高荣誉的竞赛单元。",
+        "color": "#b8860b",
+    },
+    "Asian New Talent": {
+        "id": "goblet-asian-talent",
+        "en": "Golden Goblet · Asian New Talent",
+        "zh": "亚洲新人单元",
+        "short_en": "Asian New Talent",
+        "short_zh": "亚洲新人",
+        "kind": "Competition",
+        "kind_zh": "金爵奖竞赛",
+        "blurb_en": "First and second features by emerging Asian directors competing for the New Talent award.",
+        "blurb_zh": "亚洲新生代导演的首作与第二作，角逐亚洲新人奖。",
+        "color": "#a8782a",
+    },
+    "Documentary": {
+        "id": "goblet-documentary",
+        "en": "Golden Goblet · Documentary",
+        "zh": "金爵奖纪录片单元",
+        "short_en": "Goblet · Documentary",
+        "short_zh": "金爵·纪录",
+        "kind": "Competition",
+        "kind_zh": "金爵奖竞赛",
+        "blurb_en": "Five documentaries competing for the Golden Goblet's non-fiction prize.",
+        "blurb_zh": "5部角逐金爵奖最佳纪录片的非虚构作品。",
+        "color": "#8a6020",
+    },
+    "Animation": {
+        "id": "goblet-animation",
+        "en": "Golden Goblet · Animation",
+        "zh": "金爵奖动画片单元",
+        "short_en": "Goblet · Animation",
+        "short_zh": "金爵·动画",
+        "kind": "Competition",
+        "kind_zh": "金爵奖竞赛",
+        "blurb_en": "Five animated features competing for the Golden Goblet's animation prize.",
+        "blurb_zh": "5部角逐金爵奖最佳动画长片的作品。",
+        "color": "#c8902a",
+    },
+    "Short Film - Live Action": {
+        "id": "goblet-short-live",
+        "en": "Golden Goblet · Live-Action Shorts",
+        "zh": "金爵奖实景短片单元",
+        "short_en": "Goblet · Live Shorts",
+        "short_zh": "金爵·实景短片",
+        "kind": "Competition",
+        "kind_zh": "金爵奖竞赛",
+        "blurb_en": "Ten live-action shorts competing for the short-film Golden Goblet.",
+        "blurb_zh": "10部角逐金爵奖最佳实景短片的作品。",
+        "color": "#905a30",
+    },
+    "Short Film - Animation": {
+        "id": "goblet-short-animation",
+        "en": "Golden Goblet · Animated Shorts",
+        "zh": "金爵奖动画短片单元",
+        "short_en": "Goblet · Animated Shorts",
+        "short_zh": "金爵·动画短片",
+        "kind": "Competition",
+        "kind_zh": "金爵奖竞赛",
+        "blurb_en": "Five animated shorts competing for the short-film Golden Goblet.",
+        "blurb_zh": "5部角逐金爵奖最佳动画短片的作品。",
+        "color": "#a06030",
+    },
+}
+
+_BILINGUAL = re.compile(r"^\s*(?P<zh>[^()]*?)\s*\(\s*(?P<en>[^)]+)\s*\)\s*$")
+
+
+def split_bilingual(s):
+    if not s:
+        return "", ""
+    m = _BILINGUAL.match(s.strip())
+    if m:
+        return m.group("zh").strip(), m.group("en").strip()
+    return s.strip(), ""
+
+
 def slugify(s: str) -> str:
     s = unicodedata.normalize("NFKD", s)
     s = re.sub(r"[^a-zA-Z0-9]+", "-", s)
@@ -473,6 +562,90 @@ def film_block(row):
         if row.get(key):
             return row[key]
     return list(row.values())[-1] or ""
+
+
+def load_goblet(programs, films, used_ids, base_order):
+    if not GOBLET_SRC.exists():
+        return 0, 0
+
+    with GOBLET_SRC.open("r", encoding="utf-8-sig", newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    programs_added = 0
+    films_added = 0
+    seen_program_ids = {p["id"] for p in programs}
+    by_program_count = {}
+
+    for row in rows:
+        prog_key = row["Program"].strip()
+        meta = GOBLET_PROGRAMS.get(prog_key)
+        if not meta:
+            print(f"  WARN: unknown goblet program {prog_key!r}, skipping row")
+            continue
+
+        if meta["id"] not in seen_program_ids:
+            programs.append({
+                "id": meta["id"],
+                "title_zh": meta["zh"],
+                "title_en": meta["en"],
+                "short_en": meta["short_en"],
+                "short_zh": meta["short_zh"],
+                "kind_en": meta["kind"],
+                "kind_zh": meta["kind_zh"],
+                "blurb_en": meta["blurb_en"],
+                "blurb_zh": meta["blurb_zh"],
+                "color": meta["color"],
+                "source_url": "",
+                "published_date": "",
+                "order": base_order + programs_added,
+            })
+            seen_program_ids.add(meta["id"])
+            programs_added += 1
+
+        title_en = (row["English Name"] or "").strip()
+        title_zh = (row["Chinese Name"] or "").strip()
+        director_zh, director_en = split_bilingual(row.get("Director", ""))
+        country_zh, country_en = split_bilingual(row.get("Country/Region", ""))
+        year_raw = (row.get("Produced Year") or "").strip()
+        year = int(year_raw) if year_raw.isdigit() else None
+        premiere = (row.get("Premiere Status") or "").strip() or None
+
+        base = slugify(title_en or title_zh)
+        fid = f"{meta['id']}-{base}"
+        n = 2
+        while fid in used_ids:
+            fid = f"{meta['id']}-{base}-{n}"
+            n += 1
+        used_ids.add(fid)
+        by_program_count[meta["id"]] = by_program_count.get(meta["id"], 0) + 1
+
+        films.append({
+            "id": fid,
+            "title_en": title_en,
+            "title_zh": title_zh,
+            "year": year,
+            "format_tags": [],
+            "program_id": meta["id"],
+            "program_en": meta["en"],
+            "program_zh": meta["zh"],
+            "order_in_program": by_program_count[meta["id"]],
+            "color": meta["color"],
+            "director": director_en or None,
+            "director_zh": director_zh or None,
+            "country": country_en or None,
+            "country_zh": country_zh or None,
+            "runtime": None,
+            "language": None,
+            "synopsis_en": None,
+            "synopsis_zh": None,
+            "poster_url": None,
+            "premiere": premiere,
+            "imdb_id": None,
+            "tmdb_id": None,
+        })
+        films_added += 1
+
+    return programs_added, films_added
 
 
 # ---------- main ----------
@@ -559,6 +732,10 @@ def main():
                 "imdb_id": None,
                 "tmdb_id": None,
             })
+
+    goblet_progs, goblet_films = load_goblet(programs, films, used_ids, base_order=len(programs) + 1)
+    if goblet_films:
+        print(f"  + {goblet_progs} goblet programs, {goblet_films} goblet films")
 
     OUT_PROGRAMS.write_text(json.dumps(programs, ensure_ascii=False, indent=2), encoding="utf-8")
     OUT_FILMS.write_text(json.dumps(films, ensure_ascii=False, indent=2), encoding="utf-8")

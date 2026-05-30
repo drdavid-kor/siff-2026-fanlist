@@ -680,12 +680,19 @@
     "_searched_at": 1779036171
   },
   "blow-up-new-money": {
-    "tmdb_id": null,
-    "_error": "audit-erased",
-    "_reason": "title-sim=0.25, year-diff=0 — likely matched a different film",
-    "_was_tmdb_id": 1599042,
-    "_was_tmdb_title_en": "The Rise: The New MoneyBall",
-    "_was_tmdb_year": 2025
+    "tmdb_id": 1528901,
+    "imdb_id": "tt37923632",
+    "poster_url": "https://image.tmdb.org/t/p/w500/rvt2l4WxFgucuDDxuCHBQqy4DkU.jpg",
+    "backdrop_url": "https://image.tmdb.org/t/p/w1280/hqBXSwSypl9KTv8t2tr21vtWDhw.jpg",
+    "synopsis_en": "IT specialist Taavi and his teacher wife Liisa are suddenly faced with a question: what to do if one morning they have an absurdly large amount of money in their bank account - no less, no more than 50 million euros.",
+    "director": "Rain Rannu",
+    "country": "Estonia",
+    "runtime": 100,
+    "language": "ET",
+    "tmdb_title_en": "New Money",
+    "tmdb_title_zh": "Uus raha",
+    "tmdb_release_date": "2025-10-07",
+    "_searched_at": 1780153845
   },
   "tribute-ken-loach-kes": {
     "tmdb_id": null,
@@ -1668,12 +1675,19 @@
     "_was_tmdb_year": 1968
   },
   "tribute-memorial-zoo": {
-    "tmdb_id": null,
-    "_error": "audit-erased",
-    "_reason": "title-sim=0.25, year-diff=0 — likely matched a different film",
-    "_was_tmdb_id": 1296605,
-    "_was_tmdb_title_en": "The Donut Repair Club at the Zoo",
-    "_was_tmdb_year": 1993
+    "tmdb_id": 114420,
+    "imdb_id": "tt0108662",
+    "poster_url": "https://image.tmdb.org/t/p/w500/t9JXJxrV16Xrq8PCuSs55QqA38t.jpg",
+    "backdrop_url": "https://image.tmdb.org/t/p/w1280/vXEovpdvACT0eKfKDr0KJ7JZGiF.jpg",
+    "synopsis_en": "ZOO is a film about the zoo in Miami, Florida, the care and maintenance of the animals by the keepers, the work of the veterinarians and their staff, and the visits to the zoo by people from all over the world. The film presents the wide diversity of interests and activities at the zoo and the interrelatedness of the animal, human, ethical, financial, technical, organizational and research aspects of operating the zoo.",
+    "director": "Frederick Wiseman",
+    "country": "United States of America",
+    "runtime": 130,
+    "language": "EN",
+    "tmdb_title_en": "Zoo",
+    "tmdb_title_zh": "动物园",
+    "tmdb_release_date": "1993-06-01",
+    "_searched_at": 1780153816
   },
   "tribute-memorial-menus-plaisirs-les-troisgros": {
     "tmdb_id": 1077050,
@@ -2094,12 +2108,12 @@
   "jury-films-rewa-bombay-rose-song": {
     "tmdb_id": null,
     "_error": null,
-    "_searched_at": 1780142215
+    "_searched_at": 1780153822
   },
   "jury-films-umar-and-the-wick-of-grime": {
     "tmdb_id": null,
     "_error": null,
-    "_searched_at": 1780142220
+    "_searched_at": 1780153825
   },
   "jury-films-tomorrow-my-love": {
     "tmdb_id": 852197,
@@ -3538,7 +3552,7 @@
   "belt-and-road-sumpa-kingdom": {
     "tmdb_id": null,
     "_error": null,
-    "_searched_at": 1780142584
+    "_searched_at": 1780153858
   },
   "belt-and-road-the-red-hangar": {
     "tmdb_id": 1563588,
@@ -3921,7 +3935,7 @@
   "siff-documentary-electing-miss-santa": {
     "tmdb_id": null,
     "_error": null,
-    "_searched_at": 1780142673
+    "_searched_at": 1780153876
   },
   "siff-documentary-a-face-to-be-loved": {
     "tmdb_id": null,
@@ -3942,7 +3956,7 @@
   "siff-documentary-a-place-in-the-ring": {
     "tmdb_id": null,
     "_error": null,
-    "_searched_at": 1780142683
+    "_searched_at": 1780153895
   },
   "siff-documentary-the-art-of-adventure": {
     "tmdb_id": 1468009,
@@ -4062,7 +4076,7 @@
   "siff-rhapsody-memory-of-the-forgotten": {
     "tmdb_id": null,
     "_error": null,
-    "_searched_at": 1780142725
+    "_searched_at": 1780153900
   },
   "siff-rhapsody-nouvelle-vague": {
     "tmdb_id": 1254808,
@@ -4113,7 +4127,7 @@
   "siff-rhapsody-taboo-egon-schiele": {
     "tmdb_id": null,
     "_error": null,
-    "_searched_at": 1780142745
+    "_searched_at": 1780153905
   },
   "official-selection-belen": {
     "tmdb_id": 1301844,
@@ -4324,5 +4338,492 @@
     "_was_tmdb_id": 1509573,
     "_was_tmdb_title_en": "Meet, Greet & Bye",
     "_was_tmdb_year": 2025
+  },
+  "goblet-main-atlantic-rhapsody": {
+    "tmdb_id": 288907,
+    "imdb_id": "tt0096845",
+    "poster_url": "https://image.tmdb.org/t/p/w500/6Kd15R5fRF5rTB9DhDbOszMisCC.jpg",
+    "backdrop_url": "https://image.tmdb.org/t/p/w1280/q6SkY5o60V7XZwVoOrGpuovZAxp.jpg",
+    "synopsis_en": "Presents a day in the life of a few inhabitants of Tórshavn in the Faroe Islands: A father and his daughter are having breakfast when the fire-brigade drive by. A woman and her child are looking at the fire and meet a married couple. The couple say hello to a man who is going out with his boat... and so on.",
+    "director": "Katrin Ottarsdóttir",
+    "country": "Denmark, Faeroe Islands",
+    "runtime": 75,
+    "language": "FO",
+    "tmdb_title_en": "Atlantic Rhapsody",
+    "tmdb_title_zh": "Atlantic Rhapsody - 52 myndir úr Tórshavn",
+    "tmdb_release_date": "1989-11-01",
+    "_searched_at": 1780153929
+  },
+  "goblet-main-halima": {
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.00, year-diff=1 — likely matched a different film",
+    "_was_tmdb_id": 1488374,
+    "_was_tmdb_title_en": "Halimaw Bumoto",
+    "_was_tmdb_year": 2025
+  },
+  "goblet-main-iluminada": {
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.00, year-diff=1 — likely matched a different film",
+    "_was_tmdb_id": 1477994,
+    "_was_tmdb_title_en": "Miraba caer las gotas iluminadas por los relámpagos, y cada que respiraba suspiraba, y cada vez que pensaba, pensaba en ti",
+    "_was_tmdb_year": 2025
+  },
+  "goblet-main-luiza-s-desert": {
+    "tmdb_id": null,
+    "_error": null,
+    "_searched_at": 1780153940
+  },
+  "goblet-main-my-own-last-supper": {
+    "tmdb_id": 1590903,
+    "imdb_id": "tt39073355",
+    "synopsis_en": "76-year-old widower Encek convenes his children for a final dinner, unveiling concealed memoirs of love, loss and generational wounds before choosing the sea as his reunion place with his deceased wife.",
+    "director": "Ismail Basbeth",
+    "country": "China, Indonesia",
+    "language": "ID",
+    "tmdb_title_en": "My Own Last Supper",
+    "tmdb_title_zh": "My Own Last Supper",
+    "_searched_at": 1780153943
+  },
+  "goblet-main-night-of-blindness": {
+    "tmdb_id": null,
+    "_error": null,
+    "_searched_at": 1780153946
+  },
+  "goblet-main-sea-sons": {
+    "tmdb_id": 856720,
+    "imdb_id": "tt12254438",
+    "poster_url": "https://image.tmdb.org/t/p/w500/81C6C5YZWcmDT8OaZWcrBMYUuFQ.jpg",
+    "synopsis_en": "In a small fishing community on the outskirts of Cape Town, Gabriel discovers a dead body and two bags of valuable abalone. His brother, Michail, convinces him they must take it for themselves. But when a corrupt government worker pursues them, they embark on a journey into the mountains and are driven to the ends of the Cape of Good Hope for the survival of their relationship and their lives.",
+    "director": "John Gutierrez",
+    "country": "South Africa",
+    "runtime": 85,
+    "language": "AF",
+    "tmdb_title_en": "Sons of the Sea",
+    "tmdb_title_zh": "Sons of the Sea",
+    "tmdb_release_date": "2021-03-20",
+    "_searched_at": 1780153950
+  },
+  "goblet-main-secret-in-the-box": {
+    "tmdb_id": 568726,
+    "imdb_id": "tt6456798",
+    "poster_url": "https://image.tmdb.org/t/p/w500/sMJn1aZeY8wS0QgbCO5jMeWWPyE.jpg",
+    "backdrop_url": "https://image.tmdb.org/t/p/w1280/eOYhI1tdsAt2JJohdMDOkGQFHbW.jpg",
+    "synopsis_en": "The life and works of Ecuadorian writer Marcelo Chiriboga, a key figure of the Latin American literature and member of the “boom” generation. Through interviews, visits to different cities, archival footage and his most important book, a puzzle is woven that blurs the boundaries between reality and fiction.",
+    "director": "Javier Izquierdo",
+    "country": "Ecuador",
+    "runtime": 71,
+    "language": "ES",
+    "tmdb_title_en": "A Secret in the Box",
+    "tmdb_title_zh": "Un secreto en la caja",
+    "tmdb_release_date": "2017-09-08",
+    "_searched_at": 1780153954
+  },
+  "goblet-main-superbuhei": {
+    "tmdb_id": 1293947,
+    "synopsis_en": "Jesse Bronske runs the melancholy bar Klaus Meine, navigating love, work, and paranoia while haunted by his twin, as daily life and risky plans spiral amid alcohol and obsession.",
+    "director": "Josef Brandl",
+    "country": "Germany",
+    "runtime": 115,
+    "language": "DE",
+    "tmdb_title_en": "Superbuhei",
+    "tmdb_title_zh": "Superbuhei",
+    "_searched_at": 1780153958
+  },
+  "goblet-main-the-great-skull": {
+    "tmdb_id": 1444590,
+    "imdb_id": "tt36853603",
+    "poster_url": "https://image.tmdb.org/t/p/w500/wm0LTg3eMrQRqtJxQMdCyFexGGf.jpg",
+    "synopsis_en": "Gu Liyan, on the verge of graduating from university, suddenly faced her father's death and had to assist her sharp-witted mother in navigating the tedious funeral arrangements. Unexpectedly, the 'Funeral Affairs Committee' secretly organized by her father before his death suddenly arrived at their doorstep... With unanticipated guests, absurd situations, and ridiculously dramatic events, the mother-daughter duo urgently needed to gather their strength to confront it all.",
+    "synopsis_zh": "　即将大学毕业的顾立言（文淇 饰）突逢父亲（喻恩泰 饰）去世，不得不陪着精明伶俐的母亲（倪虹洁 饰）应对繁琐的丧葬流程。谁知父亲生前偷偷安排好的“治丧委员会”突然登门…意想不到的客人，哭笑不得的状况，荒诞抓马的事件， 母女二人急需打起精神面对。",
+    "director": "Liu Xiaoyang",
+    "country": "China",
+    "language": "ZH",
+    "tmdb_title_en": "The Great Skull",
+    "tmdb_title_zh": "燃烧吧！爸爸",
+    "_searched_at": 1780153961
+  },
+  "goblet-main-the-miserable-mother": {
+    "tmdb_id": 1404124,
+    "synopsis_en": "“For ‘The Miserable Mother’, stuck at home with her boyfriend, ‘Peter Pan’, and their newborn, motherhood becomes a prison. Within her own four walls, the boundaries blur between inside and outside, society and subject, body and discourse. A musical film.",
+    "director": "Susanne Heinrich",
+    "country": "Germany",
+    "runtime": 82,
+    "language": "DE",
+    "tmdb_title_en": "The Miserable Mother",
+    "tmdb_title_zh": "Die miserable Mutter",
+    "tmdb_release_date": "2026-06-30",
+    "_searched_at": 1780153965
+  },
+  "goblet-main-the-parking-spot": {
+    "tmdb_id": 1679746,
+    "poster_url": "https://image.tmdb.org/t/p/w500/fQrl9qJkvNxM9BWctLBiHcx65D3.jpg",
+    "backdrop_url": "https://image.tmdb.org/t/p/w1280/qXPHgOIUqaTQPwkM3sWrjSvYrXU.jpg",
+    "synopsis_en": "A man’s life unravels after a parking spot is stolen from him.",
+    "director": "Owen Baxter",
+    "runtime": 14,
+    "language": "EN",
+    "tmdb_title_en": "The Parking Spot",
+    "tmdb_title_zh": "The Parking Spot",
+    "tmdb_release_date": "2026-04-25",
+    "_searched_at": 1780153968
+  },
+  "goblet-asian-talent-9-temples-to-heaven": {
+    "tmdb_id": 1046304,
+    "imdb_id": "tt37740247",
+    "poster_url": "https://image.tmdb.org/t/p/w500/6ofKFtLQCJC7xpRmMT1bzELP1cq.jpg",
+    "backdrop_url": "https://image.tmdb.org/t/p/w1280/aTxI4pigee5Gj7mDGPy8Bj3xsn7.jpg",
+    "synopsis_en": "A family of 9 takes their grandmother on a merit-making trip to 9 temples in 1 day, hoping to prolong her life. But the trip takes an unexpected turn.",
+    "director": "Sompot Chidgasornpongse",
+    "country": "Thailand, Norway, France, Singapore, China, Hong Kong, Indonesia",
+    "runtime": 140,
+    "language": "TH",
+    "tmdb_title_en": "9 Temples to Heaven",
+    "tmdb_title_zh": "9 วัด สู่สวรรค์",
+    "tmdb_release_date": "2026-05-19",
+    "_searched_at": 1780153972
+  },
+  "goblet-asian-talent-about-the-mother": {
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "year-off-by-14, title-sim=0.40",
+    "_was_tmdb_id": 1281517,
+    "_was_tmdb_title_en": "The Making of All About My Mother",
+    "_was_tmdb_year": 2012
+  },
+  "goblet-asian-talent-boomah": {
+    "tmdb_id": 1312187,
+    "poster_url": "https://image.tmdb.org/t/p/w500/k1qbeRLTOWSUYjqUW2EU4jQPpzR.jpg",
+    "synopsis_en": "In the slums of Jordan, power circulates through fear, favors, and violence. Boomah, a volatile street enforcer, survives on petty extortion and intimidation because for those at the bottom, crime is the only work that pays. Children move through the same streets she controls, selling goods, running messages, learning the rules of danger before adulthood; Boomah frightens them, exploits them, and sometimes protects them, caught between the instincts of a predator and the shadow of her own abandoned childhood. Surrounded by women struggling to shield their families, she carries a fractured relationship to motherhood, shaped by loss and survival rather than care. When a new, more organized criminal force begins to restructure the underground economy, independent lives like hers grow increasingly disposable, and Boomah is pushed to confront what it means to survive in a world where violence is labor, children inherit the streets, and motherhood is both a wound and a responsibility.",
+    "director": "Zaid Abu Hamdan",
+    "country": "Jordan, United Arab Emirates",
+    "language": "AR",
+    "tmdb_title_en": "Boomah",
+    "tmdb_title_zh": "بُومَة",
+    "_searched_at": 1780153980
+  },
+  "goblet-asian-talent-cassowary": {
+    "tmdb_id": 959247,
+    "synopsis_en": "The courier delivers orders together with his faithful assistant. No friendship, only a working relationship.",
+    "director": "Svetlana Karaeva",
+    "runtime": 1,
+    "language": "RU",
+    "tmdb_title_en": "Cassowary in the Area",
+    "tmdb_title_zh": "Казуар на районе",
+    "tmdb_release_date": "2022-03-29",
+    "_searched_at": 1780153984
+  },
+  "goblet-asian-talent-dog-day-evening": {
+    "tmdb_id": 1396674,
+    "imdb_id": "tt35111865",
+    "poster_url": "https://image.tmdb.org/t/p/w500/qSTofJ0sw5FStyfMOLglW01T6Jk.jpg",
+    "synopsis_en": "A hostage situation occurred at a TV station. The kidnapper K was not after money, he just wanted to terminate the monthly subscription to the TV station.",
+    "synopsis_zh": "电视台发生胁持事件，绑匪K仔不是为钱，只想把电视台月费终止。人质当劳为求自保，只想尽快了结，却没想过终止电视台月费竟是如此困难的事……",
+    "director": "Mak Tin-Shu",
+    "country": "Hong Kong, China",
+    "language": "CN",
+    "tmdb_title_en": "Dog Day Evening",
+    "tmdb_title_zh": "一个部门的诞生",
+    "tmdb_release_date": "2026-06-18",
+    "_searched_at": 1780153988
+  },
+  "goblet-asian-talent-her-first-taste": {
+    "tmdb_id": null,
+    "_error": null,
+    "_searched_at": 1780153993
+  },
+  "goblet-asian-talent-hunter-s-moon": {
+    "tmdb_id": 458673,
+    "imdb_id": "tt5761986",
+    "poster_url": "https://image.tmdb.org/t/p/w500/pgsqkck2iPtyTSeZ6JVs5EMEaCK.jpg",
+    "backdrop_url": "https://image.tmdb.org/t/p/w1280/z1josz5xhHCI7Pt0Eg5Kc1e7GBn.jpg",
+    "synopsis_en": "A trio of young sisters are attacked by local thugs. Then a force inhabiting the orchard exacts its revenge.",
+    "synopsis_zh": "三个十几岁的姐妹独自在新建果园农舍过夜，很快发现自己受到一些肆无忌惮的小男孩的摆布。然而，当果园里游荡的恶欲开始追捕男孩们时，桌子就变翻了。",
+    "director": "Michael Caissie",
+    "country": "United States of America",
+    "runtime": 81,
+    "language": "EN",
+    "tmdb_title_en": "Hunter's Moon",
+    "tmdb_title_zh": "月下狩猎",
+    "tmdb_release_date": "2020-03-24",
+    "_searched_at": 1780154000
+  },
+  "goblet-asian-talent-no-good-in-sight-a-story": {
+    "tmdb_id": null,
+    "_error": null,
+    "_searched_at": 1780154005
+  },
+  "goblet-asian-talent-no-hard-feelings": {
+    "tmdb_id": 1648740,
+    "poster_url": "https://image.tmdb.org/t/p/w500/kAR9bFerk7aOpB37JEIpRmGMEem.jpg",
+    "synopsis_en": "In his latest comedy special, Gary is at his unapologetic best as he takes fans on a journey from growing up in a trailer park to moving to D.C. and raising twin boys, while leaving nothing off-limits.",
+    "country": "United States of America",
+    "runtime": 57,
+    "language": "EN",
+    "tmdb_title_en": "Gary Owen: No Hard Feelings",
+    "tmdb_title_zh": "Gary Owen: No Hard Feelings",
+    "tmdb_release_date": "2026-03-07",
+    "_searched_at": 1780154010
+  },
+  "goblet-asian-talent-skylark": {
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.33, year-diff=2 — likely matched a different film",
+    "_was_tmdb_id": 1317539,
+    "_was_tmdb_title_en": "The Skylark Will Sing",
+    "_was_tmdb_year": 2024
+  },
+  "goblet-asian-talent-strangers-in-the-mountain": {
+    "tmdb_id": null,
+    "_error": null,
+    "_searched_at": 1780154022
+  },
+  "goblet-asian-talent-the-blind-girl-and-an-elephant": {
+    "tmdb_id": 1684842,
+    "imdb_id": "tt32621722",
+    "poster_url": "https://image.tmdb.org/t/p/w500/A3gvnTedT9TozSCevogPI2Rg6R2.jpg",
+    "synopsis_en": "Three girls try to flee their village to escape the superstitions and fanatic hostility surrounding them. Only the blind girl makes it out, finding herself face-to-face with an elephant.",
+    "director": "Ishtiyak Ahmad Zihad",
+    "country": "Bangladesh, Germany",
+    "runtime": 80,
+    "language": "BN",
+    "tmdb_title_en": "The Blind Girl and an Elephant",
+    "tmdb_title_zh": "The Blind Girl and an Elephant",
+    "_searched_at": 1780154028
+  },
+  "goblet-documentary-benigno": {
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.20, year-diff=4 — likely matched a different film",
+    "_was_tmdb_id": 1145360,
+    "_was_tmdb_title_en": "Igor Guimarães: Benigno in Paradise",
+    "_was_tmdb_year": 2022
+  },
+  "goblet-documentary-notes-unheard": {
+    "tmdb_id": null,
+    "_error": null,
+    "_searched_at": 1780154039
+  },
+  "goblet-documentary-ruins": {
+    "tmdb_id": 1671551,
+    "synopsis_en": "A group of dancers positions themselves between the ancient and modern ruins of the island of Crete, Greece.",
+    "director": "Lefteris Parasyris",
+    "runtime": 9,
+    "language": "EN",
+    "tmdb_title_en": "Ruins Within Ruins",
+    "tmdb_title_zh": "Ruins Within Ruins",
+    "tmdb_release_date": "2026-04-14",
+    "_searched_at": 1780154044
+  },
+  "goblet-documentary-the-tiger-of-the-east": {
+    "tmdb_id": null,
+    "_error": null,
+    "_searched_at": 1780154048
+  },
+  "goblet-documentary-wheels-of-forgotten-dreams": {
+    "tmdb_id": null,
+    "_error": null,
+    "_searched_at": 1780154051
+  },
+  "goblet-animation-amadeo-and-the-hypothetical-new-world": {
+    "tmdb_id": 1702037,
+    "poster_url": "https://image.tmdb.org/t/p/w500/gN2AQYsXzB2LWVFANq1pTQdA0dR.jpg",
+    "director": "Brenda Lígia",
+    "language": "PT",
+    "tmdb_title_en": "Amadeo and the Hypothetical New World",
+    "tmdb_title_zh": "Amadeo and the Hypothetical New World",
+    "_searched_at": 1780154055
+  },
+  "goblet-animation-dante": {
+    "tmdb_id": 1020047,
+    "imdb_id": "tt1333644",
+    "poster_url": "https://image.tmdb.org/t/p/w500/uoLxTyH6LZOGUzShvOm4GcJv70p.jpg",
+    "backdrop_url": "https://image.tmdb.org/t/p/w1280/6pb3DTtHYh6ChqsmX9yFEX9GXVt.jpg",
+    "synopsis_en": "A writer helps a mob boss steal Dante's handwritten \"Divine Comedy\" manuscript as a parallel tale follows the 14th-century poet creating his masterpiece.",
+    "synopsis_zh": "影片改编自尼克·托切斯的同名小说，讲述两个平行故事，分别围绕著名诗人但丁和他的代表作《神曲》展开：当代纽约，《神曲》原稿出现在一个黑市走私团伙的手中，厌倦现状的学者尼克（奥斯卡·伊萨克 Oscar Isaac 饰）被他们召唤去辨别真伪。尼克最终因诱惑而违抗黑手党偷走了手稿，和他的爱人茱丽叶塔（盖尔·加朵 Gal Gadot 饰）踏上了一条黑暗暴力之路，从隐喻式的地狱到天堂。",
+    "director": "Julian Schnabel",
+    "country": "Chile, Italy, United Kingdom, United States of America",
+    "runtime": 160,
+    "language": "EN",
+    "tmdb_title_en": "In the Hand of Dante",
+    "tmdb_title_zh": "但丁之手",
+    "tmdb_release_date": "2026-06-12",
+    "_searched_at": 1780154058
+  },
+  "goblet-animation-garuda-dare-to-dream": {
+    "tmdb_id": 1523377,
+    "imdb_id": "tt33571304",
+    "poster_url": "https://image.tmdb.org/t/p/w500/9HD51PdRXC8prfTIu6qyp6hVPFT.jpg",
+    "backdrop_url": "https://image.tmdb.org/t/p/w1280/fUo0s4texQF4cQbQN0yDRmRvWtj.jpg",
+    "synopsis_en": "Putra, a 13-year-old boy living with asthma, dreams of one day playing for Indonesia’s national football team. Often underestimated, his determination never wavers until he fails a crucial selection, making his dream feel impossibly out of reach.  Everything changes when he encounters Gaga, a mystical Garuda who offers him a new chance. Alongside Naya, a talented young footballer and the coach’s daughter who becomes his fiercest ally, Putra embarks on a journey filled with challenges, growth, and unexpected courage.  Through it all, Putra comes to understand that chasing a dream takes more than grit and bravery. It takes belief, and the people who stand beside you. The question is: can he rise above his limits and become one of Indonesia’s finest?",
+    "director": "Ronny Gani",
+    "country": "Indonesia, Singapore, Taiwan, South Korea",
+    "runtime": 78,
+    "language": "ID",
+    "tmdb_title_en": "Garuda: Dare to Dream",
+    "tmdb_title_zh": "Garuda Di Dadaku",
+    "tmdb_release_date": "2026-06-11",
+    "_searched_at": 1780154061
+  },
+  "goblet-animation-lucy-lost": {
+    "tmdb_id": 1217954,
+    "imdb_id": "tt10569744",
+    "poster_url": "https://image.tmdb.org/t/p/w500/y89scf8jBRXBSIBRrF8mzDi6wMU.jpg",
+    "backdrop_url": "https://image.tmdb.org/t/p/w1280/fpikuGRV01ocEqLpGkiBAlSg9K9.jpg",
+    "synopsis_en": "Set in 1915 in the Isles of Scilly just off the Cornish coast, a young girl named Lucy is raised by a clan of fishermen she knows not to be hers. However, she remembers little else about her past, and as the Great War rages down on the continent, a chance encounter with the mysterious girl her own age soon helps Lucy put back the pieces of her own life’s story and come to better understand her place in the world.",
+    "director": "Olivier Clert",
+    "country": "France",
+    "runtime": 85,
+    "language": "FR",
+    "tmdb_title_en": "Lucy Lost",
+    "tmdb_title_zh": "Lucy Lost",
+    "tmdb_release_date": "2026-10-28",
+    "_searched_at": 1780154065
+  },
+  "goblet-animation-winnipeg-seeds-of-hope": {
+    "tmdb_id": 815043,
+    "imdb_id": "tt12097608",
+    "poster_url": "https://image.tmdb.org/t/p/w500/Uo4DSzrPWJ70sOce9ONLo2j8FN.jpg",
+    "synopsis_en": "At the end of the Spanish Civil War, almost half a million people moved by fear of reprisals to France. A hundred thousand of them were children. The French Government overflowed by the human avalanche, put them in improvised refugee camps. Chilean poet Pablo Neruda, former consul in Spain before the war, convinced the President of Chile to save more than two thousand refugees. The film tells the story of Julia, a little girl that escapes Barcelona with his father, a young widower. They embarked on the Winnipeg, a ship chartered by Neruda. That saved them from a dark future in Europe. Now, she is “a daughter of Neruda”, as the descendants of the 2,200 refugees call themselves.",
+    "director": "Elio Quiroga",
+    "country": "Chile, France, Spain",
+    "runtime": 80,
+    "language": "ES",
+    "tmdb_title_en": "Winnipeg, Seeds of Hope",
+    "tmdb_title_zh": "Winnipeg, El Barco de la Esperanza",
+    "tmdb_release_date": "2026-07-10",
+    "_searched_at": 1780154068
+  },
+  "goblet-short-live-2000": {
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.20, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 1629040,
+    "_was_tmdb_title_en": "Summer 2000: The X-Cetra Story",
+    "_was_tmdb_year": 2026
+  },
+  "goblet-short-live-chicken-lady": {
+    "tmdb_id": 1698631,
+    "synopsis_en": "In a rural Sichuan village, a lady struggles with her husband’s pet rooster after he passed away.",
+    "director": "Shuqi Yuan",
+    "country": "China",
+    "runtime": 15,
+    "language": "EN",
+    "tmdb_title_en": "Chicken Lady",
+    "tmdb_title_zh": "Chicken Lady",
+    "_searched_at": 1780154075
+  },
+  "goblet-short-live-elsewhere": {
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.00, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 1615900,
+    "_was_tmdb_title_en": "elsewheres",
+    "_was_tmdb_year": 2026
+  },
+  "goblet-short-live-kill-kokesh-kill": {
+    "tmdb_id": null,
+    "_error": null,
+    "_searched_at": 1780154080
+  },
+  "goblet-short-live-last-train": {
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.25, year-diff=1 — likely matched a different film",
+    "_was_tmdb_id": 1038392,
+    "_was_tmdb_title_en": "The Conjuring: Last Rites",
+    "_was_tmdb_year": 2025
+  },
+  "goblet-short-live-lazare": {
+    "tmdb_id": 1123278,
+    "imdb_id": "tt27676959",
+    "poster_url": "https://image.tmdb.org/t/p/w500/36o8ancoKDKW1sstzMi0YYkQkpU.jpg",
+    "backdrop_url": "https://image.tmdb.org/t/p/w1280/5yZIKAPCjqm8t2r19vlzuasxbOP.jpg",
+    "synopsis_en": "Lee is an aunt whose life mission is to protect her orphaned nieces, Imogen and Maeve, from a self-destructing world, raising them in isolation until an outsider threatens their peaceful existence.",
+    "synopsis_zh": "李（Lee）在父母去世后收养了她的侄女伊莫金（Imogen）和梅芙（Maeve），并在一个偏远的小屋里抚养她们，而在他们周围，一场致命的流行病正在肆虐。在接近10年的时间里，女孩们被教导永远不要离开树林，避免与外界的任何联系，只依赖李作为她们与外界的唯一联系。李已经说服女孩们，这是在如今这个传染和暴力横行的世界中生存的关键。但当伊莫金和梅芙发现附近树林里有一个受伤的男人时，李的绝对控制开始崩溃，因为她们对她的信任，以及她们所知道的一切，开始崩溃。",
+    "director": "Alec Tibaldi",
+    "country": "United States of America",
+    "runtime": 86,
+    "language": "EN",
+    "tmdb_title_en": "Lazareth",
+    "tmdb_title_zh": "拉扎雷斯",
+    "tmdb_release_date": "2024-05-10",
+    "_searched_at": 1780154088
+  },
+  "goblet-short-live-sitting-bird": {
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.17, year-diff=23 — likely matched a different film",
+    "_was_tmdb_id": 79141,
+    "_was_tmdb_title_en": "Three Little Birds Are Sitting...",
+    "_was_tmdb_year": 2003
+  },
+  "goblet-short-live-the-drought": {
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.33, year-diff=1 — likely matched a different film",
+    "_was_tmdb_id": 1552788,
+    "_was_tmdb_title_en": "The Big Drought of 1975",
+    "_was_tmdb_year": 2025
+  },
+  "goblet-short-live-the-matchmaker": {
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.33, year-diff=3 — likely matched a different film",
+    "_was_tmdb_id": 1142395,
+    "_was_tmdb_title_en": "A Bet with the Matchmaker",
+    "_was_tmdb_year": 2023
+  },
+  "goblet-short-live-zaza-gogogo": {
+    "tmdb_id": null,
+    "_error": null,
+    "_searched_at": 1780154101
+  },
+  "goblet-short-animation-if-only": {
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.33, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 1658192,
+    "_was_tmdb_title_en": "If Only the Year Had 364 Days",
+    "_was_tmdb_year": 2026
+  },
+  "goblet-short-animation-julka": {
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "year-off-by-6, title-sim=0.50",
+    "_was_tmdb_id": 888229,
+    "_was_tmdb_title_en": "Julka and Julie",
+    "_was_tmdb_year": 2020
+  },
+  "goblet-short-animation-shoes": {
+    "tmdb_id": 1643405,
+    "synopsis_en": "Short Stop Motion film showing converse shoes in different locations",
+    "director": "Teddy Dukes",
+    "runtime": 1,
+    "language": "EN",
+    "tmdb_title_en": "The Traveling Shoes",
+    "tmdb_title_zh": "The Traveling Shoes",
+    "tmdb_release_date": "2026-02-23",
+    "_searched_at": 1780154114
+  },
+  "goblet-short-animation-unplug": {
+    "tmdb_id": 1651976,
+    "imdb_id": "tt33980638",
+    "poster_url": "https://image.tmdb.org/t/p/w500/tBFxIrtC1N4XBf8XFiC7XOQkYQ9.jpg",
+    "backdrop_url": "https://image.tmdb.org/t/p/w1280/ecwhu2wenF9qNMDRG4YfncTIjCM.jpg",
+    "synopsis_en": "When a mysterious Orb is discovered, a group of high schoolers are forced to face both strained relationships and past actions in an effort to combat the deceitful temptation of misconstrued justice that resides within...",
+    "director": "Adam Mortenson",
+    "runtime": 126,
+    "language": "EN",
+    "tmdb_title_en": "Unplug",
+    "tmdb_title_zh": "Unplug",
+    "tmdb_release_date": "2026-03-06",
+    "_searched_at": 1780154119
+  },
+  "goblet-short-animation-water-s-time-slice": {
+    "tmdb_id": null,
+    "_error": null,
+    "_searched_at": 1780154124
   }
 }

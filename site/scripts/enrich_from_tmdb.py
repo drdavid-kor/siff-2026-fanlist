@@ -173,13 +173,15 @@ def needs_fetch(entry, mode):
     if not entry:
         return True
     if entry.get("tmdb_id"):
-        return False  # already succeeded — never re-fetch
+        return False
+    if entry.get("_error") == "audit-erased":
+        return False  # stays erased until manually cleared from enrichment_tmdb.json
     if mode == "all":
-        return True   # untouched or previously failed/no-match
+        return True
     if mode == "retry-misses":
         return True
     if mode == "retry-errors":
-        return bool(entry.get("_error"))
+        return bool(entry.get("_error")) and entry.get("_error") != "audit-erased"
     return False
 
 

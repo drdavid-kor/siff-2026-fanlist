@@ -12,6 +12,7 @@ const FESTIVAL = DATA.festival;
 const PROG_BY_ID = Object.fromEntries(PROGRAMS.map(p => [p.id, p]));
 
 const KIND_ORDER = [
+  "Competition",
   "Festival Highlights",
   "Section",
   "Curated Program",
@@ -22,6 +23,7 @@ const KIND_ORDER = [
   "Format Showcase",
 ];
 const KIND_ZH = {
+  "Competition": "金爵奖竞赛",
   "Festival Highlights": "影展精粹",
   "Section": "单元",
   "Curated Program": "策展单元",
@@ -30,6 +32,12 @@ const KIND_ZH = {
   "Special Selection": "特别策划",
   "Series": "系列电影",
   "Format Showcase": "格式展映",
+};
+
+const PREMIERE_ZH = {
+  "World Premiere": "全球首映",
+  "International Premiere": "国际首映",
+  "Asia Premiere": "亚洲首映",
 };
 
 const KIND_GROUPS = KIND_ORDER
@@ -428,6 +436,7 @@ function Modal({ film, onClose, onPickProgram, saved, onToggle }) {
             <span>{[film.country, film.year].filter(Boolean).join(' · ')}</span>
             {film.runtime != null && <span>{film.runtime} minutes</span>}
             {film.language && <span>{film.language}</span>}
+            {film.premiere && <span className="premiere">{film.premiere}{PREMIERE_ZH[film.premiere] ? ' · ' + PREMIERE_ZH[film.premiere] : ''}</span>}
             {formatTags.map(t => <span key={t} className="fmt">{t}</span>)}
           </div>
           <h2>{film.title_en}</h2>
