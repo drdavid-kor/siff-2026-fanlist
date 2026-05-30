@@ -227,20 +227,12 @@
     "_searched_at": 1779036035
   },
   "belt-and-road-hen": {
-    "tmdb_id": 1311031,
-    "imdb_id": "tt32820897",
-    "poster_url": "https://image.tmdb.org/t/p/w500/fWVSwgjpT2D78VUh6X8UBd2rorW.jpg",
-    "backdrop_url": "https://image.tmdb.org/t/p/w1280/1RgPyOhN4DRs225BGTlHJqCudII.jpg",
-    "synopsis_en": "The Demon Slayer Corps are drawn into the Infinity Castle, where Tanjiro, Nezuko, and the Hashira face terrifying Upper Rank demons in a desperate fight as the final battle against Muzan Kibutsuji begins.",
-    "synopsis_zh": "当鬼杀队的成员和柱之人在为即将到来的与鬼的战斗做准备，完成共同的体能训练——柱之训练时，鬼舞辻无惨在产屋敷宅邸出现。由于鬼杀队的主公处于危险之中，炭治郎和柱急忙赶往总部，但却被鸣女推入一个神秘的异空间。炭治郎和鬼杀队的目标是鬼的堡垒——无限城。因此，鬼杀队和鬼之间的最终战斗的战场已经准备就绪。",
-    "director": "Haruo Sotozaki",
-    "country": "Japan",
-    "runtime": 156,
-    "language": "JA",
-    "tmdb_title_en": "Demon Slayer: Kimetsu no Yaiba Infinity Castle",
-    "tmdb_title_zh": "鬼灭之刃：无限城篇 第一章 猗窝座再袭",
-    "tmdb_release_date": "2025-07-18",
-    "_searched_at": 1779036040
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.00, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 1311031,
+    "_was_tmdb_title_en": "Demon Slayer: Kimetsu no Yaiba Infinity Castle",
+    "_was_tmdb_year": 2025
   },
   "belt-and-road-god-will-not-help": {
     "tmdb_id": 1457734,
@@ -288,20 +280,12 @@
     "_searched_at": 1779036053
   },
   "belt-and-road-diya": {
-    "tmdb_id": 1084242,
-    "imdb_id": "tt26443597",
-    "poster_url": "https://image.tmdb.org/t/p/w500/oJ7g2CifqpStmoYQyaLQgEU32qO.jpg",
-    "backdrop_url": "https://image.tmdb.org/t/p/w1280/lgotja3xMoJZbynwHfcQcJAEMWH.jpg",
-    "synopsis_en": "After cracking the biggest case in Zootopia's history, rookie cops Judy Hopps and Nick Wilde find themselves on the twisting trail of a great mystery when Gary De'Snake arrives and turns the animal metropolis upside down. To crack the case, Judy and Nick must go undercover to unexpected new parts of town, where their growing partnership is tested like never before.",
-    "synopsis_zh": "在成功侦破动物城历史上最重大的案件后，警官兔朱迪与狐尼克发现自己陷入了一个错综复杂的谜团之中。一只神秘爬行动物的到来，把温馨的动物城搅动得天翻地覆。面对全新的城市危机，朱迪与狐尼克将继续携手为保卫动物城而奔波。在追捕行动中，这对老搭档不仅要揭开新角色的神秘面纱，还要前往被迷雾笼罩的新领域，探索未知的地下黑市。一场疯狂动物城的全新冒险即将展开……",
-    "director": "Jared Bush",
-    "country": "United States of America, Canada",
-    "runtime": 108,
-    "language": "EN",
-    "tmdb_title_en": "Zootopia 2",
-    "tmdb_title_zh": "疯狂动物城2",
-    "tmdb_release_date": "2025-11-26",
-    "_searched_at": 1779036058
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.00, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 1084242,
+    "_was_tmdb_title_en": "Zootopia 2",
+    "_was_tmdb_year": 2025
   },
   "belt-and-road-supporting-role": {
     "tmdb_id": 1306247,
@@ -696,33 +680,20 @@
     "_searched_at": 1779036171
   },
   "blow-up-new-money": {
-    "tmdb_id": 1599042,
-    "poster_url": "https://image.tmdb.org/t/p/w500/i8o3oP6gNq9BHLDSjZZZOrddW3G.jpg",
-    "backdrop_url": "https://image.tmdb.org/t/p/w1280/t9whf3Mq5PpXqNsXkqUZrCY4cwx.jpg",
-    "synopsis_en": "An inside look at the past 50 years that led to women's professional sports becoming a billion-dollar business and a hot pop culture topic in 2024.",
-    "director": "Heather Ross",
-    "runtime": 52,
-    "language": "EN",
-    "tmdb_title_en": "The Rise: The New MoneyBall",
-    "tmdb_title_zh": "The Rise: The New MoneyBall",
-    "tmdb_release_date": "2025-12-15",
-    "_searched_at": 1779036175
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.25, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 1599042,
+    "_was_tmdb_title_en": "The Rise: The New MoneyBall",
+    "_was_tmdb_year": 2025
   },
   "tribute-ken-loach-kes": {
-    "tmdb_id": 642,
-    "imdb_id": "tt0064115",
-    "poster_url": "https://image.tmdb.org/t/p/w500/gFmmykF1Ym3OGzENo50nZQaD1dx.jpg",
-    "backdrop_url": "https://image.tmdb.org/t/p/w1280/C6jcUqld8M6hZQmzBxgwHuQ4qT.jpg",
-    "synopsis_en": "As the west rapidly becomes civilized, a pair of outlaws in 1890s Wyoming find themselves pursued by a posse and decide to flee to South America in hopes of evading the law.",
-    "synopsis_zh": "　　19世纪末，威名四震的“虎豹小霸王”布奇（保罗·纽曼 Paul Newman 饰）与搭档太阳舞小子（罗伯特·雷德福 Robert Redford 饰）在美国西部的一个小镇上四处抢劫银行，与对手凶残搏杀，与警察机智周旋。一次，两人抢劫“飞人”公司邮车，引来警长与当地居民的追捕。但他俩依旧我行我素，抢占强占了女教师埃塔（凯瑟琳·罗斯 Katharine Ross 饰），逍遥自在地过着快乐时光。当他们再次抢劫“飞人”邮车后，招来一队骑警，对他们紧追不舍，展开天罗地网的搜捕，迫使布奇和太阳舞小子展开了逃亡之路。从悬崖跳下逃命的两人找到埃塔，商议去玻利维亚谋生。在异国他乡，他们尝试金盆洗手走上正道，终究还是认为这种生活不适合他们，于是重操旧业。埃塔一气之下，抛下他们重回美国。他们在一座小镇不慎暴露身份，被追捕的警察重重包围。前有拦截，后有追兵，虎豹小霸王是否能够在重重夹击之下浴火重生？\r 　　本片获得第42届奥斯卡最佳原创剧本奖、最佳摄影奖、最佳原创歌曲奖、最佳配乐奖等。　",
-    "director": "George Roy Hill",
-    "country": "United States of America",
-    "runtime": 111,
-    "language": "EN",
-    "tmdb_title_en": "Butch Cassidy and the Sundance Kid",
-    "tmdb_title_zh": "虎豹小霸王",
-    "tmdb_release_date": "1969-09-23",
-    "_searched_at": 1779036179
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.12, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 642,
+    "_was_tmdb_title_en": "Butch Cassidy and the Sundance Kid",
+    "_was_tmdb_year": 1969
   },
   "tribute-ken-loach-family-life": {
     "tmdb_id": 56942,
@@ -1689,28 +1660,20 @@
     "_searched_at": 1779462272
   },
   "tribute-memorial-high-school": {
-    "tmdb_id": 1196332,
-    "poster_url": "https://image.tmdb.org/t/p/w500/trFhDNcQifFup4SXQXMr8HcZKj3.jpg",
-    "director": "Tarō Yuge",
-    "country": "Japan",
-    "runtime": 76,
-    "language": "JA",
-    "tmdb_title_en": "Record of a  Girls' High School Doctor: Pregnancy",
-    "tmdb_title_zh": "ある女子高校医の記録 妊娠",
-    "tmdb_release_date": "1968-07-27",
-    "_searched_at": 1779462277
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.33, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 1196332,
+    "_was_tmdb_title_en": "Record of a  Girls' High School Doctor: Pregnancy",
+    "_was_tmdb_year": 1968
   },
   "tribute-memorial-zoo": {
-    "tmdb_id": 1296605,
-    "imdb_id": "tt8041284",
-    "synopsis_en": "This platinum-selling video presents The Donut Repair Club meeting at the zoo to enjoy God’s creation, where we learn that God is our heavenly “zoo-keeper”! And He wants us to take care of the world and the people in it; especially the members of our own family! A big brother learns to take care of his little brother and sister as we sing.",
-    "director": "Annie Biggs",
-    "country": "United States of America",
-    "language": "EN",
-    "tmdb_title_en": "The Donut Repair Club at the Zoo",
-    "tmdb_title_zh": "The Donut Repair Club at the Zoo",
-    "tmdb_release_date": "1993-04-05",
-    "_searched_at": 1779462283
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.25, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 1296605,
+    "_was_tmdb_title_en": "The Donut Repair Club at the Zoo",
+    "_was_tmdb_year": 1993
   },
   "tribute-memorial-menus-plaisirs-les-troisgros": {
     "tmdb_id": 1077050,
@@ -2107,20 +2070,12 @@
     "_searched_at": 1779462418
   },
   "jury-films-chai": {
-    "tmdb_id": 76617,
-    "imdb_id": "tt1572315",
-    "poster_url": "https://image.tmdb.org/t/p/w500/dwIQ7WDCSiIcNdbferTcU7uI0KV.jpg",
-    "backdrop_url": "https://image.tmdb.org/t/p/w1280/w5T2Avx3FCyqhzHxzQPeIli91BJ.jpg",
-    "synopsis_en": "A young woman learns that she has inherited a Texas estate from her deceased grandmother. After embarking on a road trip with friends to uncover her roots, she finds she is the sole owner of a lavish, isolated Victorian mansion. But her newfound wealth comes at a price as she stumbles upon a horror that awaits her in the mansion’s dank cellars.",
-    "synopsis_zh": "影片承接1974年版本的《德州电锯杀人狂》的结尾。德州纽特小镇上的居民决定要把索亚家的农场和房子都烧掉。熊熊大火烧死了索亚家的所有成员，但是杰布·索亚却不为人知地活了下来。杰布有另一个令人闻风丧胆的名字——皮革脸。当然，活下来的索亚家族的人还有一个 ，那就是一个叫做西斯的孩子，她是一个孤儿，被另一户家庭所收养。 20年之后，西斯了解到了自己早已过世的祖母留给了她一大笔遗产，于是她便和自己的几个好朋友一起驾车穿越整个德州去继承这一笔不知道是什么的东西--不过，西斯不知道的是，在这一笔她即将继承的遗产中，就有他的堂兄皮革脸。而她的到来，也将唤醒并释放出这个令人闻风丧胆的杀人狂……",
-    "director": "John Luessenhop",
-    "country": "United States of America",
-    "runtime": 92,
-    "language": "EN",
-    "tmdb_title_en": "Texas Chainsaw 3D",
-    "tmdb_title_zh": "德州电锯杀人狂3D",
-    "tmdb_release_date": "2013-01-03",
-    "_searched_at": 1779462423
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.00, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 76617,
+    "_was_tmdb_title_en": "Texas Chainsaw 3D",
+    "_was_tmdb_year": 2013
   },
   "jury-films-true-love-story": {
     "tmdb_id": 738577,
@@ -2236,20 +2191,12 @@
     "_searched_at": 1779462468
   },
   "asian-film-of-the-year-the-world-of-love": {
-    "tmdb_id": 1269732,
-    "imdb_id": "tt35431458",
-    "poster_url": "https://image.tmdb.org/t/p/w500/baRk5YLkKKYrnfcVjpJ5iEUC0zj.jpg",
-    "backdrop_url": "https://image.tmdb.org/t/p/w1280/ka4zplxny8ethvrAxNFKFrzlRIj.jpg",
-    "synopsis_en": "Yang Guo, orphaned and wandering since childhood, became a disciple of Guo Jing but faced bullying in the Quanzhen Sect due to his mysterious background. He eventually left to study martial arts under Xiao Longnv. Meanwhile, King Jinlun and rogue disciple Li Mochou sought to seize martial arts secrets and strategic maps. Caught in the conflicts of the martial world, Yang Guo and Xiao Longnv faced numerous challenges, and their bond deepened into a bittersweet love.",
-    "synopsis_zh": "杨过自幼流落江湖，在被大侠郭靖收留后拜入了全真门下，却因身世之谜在全真教内备受欺辱， 不堪折磨的他在机缘巧合下改拜小龙女为师，学习武功。适逢异族国师金轮法王率众南下，与古 墓派弃徒李莫愁联合，欲夺取古墓内的武功秘籍与军火地图。无意卷入江湖纷争的杨过与小龙女几度同生共死，二人间的师徒之谊逐渐发展成苦恋，期间杨过胳膊被砍，摔落悬崖，遇见“良师益友”神雕。",
-    "director": "Lin Zhenzhao",
-    "country": "China",
-    "runtime": 90,
-    "language": "ZH",
-    "tmdb_title_en": "The Legend of Condor Hero: What is Love",
-    "tmdb_title_zh": "神雕侠侣：问世间",
-    "tmdb_release_date": "2025-01-22",
-    "_searched_at": 1779462473
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.17, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 1269732,
+    "_was_tmdb_title_en": "The Legend of Condor Hero: What is Love",
+    "_was_tmdb_year": 2025
   },
   "asian-film-of-the-year-ah-girl": {
     "tmdb_id": 747509,
@@ -2268,17 +2215,12 @@
     "_searched_at": 1779462479
   },
   "asian-film-of-the-year-sink": {
-    "tmdb_id": 1509943,
-    "poster_url": "https://image.tmdb.org/t/p/w500/zsaEUadN4DuNwSGZiL8gNwHiL5n.jpg",
-    "synopsis_en": "Ken Kaneki is a loner. In a world where ghouls—human-like creatures who survive on human flesh—and people are at war, his biggest concern is which novel to pick up next. But when a date with the mysterious Rize turns deadly, a lifesaving operation horrifyingly transforms him into a human-ghoul hybrid. Can he find his place in a society where it's hunt or be hunted? (Episodes 1, 5, 8, 10, 11 and 12 of Tokyo Ghoul's iconic English dub.)",
-    "director": "Shuhei Morita",
-    "country": "Japan",
-    "runtime": 146,
-    "language": "JA",
-    "tmdb_title_en": "Sink Your Teeth: A Tokyo Ghoul Celebration",
-    "tmdb_title_zh": "Sink Your Teeth: A Tokyo Ghoul Celebration",
-    "tmdb_release_date": "2025-07-21",
-    "_searched_at": 1779462483
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.17, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 1509943,
+    "_was_tmdb_title_en": "Sink Your Teeth: A Tokyo Ghoul Celebration",
+    "_was_tmdb_year": 2025
   },
   "asian-film-of-the-year-full-plate": {
     "tmdb_id": 1535954,
@@ -2905,20 +2847,12 @@
     "_searched_at": 1780142385
   },
   "pathe-130-jean-de-florette": {
-    "tmdb_id": 4481,
-    "imdb_id": "tt0091480",
-    "poster_url": "https://image.tmdb.org/t/p/w500/1qpu6Zc1PSDL3UbDNIZJ6YuhJDW.jpg",
-    "backdrop_url": "https://image.tmdb.org/t/p/w1280/3ejcvnHxMFfCbnFi736cXi1ChH1.jpg",
-    "synopsis_en": "In this, the sequel to Jean de Florette, Manon has grown into a beautiful young shepherdess living in the idyllic Provencal countryside. She plots vengeance on the men who greedily conspired to acquire her father's land years earlier.",
-    "synopsis_zh": "　　花圃主人塞萨·苏贝朗和侄子于果林·苏贝朗在十几年前设下毒计，他们堵死了“让”家赖以生存的水源，从他手里夺取了一片有泉水浇灌的园地。于果林爱上了“让”的女儿玛侬，但玛侬的心已另有所属。心存报复的玛侬在得知了多年前塞萨的阴谋以后，将村里的泉眼堵死。在教堂组织的祈祷仪式上，玛侬揭露了苏贝朗家族的丑恶嘴脸，于果林羞愧万分自缢而死。真相终于大白，原来让竟然是塞萨同他的旧情人弗罗雷特的亲骨肉，而玛侬正是塞萨的亲孙女……",
-    "director": "Claude Berri",
-    "country": "France, Italy",
-    "runtime": 115,
-    "language": "FR",
-    "tmdb_title_en": "Manon of the Spring",
-    "tmdb_title_zh": "甘泉玛侬",
-    "tmdb_release_date": "1986-11-19",
-    "_searched_at": 1780142390
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.00, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 4481,
+    "_was_tmdb_title_en": "Manon of the Spring",
+    "_was_tmdb_year": 1986
   },
   "pathe-130-manon-of-the-spring": {
     "tmdb_id": 4481,
@@ -2985,20 +2919,12 @@
     "_searched_at": 1780142404
   },
   "pathe-130-oceans": {
-    "tmdb_id": 33627,
-    "imdb_id": "tt1249415",
-    "poster_url": "https://image.tmdb.org/t/p/w500/4ECOR1bUraejC806e8GBEZPbm6l.jpg",
-    "backdrop_url": "https://image.tmdb.org/t/p/w1280/mlnNx4xal0ttw1GlmHNDg26FDUc.jpg",
-    "synopsis_en": "A 3-D documentary chronicling a sea turtle's journey across the oceans.",
-    "synopsis_zh": "　　《深海探奇》以小海龟回归大海为主线，徐徐揭开美丽而神秘的海洋面纱……色彩缤纷的珊瑚礁、无边无际的海带森林、迷人的西班牙舞者、美丽而脆弱的叶状海龙……这些令人惊奇的美妙景色和珍稀奇异的海底生物，无时无刻不在诉说着海洋母亲的博大和多彩。然而美丽的背后，常常也伴随着凶险与残酷。顽皮的海狮遇上凶狠的大白鲨而在劫难逃，雄性石斑鱼之间的战争永无止尽，鱼儿总是无法逃脱蝎子鱼狡猾的把戏，智勇双全的杀人鲸总是不经意的出现，毒性极强的海蛇能轻易的使猎物毙命，宽吻海豚妈妈为保护宝宝而与鲨鱼展开殊死较量，长须鲸一口就能吞下整个鱼群，就连看似温柔美丽的水母也能杀人于无形……捕食与被捕食的画面每天都在上演，自然法则让海洋生物世世代代的不断繁衍、生息和消亡。同样，海洋世界里也存在和谐与安宁：看似凶狠丑陋的虎鲨也有作为母亲温柔的一面; 印鱼会清洁鳐鱼身上的寄生虫作为免费搭乘的回报; 水母庇护着小鱼们逃脱劫难; 小丑鱼也找到了海葵做为最佳搭档……巨大而优雅的鳐鱼有鸟儿一样自由的翅膀; 胖胖的海牛竟是海洋哺乳类中唯一的素食者; 聪明可爱的海豚则是海洋家族中的完美精灵……大海深处的未知和惊喜时刻吸引着小海龟不断的前行。经历了神秘莫测的深海之旅以后，小海龟终于回到了生命开始的地方，变成了一个真正的母亲。完成使命后重返大海继续她的生命之旅。",
-    "director": "Jean-Jacques Mantello",
-    "country": "France",
-    "runtime": 81,
-    "language": "EN",
-    "tmdb_title_en": "OceanWorld 3D",
-    "tmdb_title_zh": "深海探奇",
-    "tmdb_release_date": "2009-01-01",
-    "_searched_at": 1780142407
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.20, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 33627,
+    "_was_tmdb_title_en": "OceanWorld 3D",
+    "_was_tmdb_year": 2009
   },
   "image-unlimited-marriage-of-the-fairy-princess": {
     "tmdb_id": 253033,
@@ -3017,20 +2943,12 @@
     "_searched_at": 1780142411
   },
   "image-unlimited-lady": {
-    "tmdb_id": 1255674,
-    "imdb_id": "tt31613162",
-    "poster_url": "https://image.tmdb.org/t/p/w500/pT28lZl2eYCNYFyxyThpSKttLfI.jpg",
-    "backdrop_url": "https://image.tmdb.org/t/p/w1280/A1prqBBKiwfnahBnNgM1t5y5vmA.jpg",
-    "synopsis_en": "Pedro receives a desperate message from an ex-girlfriend asking him to look after her senile mother, Alicia. What seems like a simple mission soon becomes his worst nightmare. Pedro needs to escape; but Alicia won’t let him...",
-    "synopsis_zh": "影片聚焦于佩德罗，他收到前女友一条急切的信息，请求他照顾她患有老年痴呆症的母亲艾丽西亚。看似简单的任务很快变成了他最可怕的噩梦。佩德罗想要逃离，但艾丽西亚却不让他走……",
-    "director": "Martín Mauregui",
-    "country": "Argentina, Spain, United States of America",
-    "runtime": 94,
-    "language": "ES",
-    "tmdb_title_en": "Crazy Old Lady",
-    "tmdb_title_zh": "老疯婆子",
-    "tmdb_release_date": "2025-10-10",
-    "_searched_at": 1780142414
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.33, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 1255674,
+    "_was_tmdb_title_en": "Crazy Old Lady",
+    "_was_tmdb_year": 2025
   },
   "image-unlimited-memory-of-princess-mumbi": {
     "tmdb_id": 1520504,
@@ -3175,20 +3093,12 @@
     "_searched_at": 1780142441
   },
   "auteurs-new-the-stranger": {
-    "tmdb_id": 1010756,
-    "imdb_id": "tt28671344",
-    "poster_url": "https://image.tmdb.org/t/p/w500/pqADzs5SJvI2jC0DThPVMuNJcWS.jpg",
-    "backdrop_url": "https://image.tmdb.org/t/p/w1280/AkzGC9vQbKMHGebetpjBF4bU4VS.jpg",
-    "synopsis_en": "After learning that one of their victims, Maya, is still alive, The Strangers return to finish the job. With nowhere to run and no one to trust, Maya soon finds herself in a brutal fight for survival against psychopaths more than willing to kill anyone who stands in their way.",
-    "synopsis_zh": "当《陌生人》得知他们的受害者之一玛雅尚在人世，便再度归来，要将未竟之事斩草除根。",
-    "director": "Renny Harlin",
-    "country": "United Kingdom, United States of America",
-    "runtime": 98,
-    "language": "EN",
-    "tmdb_title_en": "The Strangers: Chapter 2",
-    "tmdb_title_zh": "陌生人：第二章",
-    "tmdb_release_date": "2025-09-25",
-    "_searched_at": 1780142444
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.12, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 1010756,
+    "_was_tmdb_title_en": "The Strangers: Chapter 2",
+    "_was_tmdb_year": 2025
   },
   "auteurs-new-brunello-the-gracious-visionary": {
     "tmdb_id": 1498729,
@@ -3398,15 +3308,12 @@
     "_searched_at": 1780142506
   },
   "breakaway-football-fans": {
-    "tmdb_id": 689009,
-    "synopsis_en": "A look at the rise of racism in modern football",
-    "director": "Iain Thompson",
-    "runtime": 60,
-    "language": "EN",
-    "tmdb_title_en": "Robbie Lyle: Football Fans Under Their Skin",
-    "tmdb_title_zh": "Robbie Lyle: Football Fans Under Their Skin",
-    "tmdb_release_date": "2020-03-30",
-    "_searched_at": 1780142514
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.29, year-diff=58 — likely matched a different film",
+    "_was_tmdb_id": 689009,
+    "_was_tmdb_title_en": "Robbie Lyle: Football Fans Under Their Skin",
+    "_was_tmdb_year": 2020
   },
   "breakaway-space-jam": {
     "tmdb_id": 2300,
@@ -3739,17 +3646,12 @@
     "_searched_at": 1780142606
   },
   "belt-and-road-salvation": {
-    "tmdb_id": 1678865,
-    "poster_url": "https://image.tmdb.org/t/p/w500/rd4TYL0SYzG6v0oTLDbX1LpQjeq.jpg",
-    "backdrop_url": "https://image.tmdb.org/t/p/w1280/wxe8sGDfLEWX6xQwGCczk7p24jt.jpg",
-    "synopsis_en": "A popular actor struggling with mental illness and a budding idol—a chance encounter throws their destinies into chaos—finally brought to life as a rollercoaster drama.",
-    "director": "Akimori Sakami",
-    "runtime": 180,
-    "language": "JA",
-    "tmdb_title_en": "Salvation, Swallowed by the Nest",
-    "tmdb_title_zh": "救い、巣喰われ",
-    "tmdb_release_date": "2026-02-12",
-    "_searched_at": 1780142609
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.25, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 1678865,
+    "_was_tmdb_title_en": "Salvation, Swallowed by the Nest",
+    "_was_tmdb_year": 2026
   },
   "focus-germany-i-understand-your-displeasure": {
     "tmdb_id": 1616184,
@@ -3797,18 +3699,12 @@
     "_searched_at": 1780142619
   },
   "focus-germany-bearhunting": {
-    "tmdb_id": 1514041,
-    "imdb_id": "tt0011376",
-    "poster_url": "https://image.tmdb.org/t/p/w500/ugxSdfhRg9W4fgLyTokzljfGBDZ.jpg",
-    "synopsis_en": "During, ingenjör a bearhunt, Squire Glob tries to impress Greta, the daughter of Coloner Körner.  Ture Bengtsson, an engineer, exposes Glob as the coward he truly is.",
-    "director": "Lau Lauritzen Sr.",
-    "country": "Sweden",
-    "runtime": 39,
-    "language": "SV",
-    "tmdb_title_en": "Love and Bear-Hunting",
-    "tmdb_title_zh": "Kärlek och björnjakt",
-    "tmdb_release_date": "1920-08-30",
-    "_searched_at": 1780142623
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.00, year-diff=106 — likely matched a different film",
+    "_was_tmdb_id": 1514041,
+    "_was_tmdb_title_en": "Love and Bear-Hunting",
+    "_was_tmdb_year": 1920
   },
   "nile-light-the-blazing-sun": {
     "tmdb_id": 199456,
@@ -3875,18 +3771,12 @@
     "_searched_at": 1780142638
   },
   "nile-light-happy-birthday": {
-    "tmdb_id": 1303359,
-    "imdb_id": "tt30235840",
-    "poster_url": "https://image.tmdb.org/t/p/w500/cOp75WEUE0WlFIGY3yA4XvWkQcu.jpg",
-    "backdrop_url": "https://image.tmdb.org/t/p/w1280/w8XnNlKPjKJTK1rFHoN8Hd5fQFh.jpg",
-    "synopsis_en": "At his birthday party, a young introvert must confront his family's conservative ideals when his boyfriend unexpectedly shows up.",
-    "director": "Leonel Nieto",
-    "country": "Mexico",
-    "language": "ES",
-    "tmdb_title_en": "Feliz Cumpleaños, Eric",
-    "tmdb_title_zh": "Feliz Cumpleaños, Eric",
-    "tmdb_release_date": "2025-11-13",
-    "_searched_at": 1780142641
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.00, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 1303359,
+    "_was_tmdb_title_en": "Feliz Cumpleaños, Eric",
+    "_was_tmdb_year": 2025
   },
   "nile-light-asad": {
     "tmdb_id": 1211185,
@@ -4034,35 +3924,20 @@
     "_searched_at": 1780142673
   },
   "siff-documentary-a-face-to-be-loved": {
-    "tmdb_id": 47439,
-    "imdb_id": "tt0189142",
-    "poster_url": "https://image.tmdb.org/t/p/w500/1ZbBR18GU7XpVfooWV9NsrV4RGV.jpg",
-    "backdrop_url": "https://image.tmdb.org/t/p/w1280/7rOFCemUdldeNMdf3qURElant2K.jpg",
-    "synopsis_en": "In early 1920s France, an author, lying on his deathbed, looks at various photographs and is flooded with memories of the people and events that have shaped his life.",
-    "synopsis_zh": "人在死亡之前，这一生会在眼前快转而过；《追忆似水年华》是濒死之际，追忆此生的一切。 随著意识流动，看著照片想起与此人相关的往事，又从往事中的一个细微动作/物品，回忆到与其相关的其它过往，如此再三地自由联想，便复杂交错地勾勒出了主角马塞尔的一生。",
-    "director": "Raúl Ruiz",
-    "country": "France, Italy, Portugal",
-    "runtime": 163,
-    "language": "FR",
-    "tmdb_title_en": "Time Regained",
-    "tmdb_title_zh": "追忆似水年华",
-    "tmdb_release_date": "1999-05-19",
-    "_searched_at": 1780142677
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "year-off-by-27, title-sim=0.67",
+    "_was_tmdb_id": 47439,
+    "_was_tmdb_title_en": "Time Regained",
+    "_was_tmdb_year": 1999
   },
   "siff-documentary-remake": {
-    "tmdb_id": 1097699,
-    "imdb_id": "tt25274490",
-    "poster_url": "https://image.tmdb.org/t/p/w500/fSkEWlDlVlBJCgyTSINHK55SvAz.jpg",
-    "backdrop_url": "https://image.tmdb.org/t/p/w1280/fERkF0zpAg2ZSYdLXpTWFLyQBs2.jpg",
-    "synopsis_en": "A green-screen reliant remake of Tommy Wiseau's 2003 cult film.",
-    "director": "Brando Crawford",
-    "country": "United States of America",
-    "runtime": 80,
-    "language": "EN",
-    "tmdb_title_en": "The Room Returns!",
-    "tmdb_title_zh": "The Room Returns!",
-    "tmdb_release_date": "2025-08-01",
-    "_searched_at": 1780142681
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.00, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 1097699,
+    "_was_tmdb_title_en": "The Room Returns!",
+    "_was_tmdb_year": 2025
   },
   "siff-documentary-a-place-in-the-ring": {
     "tmdb_id": null,
@@ -4389,20 +4264,12 @@
     "_searched_at": 1780142778
   },
   "siff-shorts-ali": {
-    "tmdb_id": 1357359,
-    "imdb_id": "tt33381728",
-    "poster_url": "https://image.tmdb.org/t/p/w500/cjDAlNKylyqNUpv6nDoFR1YBEAD.jpg",
-    "backdrop_url": "https://image.tmdb.org/t/p/w1280/n77uTuX36Nb0yz8DCU9HBJi4RYw.jpg",
-    "synopsis_en": "Ejen Ali is appointed as the pilot of Project Satria, a new armoured suit with the help of an Artificial Intelligence programme specially designed to optimise the physical performance and mental skills of MATA agents while carrying out their secret missions.",
-    "synopsis_zh": "赛博城面临黑客与神秘团体的威胁，特工阿里被选中穿上为卧底任务打造的全新战甲展开行动。",
-    "director": "Muhammad Usamah Zaid",
-    "country": "Malaysia",
-    "runtime": 115,
-    "language": "MS",
-    "tmdb_title_en": "Ejen Ali: The Movie 2",
-    "tmdb_title_zh": "特工阿里大电影2",
-    "tmdb_release_date": "2025-05-22",
-    "_searched_at": 1780142781
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.29, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 1357359,
+    "_was_tmdb_title_en": "Ejen Ali: The Movie 2",
+    "_was_tmdb_year": 2025
   },
   "siff-shorts-perfect-city-the-mushroom": {
     "tmdb_id": 1667314,
@@ -4415,20 +4282,12 @@
     "_searched_at": 1780142785
   },
   "siff-shorts-the-unchosen-life": {
-    "tmdb_id": 1245700,
-    "imdb_id": "tt21626774",
-    "poster_url": "https://image.tmdb.org/t/p/w500/pbVcZmmcfqk35Q9hNxRoR7JPiVp.jpg",
-    "backdrop_url": "https://image.tmdb.org/t/p/w1280/as8fZuf0c8V2iMO43kw13hc6a9V.jpg",
-    "synopsis_en": "When several children disappear at the hands of a serial killer in Sector 36, a corrupt cop is forced to pursue the chilling case at all costs.",
-    "synopsis_zh": "在 36 区，几名儿童失踪，而作案人是一名连环杀手。一个腐败的警察被迫不惜一切代价追查这起骇人的案件。",
-    "director": "Aditya Nimbalkar",
-    "country": "India",
-    "runtime": 124,
-    "language": "HI",
-    "tmdb_title_en": "Sector 36",
-    "tmdb_title_zh": "致命36区",
-    "tmdb_release_date": "2024-08-18",
-    "_searched_at": 1780142790
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.20, year-diff=2 — likely matched a different film",
+    "_was_tmdb_id": 1245700,
+    "_was_tmdb_title_en": "Sector 36",
+    "_was_tmdb_year": 2024
   },
   "siff-shorts-scorching": {
     "tmdb_id": 1616160,
@@ -4459,19 +4318,11 @@
     "_searched_at": 1780142795
   },
   "siff-shorts-bye": {
-    "tmdb_id": 1509573,
-    "imdb_id": "tt35929110",
-    "poster_url": "https://image.tmdb.org/t/p/w500/7gEBNzmaTiBVG3g0eUDPU3kPbcc.jpg",
-    "backdrop_url": "https://image.tmdb.org/t/p/w1280/iCUYNsFbNnbiUzOA7MeFOfV8DYX.jpg",
-    "synopsis_en": "A mother, who loves watching K-dramas, decides to stop her chemo treatment after losing hope of getting better. Her only dream before dying is to meet her ultimate K-drama idol, who is visiting Manila for a series of events. Her four children agree to work together with the condition that once their mother meets their idol, she will undergo therapy before her time runs out.",
-    "synopsis_zh": "讲述了一对在银幕上恩爱多年、实则早已形同陌路甚至濒临绝交的顶流“国民CP”，为了履行最后一份天价合约，不得不共同开启一场横跨多城的最后告别粉丝见面会。在闪光灯与狂热尖叫的包围中，两人被迫在酒店套房与房车等私密空间里直面过往的误解与伤痛，在一次次“营业”式的虚假亲密中，现实与戏码的界限逐渐模糊，最终在这场名为告别的旅程终点，他们必须决定是让这段关系彻底随风而去，还是在名利的灰烬中找回最初的真心。",
-    "director": "Cathy Garcia-Sampana",
-    "country": "Philippines",
-    "runtime": 107,
-    "language": "TL",
-    "tmdb_title_en": "Meet, Greet & Bye",
-    "tmdb_title_zh": "相遇，告别，再见",
-    "tmdb_release_date": "2025-11-12",
-    "_searched_at": 1780142799
+    "tmdb_id": null,
+    "_error": "audit-erased",
+    "_reason": "title-sim=0.33, year-diff=0 — likely matched a different film",
+    "_was_tmdb_id": 1509573,
+    "_was_tmdb_title_en": "Meet, Greet & Bye",
+    "_was_tmdb_year": 2025
   }
 }
