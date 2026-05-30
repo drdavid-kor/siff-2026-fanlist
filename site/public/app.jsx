@@ -90,7 +90,7 @@ function useWatchlist() {
 }
 
 /* ---------- Header ---------- */
-function Header({ active, onNavigate, lang, setLang, watchCount }) {
+function Header({ active, onNavigate, lang, setLang, watchCount, planCount }) {
   return (
     <header className="site">
       <div className="row">
@@ -107,6 +107,11 @@ function Header({ active, onNavigate, lang, setLang, watchCount }) {
           <BookmarkIcon filled={watchCount>0} />
           <span>My List</span>
           <span className="wl-n mono">{watchCount}</span>
+        </button>
+        <button className={"wl-pill plan-pill" + (active==='plan'?' on':'')} onClick={()=>onNavigate('plan')}>
+          <TicketIcon filled={planCount>0} />
+          <span>My Plan</span>
+          <span className="wl-n mono">{planCount}</span>
         </button>
         <div className="lang-toggle">
           <button className={lang==='en'?'on':''} onClick={()=>setLang('en')}>EN</button>
@@ -413,7 +418,7 @@ function WatchlistView({ onOpen, watchlist, onToggle, onClear, onBrowse }) {
 }
 
 /* ---------- Modal ---------- */
-function Modal({ film, onClose, onPickProgram, saved, onToggle }) {
+function Modal({ film, onClose, onPickProgram, saved, onToggle, planEntries, onRemovePlan, onAddPlan }) {
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', onKey);
@@ -477,12 +482,8 @@ function Modal({ film, onClose, onPickProgram, saved, onToggle }) {
               </a>
             )}
 
-            <h3 style={{marginTop:24}}>Schedule · 排片</h3>
-            <div className="schedule-tba">
-              <div className="tba-mark mono">— · —</div>
-              <div className="tba-msg">Showtimes and venues<br/><em>to be announced.</em></div>
-              <div className="tba-zh">放映场次与场馆待公布</div>
-            </div>
+            <h3 style={{marginTop:24}}>My plan · 我的排片</h3>
+            <FilmPlanSection film={film} entries={planEntries} onRemove={onRemovePlan} onAdd={onAddPlan} />
           </div>
         </div>
       </div>
@@ -517,7 +518,7 @@ function Footer() {
             <li>Programme listings</li>
             <li>Posters via TMDB</li>
             <li>Links via IMDb</li>
-            <li>Schedule TBA</li>
+            <li>Plan · you build it</li>
           </ul>
         </div>
         <div>
@@ -548,7 +549,11 @@ function App() {
   const [sort, setSort] = useState('program');
   const [openFilm, setOpenFilm] = useState(null);
   const [active, setActive] = useState('programs');
+  const [picker, setPicker] = useState(null);
   const watch = useWatchlist();
+  const plan = usePlan();
+
+  const openPicker = (preset) => setPicker(preset || {});
 
   useEffect(() => {
     document.body.dataset.langEmphasis = lang;
@@ -581,7 +586,8 @@ function App() {
 
   return (
     <>
-      <Header active={active} onNavigate={navigate} lang={lang} setLang={setLang} watchCount={watch.ids.size} />
+      <Header active={active} onNavigate={navigate} lang={lang} setLang={setLang}
+              watchCount={watch.ids.size} planCount={plan.entries.length} />
 
       {active === 'programs' && <ProgramsView onPick={pickProgram} onSearch={searchAll} onOpen={setOpenFilm} />}
 
@@ -604,9 +610,30 @@ function App() {
                        onClear={watch.clear} onBrowse={() => navigate('programs')} />
       )}
 
+      {active === 'plan' && (
+        <CalendarView
+          entries={plan.entries}
+          onRemove={plan.remove}
+          onClear={plan.clear}
+          onAddSlot={(d, s) => openPicker({ day: d, slot: s })}
+          onAddOpen={() => openPicker()}
+          onOpenFilm={setOpenFilm}
+        />
+      )}
+
       <Footer />
       {openFilm && <Modal film={openFilm} onClose={() => setOpenFilm(null)} onPickProgram={pickProgram}
-                          saved={watch.ids.has(openFilm.id)} onToggle={watch.toggle} />}
+                          saved={watch.ids.has(openFilm.id)} onToggle={watch.toggle}
+                          planEntries={plan.entries} onRemovePlan={plan.remove}
+                          onAddPlan={(f) => openPicker({ film: f })} />}
+      {picker && (
+        <EntryPicker
+          preset={picker}
+          watchIds={watch.ids}
+          onClose={() => setPicker(null)}
+          onConfirm={(entry) => { plan.add(entry); setPicker(null); if (active !== 'plan' && !openFilm) navigate('plan'); }}
+        />
+      )}
     </>
   );
 }
