@@ -273,6 +273,139 @@ PROGRAM_META = {
         "blurb_zh": "策展精选的 2025 年长片——各自承载缓慢、厚重的分量。",
         "color": "#3a6a5a",
     },
+    # ---- added 2026-05-30 ----
+    "SIFF短片": {
+        "id": "siff-shorts",
+        "en": "SIFF Short Films",
+        "short_en": "Shorts",
+        "short_zh": "短片",
+        "kind": "Section",
+        "kind_zh": "单元",
+        "blurb_en": "Inventive shorts from across continents and forms.",
+        "blurb_zh": "跨越大陆与形式的精短之作。",
+        "color": "#2a5a7a",
+    },
+    "SIFF纪录": {
+        "id": "siff-documentary",
+        "en": "SIFF Documentary",
+        "short_en": "Documentary",
+        "short_zh": "纪录",
+        "kind": "Section",
+        "kind_zh": "单元",
+        "blurb_en": "Unfiltered realities — documentaries mapping contemporary lives and histories.",
+        "blurb_zh": "呈现当代生活与历史的纪录片选映。",
+        "color": "#6a4a2a",
+    },
+    "午夜惊奇": {
+        "id": "midnight-fright",
+        "en": "Midnight Fright",
+        "short_en": "Midnight",
+        "short_zh": "午夜",
+        "kind": "Section",
+        "kind_zh": "单元",
+        "blurb_en": "Late-night genre cinema — restored shocks and contemporary scares.",
+        "blurb_zh": "午夜场的类型电影——修复经典与当代惊悚。",
+        "color": "#1a1a3a",
+    },
+    "大好河山·中华电影图卷": {
+        "id": "chinese-landscape",
+        "en": "Great Mountains & Rivers: A Tapestry of Chinese Cinema",
+        "short_en": "Chinese Tapestry",
+        "short_zh": "中华图卷",
+        "kind": "Curated Program",
+        "kind_zh": "策展单元",
+        "blurb_en": "Classics mapping the geography and soul of Chinese cinema across half a century.",
+        "blurb_zh": "半个世纪的中国电影经典，铺展为一卷山河图谱。",
+        "color": "#8a4a2a",
+    },
+    "宝格丽经典呈现·真实之境": {
+        "id": "bulgari-realism",
+        "en": "Bulgari Presents · The Real",
+        "short_en": "The Real",
+        "short_zh": "真实之境",
+        "kind": "Special Selection",
+        "kind_zh": "特别呈现",
+        "blurb_en": "A curated survey of realism on screen, presented by Bulgari.",
+        "blurb_zh": "宝格丽呈现的真实电影特别选映。",
+        "color": "#5a6a7a",
+    },
+    "尼罗光影": {
+        "id": "nile-light",
+        "en": "Nile Light: Egyptian Cinema",
+        "short_en": "Nile Light",
+        "short_zh": "尼罗",
+        "kind": "Curated Program",
+        "kind_zh": "策展单元",
+        "blurb_en": "Egyptian films tracing light and shadow along the Nile.",
+        "blurb_zh": "尼罗河畔的光与影——埃及电影选映。",
+        "color": "#c89030",
+    },
+    "澳洲掠影": {
+        "id": "australian-glimpse",
+        "en": "Australian Glimpse",
+        "short_en": "Australia",
+        "short_zh": "澳洲",
+        "kind": "Curated Program",
+        "kind_zh": "策展单元",
+        "blurb_en": "A glimpse of Australia on screen — landscape, voice, and time.",
+        "blurb_zh": "澳洲电影掠影——风景、声音与时间。",
+        "color": "#3a5a4a",
+    },
+    "特别策划｜百代光影130周年": {
+        "id": "pathe-130",
+        "en": "Special Program · Pathé 130: A Century of Light",
+        "short_en": "Pathé 130",
+        "short_zh": "百代130",
+        "kind": "Special Selection",
+        "kind_zh": "特别策划",
+        "blurb_en": "Pathé-distributed classics from silent cinema to today, marking 130 years of the studio.",
+        "blurb_zh": "百代130周年——从默片到当代的精选放映。",
+        "color": "#9a5040",
+    },
+    "破风": {
+        "id": "breakaway",
+        "en": "Breakaway: Sports on Screen",
+        "short_en": "Breakaway",
+        "short_zh": "破风",
+        "kind": "Section",
+        "kind_zh": "单元",
+        "blurb_en": "Films of effort and exhilaration — athletes, teams, and the line that gets crossed.",
+        "blurb_zh": "关于全力以赴与冲线时刻的体育电影。",
+        "color": "#2a6a8a",
+    },
+    "系列电影｜魔法闪耀25周年": {
+        "id": "harry-potter-25",
+        "en": "Film Series · 25 Years of Magic: Harry Potter",
+        "short_en": "Harry Potter 25",
+        "short_zh": "魔法闪耀",
+        "kind": "Series",
+        "kind_zh": "系列电影",
+        "blurb_en": "A quarter-century of the Wizarding World, back on the big screen.",
+        "blurb_zh": "魔法世界25周年——重返大银幕。",
+        "color": "#6a4a8a",
+    },
+    "聚焦德国": {
+        "id": "focus-germany",
+        "en": "Focus on Germany",
+        "short_en": "Germany",
+        "short_zh": "德国",
+        "kind": "Curated Program",
+        "kind_zh": "策展单元",
+        "blurb_en": "Contemporary German cinema in focus.",
+        "blurb_zh": "聚焦当代德国电影。",
+        "color": "#4a3a5a",
+    },
+    "聚焦西班牙": {
+        "id": "focus-spain",
+        "en": "Focus on Spain",
+        "short_en": "Spain",
+        "short_zh": "西班牙",
+        "kind": "Curated Program",
+        "kind_zh": "策展单元",
+        "blurb_en": "Contemporary Spanish cinema in focus.",
+        "blurb_zh": "聚焦当代西班牙电影。",
+        "color": "#b04a2a",
+    },
 }
 
 
@@ -335,6 +468,13 @@ def split_data_block(block: str):
     return [parse_film_line(L) for L in block.splitlines() if L.strip()]
 
 
+def film_block(row):
+    for key in ("film_title_english", "film_year_1"):
+        if row.get(key):
+            return row[key]
+    return list(row.values())[-1] or ""
+
+
 # ---------- main ----------
 
 def main():
@@ -360,25 +500,31 @@ def main():
             "color": "#888",
         })
 
-        program = {
-            "id": meta["id"],
-            "title_zh": zh_title,
-            "title_en": meta["en"],
-            "short_en": meta["short_en"],
-            "short_zh": meta["short_zh"],
-            "kind_en": meta["kind"],
-            "kind_zh": meta["kind_zh"],
-            "blurb_en": meta["blurb_en"],
-            "blurb_zh": meta["blurb_zh"],
-            "color": meta["color"],
-            "source_url": row.get("item_page_link", ""),
-            "published_date": row.get("phone", ""),
-            "order": i + 1,
-        }
-        programs.append(program)
+        existing = next((p for p in programs if p["id"] == meta["id"]), None)
+        if existing:
+            program = existing
+            offset = by_program_count.get(program["id"], 0)
+        else:
+            program = {
+                "id": meta["id"],
+                "title_zh": zh_title,
+                "title_en": meta["en"],
+                "short_en": meta["short_en"],
+                "short_zh": meta["short_zh"],
+                "kind_en": meta["kind"],
+                "kind_zh": meta["kind_zh"],
+                "blurb_en": meta["blurb_en"],
+                "blurb_zh": meta["blurb_zh"],
+                "color": meta["color"],
+                "source_url": row.get("item_page_link", ""),
+                "published_date": row.get("phone", ""),
+                "order": i + 1,
+            }
+            programs.append(program)
+            offset = 0
 
-        parsed = [p for p in split_data_block(row["film_title_english"]) if p]
-        by_program_count[program["id"]] = len(parsed)
+        parsed = [p for p in split_data_block(film_block(row)) if p]
+        by_program_count[program["id"]] = offset + len(parsed)
 
         for j, p in enumerate(parsed):
             base = slugify(p["title_en"] or p["title_zh"])
@@ -397,7 +543,7 @@ def main():
                 "program_id": program["id"],
                 "program_en": program["title_en"],
                 "program_zh": zh_title,
-                "order_in_program": j + 1,
+                "order_in_program": offset + j + 1,
                 "color": program["color"],
                 # Fields below to be enriched later — see README.md
                 "director": None,
