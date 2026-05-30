@@ -1,423 +1,479 @@
-/* SIFF 2026 — Fan Showcase
-   Reads window.SIFF_DATA (built by scripts/build_data.py).
-   No fetches at runtime — everything is in data.js. */
+/* SIFF 2026 — Fan Showcase, redesigned around three user jobs:
+   Programme (browse by strand) · All Films (search + filter) · My List (persisted watchlist)
+   Reads window.SIFF_DATA built by scripts/build_data.py. */
 
-const { useState, useMemo, useEffect } = React;
+const { useState, useMemo, useEffect, useCallback } = React;
 
 const DATA = window.SIFF_DATA;
 const PROGRAMS = DATA.programs;
 const FILMS = DATA.films;
 const FESTIVAL = DATA.festival;
 
-// Build derived filter options
-const YEARS = Array.from(new Set(FILMS.map(f => f.year).filter(Boolean))).sort((a, b) => b - a);
-const FORMAT_TAGS = Array.from(new Set(FILMS.flatMap(f => f.format_tags || []))).sort();
+const PROG_BY_ID = Object.fromEntries(PROGRAMS.map(p => [p.id, p]));
+
+const KIND_ORDER = [
+  "Festival Highlights",
+  "Section",
+  "Curated Program",
+  "Tribute",
+  "Special Program",
+  "Special Selection",
+  "Series",
+  "Format Showcase",
+];
+const KIND_ZH = {
+  "Festival Highlights": "影展精粹",
+  "Section": "单元",
+  "Curated Program": "策展单元",
+  "Tribute": "向大师致敬",
+  "Special Program": "特别企划",
+  "Special Selection": "特别策划",
+  "Series": "系列电影",
+  "Format Showcase": "格式展映",
+};
+
+const KIND_GROUPS = KIND_ORDER
+  .map(kind => ({ kind, kindZh: KIND_ZH[kind], programs: PROGRAMS.filter(p => p.kind_en === kind) }))
+  .filter(g => g.programs.length > 0);
 
 const SORTS = [
-  { id: "program", label: "By program · 按单元", label_zh: "按单元" },
-  { id: "title",   label: "Title A→Z · 片名",       label_zh: "片名" },
-  { id: "year",    label: "Year (newest first)",    label_zh: "按年份" },
+  { id: "program", label: "By program" },
+  { id: "title",   label: "A → Z" },
+  { id: "year",    label: "By year" },
+  { id: "runtime", label: "Runtime" },
+  { id: "country", label: "By country" },
 ];
 
-// ---- icons ----
+const filmCount = (programId) => FILMS.filter(f => f.program_id === programId).length;
+const pad2 = (n) => String(n).padStart(2, '0');
+
+/* ---------- Icons ---------- */
 const SearchIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4">
-    <circle cx="7" cy="7" r="5"/><path d="M11 11l4 4"/>
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4"><circle cx="7" cy="7" r="5"/><path d="M11 11l4 4"/></svg>
+);
+const ExtIcon = () => (
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M6 3H3v10h10v-3M9 3h4v4M13 3L7 9"/></svg>
+);
+const BookmarkIcon = ({ filled }) => (
+  <svg viewBox="0 0 16 16" fill={filled ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.4">
+    <path d="M4 2.5h8v11l-4-3-4 3z" strokeLinejoin="round"/>
   </svg>
 );
 
-// ---- color helpers (for poster placeholder gradients) ----
-function lightenHex(hex, amt) {
-  const m = hex.replace('#', '');
-  const r = parseInt(m.substring(0,2),16);
-  const g = parseInt(m.substring(2,4),16);
-  const b = parseInt(m.substring(4,6),16);
-  const f = (v) => Math.min(255, Math.max(0, Math.round(v + (255 - v) * amt)));
-  return `rgb(${f(r)},${f(g)},${f(b)})`;
-}
-function darkenHex(hex, amt) {
-  const m = hex.replace('#', '');
-  const r = parseInt(m.substring(0,2),16);
-  const g = parseInt(m.substring(2,4),16);
-  const b = parseInt(m.substring(4,6),16);
-  const f = (v) => Math.min(255, Math.max(0, Math.round(v * (1 - amt))));
-  return `rgb(${f(r)},${f(g)},${f(b)})`;
-}
-
-function posterBg(color) {
-  if (!color) color = "#888";
-  return `linear-gradient(160deg, ${lightenHex(color, 0.18)} 0%, ${color} 55%, ${darkenHex(color, 0.4)} 100%)`;
+/* ---------- Watchlist (persisted) ---------- */
+function useWatchlist() {
+  const KEY = 'siff2026-watchlist';
+  const [ids, setIds] = useState(() => {
+    try { return new Set(JSON.parse(localStorage.getItem(KEY) || '[]')); } catch (e) { return new Set(); }
+  });
+  const toggle = useCallback((id) => {
+    setIds(prev => {
+      const n = new Set(prev);
+      n.has(id) ? n.delete(id) : n.add(id);
+      try { localStorage.setItem(KEY, JSON.stringify([...n])); } catch (e) {}
+      return n;
+    });
+  }, []);
+  const clear = useCallback(() => {
+    setIds(new Set());
+    try { localStorage.setItem(KEY, '[]'); } catch (e) {}
+  }, []);
+  return { ids, toggle, clear };
 }
 
-// ---- components ----
-function Header({ lang, setLang, density, setDensity }) {
+/* ---------- Header ---------- */
+function Header({ active, onNavigate, lang, setLang, watchCount }) {
   return (
     <header className="site">
       <div className="row">
-        <a className="brand" href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+        <a className="brand" href="#" onClick={(e)=>{e.preventDefault(); onNavigate('programs');}}>
           <span className="b-mark">SIFF · 2026</span>
-          <span className="b-title">Shanghai International Film Festival</span>
+          <span>Shanghai International<br/>Film Festival</span>
           <span className="b-zh">上海国际电影节</span>
         </a>
-        <div className="lang-toggle" role="tablist" aria-label="Language">
-          <button className={lang === 'en' ? 'on' : ''} onClick={() => setLang('en')}>EN</button>
-          <button className={lang === 'balanced' ? 'on' : ''} onClick={() => setLang('balanced')}>EN/中</button>
-          <button className={lang === 'zh' ? 'on' : ''} onClick={() => setLang('zh')}>中文</button>
+        <nav className="top">
+          <a className={active==='programs'?'active':''} href="#" onClick={(e)=>{e.preventDefault(); onNavigate('programs');}}>Programme <span className="nav-zh">单元</span></a>
+          <a className={active==='films'?'active':''} href="#" onClick={(e)=>{e.preventDefault(); onNavigate('films');}}>All Films <span className="nav-zh">影片</span></a>
+        </nav>
+        <button className={"wl-pill" + (active==='watchlist'?' on':'')} onClick={()=>onNavigate('watchlist')}>
+          <BookmarkIcon filled={watchCount>0} />
+          <span>My List</span>
+          <span className="wl-n mono">{watchCount}</span>
+        </button>
+        <div className="lang-toggle">
+          <button className={lang==='en'?'on':''} onClick={()=>setLang('en')}>EN</button>
+          <button className={lang==='balanced'?'on':''} onClick={()=>setLang('balanced')}>EN/中</button>
+          <button className={lang==='zh'?'on':''} onClick={()=>setLang('zh')}>中文</button>
         </div>
       </div>
     </header>
   );
 }
 
-function FestRibbon() {
-  const total = FILMS.length;
-  const programs = PROGRAMS.length;
-  const directors = new Set(FILMS.map(f => f.director).filter(Boolean)).size;
-  const yearsSpan = (() => {
-    const ys = FILMS.map(f => f.year).filter(Boolean);
-    if (!ys.length) return "—";
-    const mn = Math.min(...ys), mx = Math.max(...ys);
-    return mn === mx ? `${mn}` : `${mn}—${mx}`;
-  })();
+/* ---------- Poster-wall hero ---------- */
+const POSTER_FILMS = FILMS.filter(f => f.poster_url);
+const _hash = (s) => { let h = 0; for (let i=0;i<s.length;i++) h = (h*31 + s.charCodeAt(i)) >>> 0; return h; };
+const WALL_PICK = [...POSTER_FILMS].sort((a,b) => _hash(a.id) - _hash(b.id)).slice(0, 60);
+const WALL_ROWS = [WALL_PICK.slice(0,20), WALL_PICK.slice(20,40), WALL_PICK.slice(40,60)];
+
+function PosterWall({ onOpen }) {
   return (
-    <section className="fest-ribbon">
-      <div className="fest-ribbon-row">
-        <div className="fr-cell">
-          <span className="fr-k">{FESTIVAL.edition} · {FESTIVAL.edition_zh}</span>
-          <span className="fr-v">{FESTIVAL.dates}</span>
+    <div className="poster-wall" aria-hidden="false">
+      {WALL_ROWS.map((row, ri) => (
+        <div key={ri} className={"pw-row" + (ri % 2 ? ' rev' : '')}>
+          {[...row, ...row].map((f, i) => (
+            <button key={f.id + '-' + i} className="pw-tile" title={f.title_en}
+                    onClick={() => onOpen(f)} tabIndex={i < row.length ? 0 : -1}>
+              <img src={f.poster_url} alt={f.title_en} draggable="false" />
+            </button>
+          ))}
         </div>
-        <div className="fr-cell">
-          <span className="fr-k">Films · 影片</span>
-          <span className="fr-v mono">{total}</span>
-        </div>
-        <div className="fr-cell">
-          <span className="fr-k">Programs · 单元</span>
-          <span className="fr-v mono">{programs}</span>
-        </div>
-        <div className="fr-cell">
-          <span className="fr-k">Years spanned · 年代</span>
-          <span className="fr-v mono">{yearsSpan}</span>
-        </div>
-        <div className="fr-cell">
-          <span className="fr-k">Schedule · 排期</span>
-          <span className="fr-v" style={{ color: 'var(--ink-mute)', fontStyle: 'italic', fontSize: 18 }}>TBA · 待公布</span>
+      ))}
+      <div className="pw-scrim"></div>
+    </div>
+  );
+}
+
+/* ---------- Programme landing (default view) ---------- */
+function ProgramsView({ onPick, onSearch, onOpen }) {
+  const [q, setQ] = useState('');
+  const countries = new Set(FILMS.map(f => f.country).filter(Boolean)).size;
+  const submit = (e) => { e.preventDefault(); if (q.trim()) onSearch(q.trim()); };
+  return (
+    <section className="programs-view">
+      <div className="pw-hero">
+        <PosterWall onOpen={onOpen} />
+        <div className="pw-masthead">
+          <div className="pv-eyebrow mono">{FESTIVAL.edition} · {FESTIVAL.dates}</div>
+          <h1>The Programme<span className="pv-zh">展映单元</span></h1>
+          <p className="pw-lead">
+            {FILMS.length} films · {PROGRAMS.length} programs · {countries} countries — the full 2026 selection.
+          </p>
         </div>
       </div>
+
+      <div className="pv-bar">
+        <form className="pv-search" onSubmit={submit}>
+          <SearchIcon />
+          <input value={q} onChange={(e)=>setQ(e.target.value)}
+                 placeholder="Search films, directors, countries…  搜索全部影片" />
+          <button type="submit" className="pv-search-go mono">Search →</button>
+        </form>
+        <div className="pv-bar-stats mono">
+          <span><b>{FILMS.length}</b> films</span>
+          <span><b>{PROGRAMS.length}</b> programs</span>
+          <span><b>{KIND_GROUPS.length}</b> strands</span>
+        </div>
+      </div>
+
+      {KIND_GROUPS.map(g => (
+        <div key={g.kind} className="kind-block">
+          <div className="kind-head">
+            <h2>{g.kind}</h2>
+            <span className="kind-zh">{g.kindZh}</span>
+            <span className="kind-count">{g.programs.length} {g.programs.length===1?'program':'programs'}</span>
+          </div>
+          <div className="prog-grid">
+            {g.programs.map(p => (
+              <button key={p.id} className="prog-card" onClick={() => onPick(p.id)} style={{'--pc': p.color}}>
+                <span className="pc-bar"></span>
+                <div className="pc-top">
+                  <span className="pc-n mono">{pad2(p.order)}</span>
+                  <span className="pc-count mono">{filmCount(p.id)} films</span>
+                </div>
+                <div className="pc-name">{p.short_en || p.title_en}</div>
+                <div className="pc-zh">{p.short_zh || p.title_zh}</div>
+                {p.blurb_en && <div className="pc-blurb">{p.blurb_en}</div>}
+                <span className="pc-go mono">Browse →</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      ))}
     </section>
   );
 }
 
-function SectionStrip({ active, setActive }) {
+/* ---------- Filter bar (All Films) ---------- */
+function FilterBar({ query, setQuery, program, setProgram, kind, setKind, sort, setSort, totalShown, totalAll, onClear }) {
+  const anyActive = program || kind || query;
   return (
-    <section className="section-strip">
-      <h2>Programs / 策展单元 · {PROGRAMS.length}</h2>
-      <div className="strip-row">
-        {PROGRAMS.map((p, i) => (
-          <button key={p.id}
-                  className={"strip-cell" + (active === p.id ? ' active' : '')}
-                  onClick={() => {
-                    setActive(active === p.id ? null : p.id);
-                    setTimeout(() => {
-                      const el = document.getElementById('catalog-' + p.id);
-                      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 50);
-                  }}>
-            <div className="n">
-              <span>{String(i + 1).padStart(2, '0')} · {p.kind_en}</span>
-              <span>{FILMS.filter(f => f.program_id === p.id).length} films</span>
-            </div>
-            <div className="name">{p.short_en || p.title_en}</div>
-            <div className="zh-name">{p.title_zh}</div>
-          </button>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function FilterBar({ query, setQuery, program, setProgram, year, setYear, fmt, setFmt, sort, setSort, totalShown, totalAll, onClear }) {
-  const anyActive = program || year || fmt || query;
-  return (
+    <>
     <div className="filter-bar">
       <div className="search">
         <SearchIcon />
-        <input type="text"
-               placeholder="Search films, directors, programs… 搜索影片、导演、单元"
-               value={query}
-               onChange={(e) => setQuery(e.target.value)} />
+        <input type="text" placeholder="Search films, directors, countries…  搜索"
+               value={query} onChange={(e) => setQuery(e.target.value)} />
         <span className="count">{totalShown}/{totalAll}</span>
       </div>
       <div className="select">
-        <select value={program || ''} onChange={(e) => setProgram(e.target.value || null)}>
+        <select value={kind || ''} onChange={(e)=>setKind(e.target.value || null)}>
+          <option value="">All strands / 全部类别</option>
+          {KIND_GROUPS.map(g => <option key={g.kind} value={g.kind}>{g.kind} · {g.kindZh}</option>)}
+        </select>
+      </div>
+      <div className="select">
+        <select value={program || ''} onChange={(e)=>setProgram(e.target.value || null)}>
           <option value="">All programs / 全部单元</option>
-          {PROGRAMS.map(p => <option key={p.id} value={p.id}>{p.short_en} · {p.short_zh}</option>)}
+          {KIND_GROUPS.map(g => (
+            <optgroup key={g.kind} label={g.kind}>
+              {g.programs.map(p => <option key={p.id} value={p.id}>{p.short_en || p.title_en} ({filmCount(p.id)})</option>)}
+            </optgroup>
+          ))}
         </select>
       </div>
       <div className="select">
-        <select value={year || ''} onChange={(e) => setYear(e.target.value || null)}>
-          <option value="">All years / 全部年代</option>
-          {YEARS.map(y => <option key={y} value={y}>{y}</option>)}
-        </select>
-      </div>
-      {FORMAT_TAGS.length > 0 && (
-        <div className="select">
-          <select value={fmt || ''} onChange={(e) => setFmt(e.target.value || null)}>
-            <option value="">All formats / 全部格式</option>
-            {FORMAT_TAGS.map(t => <option key={t} value={t}>{t}</option>)}
-          </select>
-        </div>
-      )}
-      <div className="select">
-        <select value={sort} onChange={(e) => setSort(e.target.value)}>
+        <select value={sort} onChange={(e)=>setSort(e.target.value)}>
           {SORTS.map(s => <option key={s.id} value={s.id}>Sort: {s.label}</option>)}
         </select>
       </div>
       {anyActive && <button className="clear" onClick={onClear}>Clear all ×</button>}
     </div>
+    {(program || kind) && (
+      <div className="active-row">
+        <span className="lab">Filtering</span>
+        {kind && <button className="chip on" onClick={()=>setKind(null)}>{kind} <span className="x">×</span></button>}
+        {program && <button className="chip on" onClick={()=>setProgram(null)}>{PROG_BY_ID[program]?.short_en} <span className="x">×</span></button>}
+      </div>
+    )}
+    </>
   );
 }
 
-function Poster({ film, index, big = false }) {
-  const hasImg = !!film.poster_url;
+/* ---------- Poster ---------- */
+function Poster({ film, saved, onToggle }) {
+  const [err, setErr] = useState(false);
+  const prog = PROG_BY_ID[film.program_id];
+  const showImg = film.poster_url && !err;
+  const formatTags = film.format_tags || [];
   return (
-    <div className={(big ? "m-poster" : "poster") + (hasImg ? " has-img" : "")}
-         style={{ background: hasImg ? undefined : posterBg(film.color) }}>
-      {hasImg && <img src={film.poster_url} alt={film.title_en} loading="lazy" referrerPolicy="no-referrer" />}
-      <span className={big ? "pcorner" : "corner"}>{film.program_zh || film.program_en}</span>
-      {typeof index === 'number' && <span className={big ? "pyear" : "num"}>{big ? (film.year || '—') : '№' + String(index + 1).padStart(2, '0')}</span>}
-      {!big && film.year && <span className="pyear">{film.year}</span>}
-      <span className="ptag">{film.title_zh}</span>
+    <div className={"poster" + (showImg ? ' has-img' : '')}
+         style={{ '--poster': film.color, backgroundColor: film.color }}>
+      <span className="placeholder-tag">[ {prog ? (prog.short_en || prog.title_en) : film.title_en} ]</span>
+      {showImg && <img src={film.poster_url} alt={film.title_en} loading="lazy" onError={() => setErr(true)} />}
+      {film.country && <span className="corner">{film.country.split(/[,/]/)[0].trim()}</span>}
+      {formatTags.length > 0 && <span className="fmt-tag">{formatTags[0]}</span>}
+      <button className={"watch-btn" + (saved ? ' on' : '')} title={saved ? 'Remove from My List' : 'Add to My List'}
+              onClick={(e) => { e.stopPropagation(); onToggle(film.id); }}>
+        <BookmarkIcon filled={saved} />
+      </button>
     </div>
   );
 }
 
-const IMDbBadge = ({ film, compact = false }) => {
-  if (!film.imdb_url) return null;
-  const real = !!film.imdb_id;
-  const label = compact
-    ? (real ? 'IMDb ↗' : 'IMDb · find ↗')
-    : (real ? `View on IMDb · ${film.imdb_id} ↗` : 'Find on IMDb ↗');
+/* ---------- Card ---------- */
+function Card({ film, onOpen, saved, onToggle }) {
+  const prog = PROG_BY_ID[film.program_id];
   return (
-    <a className={"imdb-link" + (real ? " real" : " search")}
-       href={film.imdb_url}
-       target="_blank" rel="noopener noreferrer"
-       onClick={(e) => e.stopPropagation()}
-       title={real ? "Open this film's IMDb page in a new tab" : "Search IMDb for this title (TMDB enrichment not run yet)"}>
-      {label}
-    </a>
-  );
-};
-
-function Card({ film, index, onOpen }) {
-  return (
-    <div className="card"
-         onClick={() => onOpen(film)}
-         style={{ '--poster': film.color }}
-         role="button" tabIndex={0}
+    <div className="card" onClick={() => onOpen(film)} role="button" tabIndex={0}
          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(film); } }}>
-      <Poster film={film} index={index} />
+      <Poster film={film} saved={saved} onToggle={onToggle} />
       <div>
-        <h3>{film.title_en || film.title_zh}</h3>
+        <h3><span className="en">{film.title_en}</span></h3>
         <div className="h-zh">{film.title_zh}</div>
       </div>
       <div className="badge-row">
-        {film.year && <span className="badge">{film.year}</span>}
-        {(film.format_tags || []).map(t => (
-          <span key={t} className="badge fmt">{t}</span>
-        ))}
-        {film.runtime && <span className="badge">{film.runtime}′</span>}
-        <IMDbBadge film={film} compact />
+        {prog && <span className="badge">{prog.short_en || prog.title_en}</span>}
+        {film.year && <span className="badge year">{film.year}</span>}
       </div>
       <div className="meta-row">
-        {film.director && (
-          <div className="line">
-            <span className="dir">dir. {film.director}</span>
-            {film.country && <span>{film.country}</span>}
-          </div>
-        )}
-        {!film.director && film.country && (
-          <div className="line"><span>{film.country}</span></div>
-        )}
-        {film.language && (
-          <div className="line">
-            <span style={{ color: 'var(--ink-mute)' }}>{film.language}</span>
-            {!film.runtime && film.year && <span>{film.year}</span>}
-          </div>
-        )}
+        <div className="line">
+          <span className="dir">{film.director ? 'dir. ' + film.director : '—'}</span>
+          {film.runtime != null && <span>{film.runtime}′</span>}
+        </div>
+        <div className="line">
+          <span>{film.country || '—'}</span>
+          <span>{film.language}</span>
+        </div>
       </div>
     </div>
   );
 }
 
-function Catalog({ films, onOpen, sort, activeProgram }) {
-  if (films.length === 0) {
-    return (
-      <section className="catalog">
-        <div className="empty">
-          <div className="big">No films match.</div>
-          <div className="mono" style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase' }}>
-            Try widening your filters · 请调整筛选条件
-          </div>
-        </div>
-      </section>
-    );
-  }
+/* ---------- Catalog ---------- */
+function Catalog({ films, onOpen, sort, watchlist, onToggle }) {
+  const renderCard = (f, i) => (
+    <Card key={f.id + '-' + i} film={f} onOpen={onOpen} saved={watchlist.has(f.id)} onToggle={onToggle} />
+  );
+  if (films.length === 0) return <EmptyState />;
 
   if (sort === 'program') {
     const groups = PROGRAMS
-      .map(p => ({ program: p, films: films.filter(f => f.program_id === p.id) }))
+      .map(p => ({ prog: p, films: films.filter(f => f.program_id === p.id) }))
       .filter(g => g.films.length > 0);
     return (
       <section className="catalog">
         {groups.map(g => (
-          <div key={g.program.id} id={'catalog-' + g.program.id}>
-            <div className="group-head">
-              <h2>
-                {g.program.title_en}
-                <span className="zh-tag">{g.program.title_zh}</span>
-              </h2>
-              <span className="group-count">
-                {g.films.length} {g.films.length === 1 ? 'film' : 'films'} · {g.program.kind_en}
-              </span>
-            </div>
-            {(g.program.blurb_en || g.program.blurb_zh) && (
-              <div className="group-blurb">
-                <span className="en">{g.program.blurb_en}</span>
-                <span className="zh">{g.program.blurb_zh}</span>
+          <div key={g.prog.id}>
+            <div className="group-head" style={{ '--gc': g.prog.color }}>
+              <div className="gh-left">
+                <span className="gh-kind mono">{g.prog.kind_en} · {g.prog.kind_zh}</span>
+                <h2>{g.prog.short_en || g.prog.title_en}<span className="zh-tag">{g.prog.short_zh || g.prog.title_zh}</span></h2>
+                {g.prog.blurb_en && <p className="gh-blurb">{g.prog.blurb_en}</p>}
               </div>
-            )}
-            <div className="grid">
-              {g.films.map((f, i) => <Card key={f.id} film={f} index={i} onOpen={onOpen} />)}
+              <span className="group-count">{g.films.length} {g.films.length===1?'film':'films'}</span>
             </div>
+            <div className="grid">{g.films.map(renderCard)}</div>
           </div>
         ))}
       </section>
     );
   }
 
-  // flat sorts
-  const sorted = [...films];
-  if (sort === 'title') sorted.sort((a, b) => (a.title_en || '').localeCompare(b.title_en || ''));
-  if (sort === 'year') sorted.sort((a, b) => (b.year || 0) - (a.year || 0));
+  if (sort === 'country') {
+    const by = {};
+    films.forEach(f => { const k = f.country || 'Unknown'; (by[k] = by[k] || []).push(f); });
+    const groups = Object.keys(by).sort().map(k => ({ key: k, films: by[k] }));
+    return (
+      <section className="catalog">
+        {groups.map(g => (
+          <div key={g.key}>
+            <div className="group-head">
+              <div className="gh-left"><h2>{g.key}</h2></div>
+              <span className="group-count">{g.films.length} {g.films.length===1?'film':'films'}</span>
+            </div>
+            <div className="grid">{g.films.map(renderCard)}</div>
+          </div>
+        ))}
+      </section>
+    );
+  }
 
+  const sorted = [...films];
+  if (sort === 'title') sorted.sort((a,b) => (a.title_en || '').localeCompare(b.title_en || ''));
+  if (sort === 'runtime') sorted.sort((a,b) => (a.runtime||999) - (b.runtime||999));
+  if (sort === 'year') sorted.sort((a,b) => (+b.year||0) - (+a.year||0) || (a.title_en || '').localeCompare(b.title_en || ''));
+  const heads = { title: ['All films','全部影片'], runtime: ['By runtime','按片长'], year: ['By year','按年份'] };
   return (
     <section className="catalog">
       <div className="group-head">
-        <h2>
-          {sort === 'title' ? 'All films · A → Z' : 'All films · by year'}
-          <span className="zh-tag">{sort === 'title' ? '按片名' : '按年份'}</span>
-        </h2>
-        <span className="group-count">{sorted.length} {sorted.length === 1 ? 'film' : 'films'}</span>
+        <div className="gh-left"><h2>{heads[sort][0]}<span className="zh-tag">{heads[sort][1]}</span></h2></div>
+        <span className="group-count">{sorted.length} films</span>
       </div>
-      <div className="grid">
-        {sorted.map((f, i) => <Card key={f.id} film={f} index={i} onOpen={onOpen} />)}
-      </div>
+      <div className="grid">{sorted.map(renderCard)}</div>
     </section>
   );
 }
 
-function Modal({ film, onClose }) {
+function EmptyState() {
+  return (
+    <div className="catalog">
+      <div className="empty">
+        <div className="big">No films match.</div>
+        <div className="mono" style={{fontSize:11, letterSpacing:'0.14em', textTransform:'uppercase'}}>Try widening your filters · 请调整筛选条件</div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- My List (watchlist) ---------- */
+function WatchlistView({ onOpen, watchlist, onToggle, onClear, onBrowse }) {
+  const saved = FILMS.filter(f => watchlist.has(f.id));
+  const totalRuntime = saved.reduce((s, f) => s + (f.runtime || 0), 0);
+  const hours = Math.floor(totalRuntime / 60), mins = totalRuntime % 60;
+  return (
+    <section className="watchlist-view">
+      <div className="wl-head">
+        <div className="wl-head-left">
+          <div className="pv-eyebrow mono">Your festival plan · 我的片单</div>
+          <h1>My List<span className="pv-zh">收藏</span></h1>
+          {saved.length > 0 && (
+            <p className="pv-lead">
+              {saved.length} {saved.length===1?'film':'films'} saved
+              {totalRuntime > 0 && <> · {hours>0 && `${hours}h `}{mins}m of cinema</>}
+              <span className="wl-note"> · saved on this device</span>
+            </p>
+          )}
+        </div>
+        {saved.length > 0 && <button className="wl-clear mono" onClick={onClear}>Clear list ×</button>}
+      </div>
+      {saved.length === 0 ? (
+        <div className="wl-empty">
+          <div className="big">Your list is empty.</div>
+          <p>Tap the <span className="wl-inline-icon"><BookmarkIcon /></span> on any film to save it here for the festival.</p>
+          <button className="wl-browse mono" onClick={onBrowse}>Browse the programme →</button>
+        </div>
+      ) : (
+        <div className="grid wl-grid">
+          {saved.map((f,i) => (
+            <Card key={f.id+'-'+i} film={f} onOpen={onOpen} saved={true} onToggle={onToggle} />
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+/* ---------- Modal ---------- */
+function Modal({ film, onClose, onPickProgram, saved, onToggle }) {
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', onKey);
-    const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = prev;
-    };
+    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
   }, [onClose]);
-
+  const [err, setErr] = useState(false);
   if (!film) return null;
-  const program = PROGRAMS.find(p => p.id === film.program_id);
-
-  // Pick a synopsis fallback from the program blurb
-  const synEn = film.synopsis_en || (program && program.blurb_en) || `A selection in ${film.program_en}. Detailed credits and synopsis to be confirmed.`;
-  const synZh = film.synopsis_zh || (program && program.blurb_zh) || `《${film.program_zh}》单元选片，主创信息与简介待公布。`;
+  const prog = PROG_BY_ID[film.program_id];
+  const showImg = film.poster_url && !err;
+  const formatTags = film.format_tags || [];
 
   return (
     <div className="modal-scrim" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
+      <div className="modal" onClick={(e)=>e.stopPropagation()}>
         <button className="close" onClick={onClose} aria-label="Close">×</button>
         <div className="m-head">
           <div className="crest">
-            <span className="sec">{film.program_en} · {film.program_zh}</span>
-            {film.year && <span>{film.year}</span>}
-            {film.country && <span>{film.country}</span>}
-            {film.runtime && <span>{film.runtime} min</span>}
+            {prog && <button className="sec" onClick={()=>onPickProgram(film.program_id)}>{prog.short_en} · {prog.short_zh || prog.title_zh}</button>}
+            <span>{[film.country, film.year].filter(Boolean).join(' · ')}</span>
+            {film.runtime != null && <span>{film.runtime} minutes</span>}
             {film.language && <span>{film.language}</span>}
-            {(film.format_tags || []).map(t => <span key={t} style={{ color: 'var(--accent)' }}>{t}</span>)}
+            {formatTags.map(t => <span key={t} className="fmt">{t}</span>)}
           </div>
-          <h2>{film.title_en || film.title_zh}</h2>
-          {film.title_zh && film.title_en && <div className="h-zh">{film.title_zh}</div>}
+          <h2>{film.title_en}</h2>
+          <div className="h-zh">{film.title_zh}</div>
           <div className="tagline">
-            <div>
-              <span className="k">Director / 导演</span>
-              <span>{film.director || '—'}{film.director_zh ? ` · ${film.director_zh}` : ''}</span>
-            </div>
-            <div>
-              <span className="k">Country / 国别</span>
-              <span>{film.country || '—'}{film.country_zh ? ` · ${film.country_zh}` : ''}</span>
-            </div>
-            <div>
-              <span className="k">Runtime / 片长</span>
-              <span>{film.runtime ? `${film.runtime} min` : '—'}</span>
-            </div>
+            {film.director && <div><span className="k">Director / 导演</span><span>{film.director}{film.director_zh ? ' · ' + film.director_zh : ''}</span></div>}
+            <div><span className="k">Strand / 类别</span><span>{prog ? prog.kind_en + ' · ' + prog.kind_zh : '—'}</span></div>
           </div>
         </div>
         <div className="m-body">
           <div className="col">
             <h3>Synopsis · 简介</h3>
-            <p className="en">{synEn}</p>
-            <p className="zh">{synZh}</p>
+            {film.synopsis_en ? <p>{film.synopsis_en}</p> : <p className="muted">Synopsis to be published. · 简介待补。</p>}
+            {film.synopsis_zh && <p className="zh">{film.synopsis_zh}</p>}
 
-            <div className="credits">
-              <div className="row"><span className="k">Year</span><span>{film.year || '—'}</span></div>
-              <div className="row"><span className="k">Language</span><span>{film.language || '—'}</span></div>
-              <div className="row"><span className="k">Program</span><span>{film.program_en}</span></div>
-              <div className="row"><span className="k">Premiere</span><span>{film.premiere || '—'}</span></div>
-            </div>
+            {prog && prog.blurb_en && (
+              <div className="prog-note">
+                <span className="k mono">In the program · 所属单元</span>
+                <button className="pn-name" onClick={()=>onPickProgram(film.program_id)}>{prog.title_en}</button>
+                <p>{prog.blurb_en}</p>
+              </div>
+            )}
           </div>
           <div className="col">
-            <Poster film={film} index={null} big />
-
-            <div className="m-imdb">
-              <IMDbBadge film={film} />
-              {!film.imdb_id && (
-                <div className="m-imdb-hint">
-                  TMDB enrichment hasn't run yet — link goes to an IMDb search.
-                  <span className="zh">尚未运行 TMDB 数据补全 — 链接指向 IMDb 搜索。</span>
-                </div>
-              )}
+            <div className={"m-poster" + (showImg ? '' : ' empty')} style={{ backgroundColor: film.color }}>
+              {showImg ? <img src={film.poster_url} alt={film.title_en} onError={()=>setErr(true)} />
+                       : <span className="mp-lab mono">no poster · 暂无海报</span>}
             </div>
 
-            <h3>Schedule · 排片</h3>
+            <button className={"modal-wl" + (saved ? ' on' : '')} onClick={()=>onToggle(film.id)}>
+              <BookmarkIcon filled={saved} />
+              <span>{saved ? 'Saved to My List' : 'Add to My List'}</span>
+            </button>
+
+            {film.imdb_url && (
+              <a className="imdb-link" href={film.imdb_url} target="_blank" rel="noopener noreferrer">
+                <span>View on IMDb</span><ExtIcon />
+              </a>
+            )}
+
+            <h3 style={{marginTop:24}}>Schedule · 排片</h3>
             <div className="schedule-tba">
               <div className="tba-mark mono">— · —</div>
-              <div className="tba-msg">
-                Showtimes and venues<br/>
-                <em>to be announced.</em>
-              </div>
+              <div className="tba-msg">Showtimes and venues<br/><em>to be announced.</em></div>
               <div className="tba-zh">放映场次与场馆待公布</div>
-              {program && program.source_url && (
-                <a className="tba-link" href={program.source_url} target="_blank" rel="noopener noreferrer">
-                  Program page · 单元页 ↗
-                </a>
-              )}
             </div>
-
-            {film.runtime && (
-              <div className="marquee-stat">
-                <span className="big">{film.runtime}<span style={{ fontSize: '0.4em', fontStyle: 'italic', marginLeft: 4 }}>min</span></span>
-                <span className="lab">runtime / 片长</span>
-              </div>
-            )}
-            {film.year && (
-              <div className="marquee-stat" style={{ marginTop: 6 }}>
-                <span className="big" style={{ fontStyle: 'italic' }}>{film.year}</span>
-                <span className="lab">year of release / 年份</span>
-              </div>
-            )}
           </div>
         </div>
       </div>
@@ -425,6 +481,7 @@ function Modal({ film, onClose }) {
   );
 }
 
+/* ---------- Footer ---------- */
 function Footer() {
   return (
     <footer className="site">
@@ -432,101 +489,115 @@ function Footer() {
         <div>
           <h4>About this site / 关于</h4>
           <div className="fan-note">
-            A <em>fan-made</em> showcase.
-            <br/>Not affiliated with the festival.
-            <span className="zh">影迷自製，非官方网站。</span>
+            A <em>fan-made</em> catalogue of the full 2026 programme.
+            <span className="zh">影迷自製全单元片单，非官方网站。</span>
           </div>
+        </div>
+        <div>
+          <h4>Catalogue / 片单</h4>
+          <ul>
+            <li>{FILMS.length} films · 部影片</li>
+            <li>{PROGRAMS.length} programs · 个单元</li>
+            <li>{KIND_GROUPS.length} strands · 类别</li>
+            <li>{FESTIVAL.dates} · 会期</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Sources / 来源</h4>
+          <ul>
+            <li>Programme listings</li>
+            <li>Posters via TMDB</li>
+            <li>Links via IMDb</li>
+            <li>Schedule TBA</li>
+          </ul>
         </div>
         <div>
           <h4>Festival / 电影节</h4>
           <ul>
-            <li><a href="https://www.siff.com" target="_blank" rel="noopener noreferrer">SIFF official ↗</a></li>
-            <li>Dates · 6/12 — 6/21, 2026</li>
-            <li>Venues · TBA</li>
-            <li>Tickets · TBA</li>
-          </ul>
-        </div>
-        <div>
-          <h4>Catalog / 片单</h4>
-          <ul>
-            <li>{FILMS.length} films · 部影片</li>
-            <li>{PROGRAMS.length} programs · 个单元</li>
-            <li>Bilingual · 中英双语</li>
-            <li>Updated · 更新于 May 17, 2026</li>
-          </ul>
-        </div>
-        <div>
-          <h4>Colophon / 版权信息</h4>
-          <ul>
-            <li>Type · Instrument Serif</li>
-            <li>Type · IBM Plex Sans</li>
-            <li>Type · Noto Serif SC</li>
-            <li>Type · JetBrains Mono</li>
+            <li>Dates · 日期</li>
+            <li>Venues · 场馆</li>
+            <li>Tickets · 票务</li>
+            <li>Press · 媒体</li>
           </ul>
         </div>
       </div>
       <div className="small">
-        <span>SIFF · 2026 · Fan Showcase</span>
-        <span>Built for <em>cinephiles</em> · 为影迷而作</span>
-        <span>Source: siff.com crawl, 2026-05-17</span>
+        <span>{FESTIVAL.edition} · Fan Catalogue</span>
+        <span>Type set in <em>Instrument Serif</em> &amp; <em>IBM Plex</em></span>
+        <span>Built with care · 用心而作</span>
       </div>
     </footer>
   );
 }
 
+/* ---------- App ---------- */
 function App() {
   const [lang, setLang] = useState('balanced');
-  const [density, setDensity] = useState('comfortable');
   const [query, setQuery] = useState('');
   const [program, setProgram] = useState(null);
-  const [year, setYear] = useState(null);
-  const [fmt, setFmt] = useState(null);
+  const [kind, setKind] = useState(null);
   const [sort, setSort] = useState('program');
   const [openFilm, setOpenFilm] = useState(null);
+  const [active, setActive] = useState('programs');
+  const watch = useWatchlist();
 
   useEffect(() => {
     document.body.dataset.langEmphasis = lang;
-    document.body.dataset.density = density;
-  }, [lang, density]);
+  }, [lang]);
 
   const filtered = useMemo(() => {
     return FILMS.filter(f => {
       if (program && f.program_id !== program) return false;
-      if (year && String(f.year) !== String(year)) return false;
-      if (fmt && !(f.format_tags || []).includes(fmt)) return false;
+      if (kind && PROG_BY_ID[f.program_id]?.kind_en !== kind) return false;
       if (query.trim()) {
         const q = query.trim().toLowerCase();
-        const hay = [
-          f.title_en, f.title_zh, f.director, f.director_zh,
-          f.country, f.country_zh, f.program_en, f.program_zh,
-          f.language, f.synopsis_en, f.synopsis_zh,
-          ...(f.format_tags || []),
-        ].filter(Boolean).join(' ').toLowerCase();
+        const hay = [f.title_en, f.title_zh, f.director, f.director_zh, f.country, f.country_zh, f.language, PROG_BY_ID[f.program_id]?.short_en].filter(Boolean).join(' ').toLowerCase();
         if (!hay.includes(q)) return false;
       }
       return true;
     });
-  }, [query, program, year, fmt]);
+  }, [query, program, kind]);
 
-  const clear = () => { setQuery(''); setProgram(null); setYear(null); setFmt(null); };
+  const clear = () => { setQuery(''); setProgram(null); setKind(null); };
+  const navigate = (view) => { setActive(view); window.scrollTo({ top: 0 }); };
+
+  const pickProgram = (pid) => {
+    setKind(null); setProgram(pid); setQuery(''); setSort('program');
+    setOpenFilm(null); setActive('films'); window.scrollTo({ top: 0 });
+  };
+  const searchAll = (q) => {
+    setQuery(q); setProgram(null); setKind(null); setSort('title');
+    setActive('films'); window.scrollTo({ top: 0 });
+  };
 
   return (
     <>
-      <Header lang={lang} setLang={setLang} density={density} setDensity={setDensity} />
-      <FestRibbon />
-      <SectionStrip active={program} setActive={setProgram} />
-      <FilterBar
-        query={query} setQuery={setQuery}
-        program={program} setProgram={setProgram}
-        year={year} setYear={setYear}
-        fmt={fmt} setFmt={setFmt}
-        sort={sort} setSort={setSort}
-        totalShown={filtered.length} totalAll={FILMS.length}
-        onClear={clear}
-      />
-      <Catalog films={filtered} onOpen={setOpenFilm} sort={sort} activeProgram={program} />
+      <Header active={active} onNavigate={navigate} lang={lang} setLang={setLang} watchCount={watch.ids.size} />
+
+      {active === 'programs' && <ProgramsView onPick={pickProgram} onSearch={searchAll} onOpen={setOpenFilm} />}
+
+      {active === 'films' && (
+        <>
+          <FilterBar
+            query={query} setQuery={setQuery}
+            program={program} setProgram={setProgram}
+            kind={kind} setKind={setKind}
+            sort={sort} setSort={setSort}
+            totalShown={filtered.length} totalAll={FILMS.length}
+            onClear={clear}
+          />
+          <Catalog films={filtered} onOpen={setOpenFilm} sort={sort} watchlist={watch.ids} onToggle={watch.toggle} />
+        </>
+      )}
+
+      {active === 'watchlist' && (
+        <WatchlistView onOpen={setOpenFilm} watchlist={watch.ids} onToggle={watch.toggle}
+                       onClear={watch.clear} onBrowse={() => navigate('programs')} />
+      )}
+
       <Footer />
-      {openFilm && <Modal film={openFilm} onClose={() => setOpenFilm(null)} />}
+      {openFilm && <Modal film={openFilm} onClose={() => setOpenFilm(null)} onPickProgram={pickProgram}
+                          saved={watch.ids.has(openFilm.id)} onToggle={watch.toggle} />}
     </>
   );
 }
