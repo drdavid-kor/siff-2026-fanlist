@@ -674,6 +674,76 @@
     line-height: 1.55 !important; color: var(--ink-soft) !important; margin: 10px 0 0 !important;
   }
 
+  /* ---------- Bilingual emphasis: program text + modal title ---------- */
+  /* New Chinese siblings (always in the DOM; CSS picks who's visible) */
+  .prog-card .pc-blurb-zh { font-family: var(--zh-serif); margin-top: 4px; }
+  .catalog .group-head .gh-blurb-zh { font-family: var(--zh-serif); margin-top: 4px; }
+  .prog-note .pn-name-zh {
+    font-family: var(--zh-serif); font-size: 14px; color: var(--ink-soft);
+    margin-top: 2px; line-height: 1.2;
+  }
+  .prog-note p.pn-blurb-zh {
+    font-family: var(--zh-serif) !important; font-size: 13px !important;
+    line-height: 1.6 !important; color: var(--ink-soft) !important; margin-top: 6px !important;
+  }
+
+  /* EN mode — hide every Chinese sibling */
+  body[data-lang-emphasis="en"] .kind-head .kind-zh,
+  body[data-lang-emphasis="en"] .prog-card .pc-zh,
+  body[data-lang-emphasis="en"] .prog-card .pc-blurb-zh,
+  body[data-lang-emphasis="en"] .catalog .group-head h2 .zh-tag,
+  body[data-lang-emphasis="en"] .catalog .group-head .gh-blurb-zh,
+  body[data-lang-emphasis="en"] .m-head .h-zh,
+  body[data-lang-emphasis="en"] .prog-note .pn-name-zh,
+  body[data-lang-emphasis="en"] .prog-note .pn-blurb-zh { display: none; }
+
+  /* ZH mode — hide the English sibling, promote Chinese to primary visual weight */
+  body[data-lang-emphasis="zh"] .prog-card .pc-blurb:not(.pc-blurb-zh),
+  body[data-lang-emphasis="zh"] .catalog .group-head .gh-blurb:not(.gh-blurb-zh),
+  body[data-lang-emphasis="zh"] .prog-note p.pn-blurb:not(.pn-blurb-zh) { display: none; }
+
+  body[data-lang-emphasis="zh"] .kind-head h2 {
+    font-size: 16px; color: var(--ink-soft); font-style: italic;
+  }
+  body[data-lang-emphasis="zh"] .kind-head .kind-zh {
+    font-family: var(--zh-serif); font-size: clamp(24px, 2.6vw, 34px);
+    color: var(--ink); letter-spacing: -0.01em;
+  }
+
+  body[data-lang-emphasis="zh"] .prog-card .pc-name {
+    font-size: 14px; color: var(--ink-soft); font-style: italic;
+  }
+  body[data-lang-emphasis="zh"] .prog-card .pc-zh {
+    font-family: var(--zh-serif); font-size: clamp(22px, 2vw, 28px);
+    color: var(--ink); line-height: 1.04;
+  }
+
+  body[data-lang-emphasis="zh"] .catalog .group-head h2 {
+    font-family: var(--zh-serif); font-size: clamp(20px, 2.4vw, 32px);
+    color: var(--ink-soft); font-style: italic;
+  }
+  body[data-lang-emphasis="zh"] .catalog .group-head h2 .zh-tag {
+    display: block; font-family: var(--zh-serif); font-size: clamp(28px, 3.6vw, 52px);
+    color: var(--ink); letter-spacing: -0.015em; margin: 0 0 6px;
+    line-height: 1; font-style: normal;
+  }
+
+  body[data-lang-emphasis="zh"] .m-head h2 {
+    font-size: clamp(20px, 2.2vw, 30px); color: var(--ink-soft); font-style: italic;
+    letter-spacing: -0.01em;
+  }
+  body[data-lang-emphasis="zh"] .m-head .h-zh {
+    font-family: var(--zh-serif); font-size: clamp(36px, 5.4vw, 76px);
+    color: var(--ink); margin-top: 4px; line-height: 0.95; letter-spacing: -0.01em;
+  }
+
+  body[data-lang-emphasis="zh"] .prog-note .pn-name {
+    font-size: 14px; color: var(--ink-soft); font-style: italic;
+  }
+  body[data-lang-emphasis="zh"] .prog-note .pn-name-zh {
+    font-family: var(--zh-serif); font-size: 22px; color: var(--ink); margin-top: 4px;
+  }
+
   /* ---------- My Plan pill (header) ---------- */
   .wl-pill.plan-pill.on { background: var(--accent); border-color: var(--accent); color: var(--paper); }
   header.site nav.top a { white-space: nowrap; }

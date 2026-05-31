@@ -197,6 +197,7 @@ function ProgramsView({ onPick, onSearch, onOpen }) {
                 <div className="pc-name">{p.short_en || p.title_en}</div>
                 <div className="pc-zh">{p.short_zh || p.title_zh}</div>
                 {p.blurb_en && <div className="pc-blurb">{p.blurb_en}</div>}
+                {p.blurb_zh && <div className="pc-blurb pc-blurb-zh">{p.blurb_zh}</div>}
                 <span className="pc-go mono">Browse →</span>
               </button>
             ))}
@@ -323,6 +324,7 @@ function Catalog({ films, onOpen, sort, watchlist, onToggle }) {
                 <span className="gh-kind mono">{g.prog.kind_en} · {g.prog.kind_zh}</span>
                 <h2>{g.prog.short_en || g.prog.title_en}<span className="zh-tag">{g.prog.short_zh || g.prog.title_zh}</span></h2>
                 {g.prog.blurb_en && <p className="gh-blurb">{g.prog.blurb_en}</p>}
+                {g.prog.blurb_zh && <p className="gh-blurb gh-blurb-zh">{g.prog.blurb_zh}</p>}
               </div>
               <span className="group-count">{g.films.length} {g.films.length===1?'film':'films'}</span>
             </div>
@@ -380,10 +382,11 @@ function EmptyState() {
 }
 
 /* ---------- My List (watchlist) ---------- */
-function WatchlistView({ onOpen, watchlist, onToggle, onClear, onBrowse }) {
+function WatchlistView({ lang, onOpen, watchlist, onToggle, onClear, onBrowse }) {
   const saved = FILMS.filter(f => watchlist.has(f.id));
   const totalRuntime = saved.reduce((s, f) => s + (f.runtime || 0), 0);
   const hours = Math.floor(totalRuntime / 60), mins = totalRuntime % 60;
+  const isZh = lang === 'zh';
   return (
     <section className="watchlist-view">
       <div className="wl-head">
@@ -392,19 +395,22 @@ function WatchlistView({ onOpen, watchlist, onToggle, onClear, onBrowse }) {
           <h1>My List<span className="pv-zh">收藏</span></h1>
           {saved.length > 0 && (
             <p className="pv-lead">
-              {saved.length} {saved.length===1?'film':'films'} saved
-              {totalRuntime > 0 && <> · {hours>0 && `${hours}h `}{mins}m of cinema</>}
-              <span className="wl-note"> · saved on this device</span>
+              {isZh
+                ? <>已收藏 {saved.length} 部{totalRuntime > 0 && <> · 约 {hours>0 && `${hours}小时`}{mins}分钟</>}<span className="wl-note"> · 仅保存在本设备</span></>
+                : <>{saved.length} {saved.length===1?'film':'films'} saved{totalRuntime > 0 && <> · {hours>0 && `${hours}h `}{mins}m of cinema</>}<span className="wl-note"> · saved on this device</span></>
+              }
             </p>
           )}
         </div>
-        {saved.length > 0 && <button className="wl-clear mono" onClick={onClear}>Clear list ×</button>}
+        {saved.length > 0 && <button className="wl-clear mono" onClick={onClear}>{isZh ? '清空 ×' : 'Clear list ×'}</button>}
       </div>
       {saved.length === 0 ? (
         <div className="wl-empty">
-          <div className="big">Your list is empty.</div>
-          <p>Tap the <span className="wl-inline-icon"><BookmarkIcon /></span> on any film to save it here for the festival.</p>
-          <button className="wl-browse mono" onClick={onBrowse}>Browse the programme →</button>
+          <div className="big">{isZh ? '收藏单还是空的。' : 'Your list is empty.'}</div>
+          {isZh
+            ? <p>点击任意影片海报上的 <span className="wl-inline-icon"><BookmarkIcon /></span> 收藏按钮即可加入此处。</p>
+            : <p>Tap the <span className="wl-inline-icon"><BookmarkIcon /></span> on any film to save it here for the festival.</p>}
+          <button className="wl-browse mono" onClick={onBrowse}>{isZh ? '浏览展映单元 →' : 'Browse the programme →'}</button>
         </div>
       ) : (
         <div className="grid wl-grid">
@@ -418,7 +424,7 @@ function WatchlistView({ onOpen, watchlist, onToggle, onClear, onBrowse }) {
 }
 
 /* ---------- Modal ---------- */
-function Modal({ film, onClose, onPickProgram, saved, onToggle, planEntries, onRemovePlan, onAddPlan }) {
+function Modal({ lang, film, onClose, onPickProgram, saved, onToggle, planEntries, onRemovePlan, onAddPlan }) {
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', onKey);
@@ -457,11 +463,13 @@ function Modal({ film, onClose, onPickProgram, saved, onToggle, planEntries, onR
             {film.synopsis_en ? <p>{film.synopsis_en}</p> : <p className="muted">Synopsis to be published. · 简介待补。</p>}
             {film.synopsis_zh && <p className="zh">{film.synopsis_zh}</p>}
 
-            {prog && prog.blurb_en && (
+            {prog && (prog.blurb_en || prog.blurb_zh) && (
               <div className="prog-note">
                 <span className="k mono">In the program · 所属单元</span>
                 <button className="pn-name" onClick={()=>onPickProgram(film.program_id)}>{prog.title_en}</button>
-                <p>{prog.blurb_en}</p>
+                <div className="pn-name-zh">{prog.title_zh}</div>
+                {prog.blurb_en && <p className="pn-blurb">{prog.blurb_en}</p>}
+                {prog.blurb_zh && <p className="pn-blurb pn-blurb-zh">{prog.blurb_zh}</p>}
               </div>
             )}
           </div>
@@ -473,17 +481,17 @@ function Modal({ film, onClose, onPickProgram, saved, onToggle, planEntries, onR
 
             <button className={"modal-wl" + (saved ? ' on' : '')} onClick={()=>onToggle(film.id)}>
               <BookmarkIcon filled={saved} />
-              <span>{saved ? 'Saved to My List' : 'Add to My List'}</span>
+              <span>{lang === 'zh' ? (saved ? '已加入收藏' : '加入我的收藏') : (saved ? 'Saved to My List' : 'Add to My List')}</span>
             </button>
 
             {film.imdb_url && (
               <a className="imdb-link" href={film.imdb_url} target="_blank" rel="noopener noreferrer">
-                <span>View on IMDb</span><ExtIcon />
+                <span>{lang === 'zh' ? '在 IMDb 查看' : 'View on IMDb'}</span><ExtIcon />
               </a>
             )}
 
             <h3 style={{marginTop:24}}>My plan · 我的排片</h3>
-            <FilmPlanSection film={film} entries={planEntries} onRemove={onRemovePlan} onAdd={onAddPlan} />
+            <FilmPlanSection lang={lang} film={film} entries={planEntries} onRemove={onRemovePlan} onAdd={onAddPlan} />
           </div>
         </div>
       </div>
@@ -606,12 +614,13 @@ function App() {
       )}
 
       {active === 'watchlist' && (
-        <WatchlistView onOpen={setOpenFilm} watchlist={watch.ids} onToggle={watch.toggle}
+        <WatchlistView lang={lang} onOpen={setOpenFilm} watchlist={watch.ids} onToggle={watch.toggle}
                        onClear={watch.clear} onBrowse={() => navigate('programs')} />
       )}
 
       {active === 'plan' && (
         <CalendarView
+          lang={lang}
           entries={plan.entries}
           onRemove={plan.remove}
           onClear={plan.clear}
@@ -622,12 +631,13 @@ function App() {
       )}
 
       <Footer />
-      {openFilm && <Modal film={openFilm} onClose={() => setOpenFilm(null)} onPickProgram={pickProgram}
+      {openFilm && <Modal lang={lang} film={openFilm} onClose={() => setOpenFilm(null)} onPickProgram={pickProgram}
                           saved={watch.ids.has(openFilm.id)} onToggle={watch.toggle}
                           planEntries={plan.entries} onRemovePlan={plan.remove}
                           onAddPlan={(f) => openPicker({ film: f })} />}
       {picker && (
         <EntryPicker
+          lang={lang}
           preset={picker}
           watchIds={watch.ids}
           onClose={() => setPicker(null)}

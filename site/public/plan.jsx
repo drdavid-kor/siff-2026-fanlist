@@ -84,8 +84,9 @@ function EntryChip({ entry, onOpenFilm, onRemove }) {
 }
 
 /* ============ Calendar planner ============ */
-function CalendarView({ entries, onRemove, onClear, onAddSlot, onAddOpen, onOpenFilm }) {
+function CalendarView({ lang, entries, onRemove, onClear, onAddSlot, onAddOpen, onOpenFilm }) {
   const [mode, setMode] = _useState('grid');
+  const isZh = lang === 'zh';
   const byCell = _useMemo(() => {
     const m = {};
     entries.forEach(e => { const k = e.dayIndex + '|' + e.slot; (m[k] = m[k] || []).push(e); });
@@ -111,17 +112,21 @@ function CalendarView({ entries, onRemove, onClear, onAddSlot, onAddOpen, onOpen
           <h1>My Plan<span className="pv-zh">行程</span></h1>
           <p className="pv-lead">
             {entries.length === 0
-              ? <>Add a film + theatre to any slot below. We don't have the official grid — <b>this calendar is yours to fill</b>.</>
-              : <>{entries.length} {entries.length === 1 ? 'screening' : 'screenings'} across {dayCount} {dayCount === 1 ? 'day' : 'days'}{totalRuntime > 0 && <> · {hours > 0 && `${hours}h `}{mins}m of cinema</>}<span className="wl-note"> · saved on this device</span></>}
+              ? (isZh
+                  ? <>在下方任意时段添加影片 + 影院。官方排片尚未公布 —— <b>这张日历由你自己填写</b>。</>
+                  : <>Add a film + theatre to any slot below. We don't have the official grid — <b>this calendar is yours to fill</b>.</>)
+              : (isZh
+                  ? <>已排 {entries.length} 场，共 {dayCount} 天{totalRuntime > 0 && <> · 约 {hours > 0 && `${hours}小时`}{mins}分钟</>}<span className="wl-note"> · 仅保存在本设备</span></>
+                  : <>{entries.length} {entries.length === 1 ? 'screening' : 'screenings'} across {dayCount} {dayCount === 1 ? 'day' : 'days'}{totalRuntime > 0 && <> · {hours > 0 && `${hours}h `}{mins}m of cinema</>}<span className="wl-note"> · saved on this device</span></>)}
           </p>
         </div>
         <div className="cal-head-actions">
           <div className="cal-modes">
-            <button className={mode === 'grid' ? 'on' : ''} onClick={() => setMode('grid')}>Grid</button>
-            <button className={mode === 'agenda' ? 'on' : ''} onClick={() => setMode('agenda')}>Agenda</button>
+            <button className={mode === 'grid' ? 'on' : ''} onClick={() => setMode('grid')}>{isZh ? '日历' : 'Grid'}</button>
+            <button className={mode === 'agenda' ? 'on' : ''} onClick={() => setMode('agenda')}>{isZh ? '行程' : 'Agenda'}</button>
           </div>
-          <button className="cal-add-btn" onClick={() => onAddOpen()}><PlusIcon /> Add screening</button>
-          {entries.length > 0 && <button className="wl-clear mono" onClick={onClear}>Clear ×</button>}
+          <button className="cal-add-btn" onClick={() => onAddOpen()}><PlusIcon /> {isZh ? '添加场次' : 'Add screening'}</button>
+          {entries.length > 0 && <button className="wl-clear mono" onClick={onClear}>{isZh ? '清空 ×' : 'Clear ×'}</button>}
         </div>
       </div>
 
@@ -131,9 +136,9 @@ function CalendarView({ entries, onRemove, onClear, onAddSlot, onAddOpen, onOpen
             <div className="cal-corner mono">SIFF</div>
             {P_DATES.map(d => (
               <div key={d.index} className={"cal-dayhead" + (d.weekend ? ' weekend' : '')}>
-                <span className="cdh-dow mono">{d.dow}</span>
+                <span className="cdh-dow mono">{isZh ? '周' + d.dowZh : d.dow}</span>
                 <span className="cdh-d">{d.day}</span>
-                <span className="cdh-mon mono">Jun</span>
+                <span className="cdh-mon mono">{isZh ? '6月' : 'Jun'}</span>
               </div>
             ))}
             {P_SLOTS.map(s => (
@@ -141,7 +146,7 @@ function CalendarView({ entries, onRemove, onClear, onAddSlot, onAddOpen, onOpen
                 <div className="cal-slotlabel">
                   <span className="csl-time mono">{s.start}</span>
                   <span className="csl-time-end mono">{s.end}</span>
-                  <span className="csl-label">{s.label}</span>
+                  <span className="csl-label">{isZh ? s.labelZh : s.label}</span>
                 </div>
                 {P_DATES.map(d => {
                   const cell = byCell[d.index + '|' + s.index] || [];
@@ -149,7 +154,7 @@ function CalendarView({ entries, onRemove, onClear, onAddSlot, onAddOpen, onOpen
                     <div key={d.index} className={"cal-cell" + (cell.length ? ' filled' : '') + (d.weekend ? ' weekend' : '')}>
                       {cell.map(e => <EntryChip key={e.id} entry={e} onOpenFilm={onOpenFilm} onRemove={onRemove} />)}
                       <button className="cal-add" onClick={() => onAddSlot(d.index, s.index)}>
-                        <PlusIcon /><span>{cell.length ? 'add' : ''}</span>
+                        <PlusIcon /><span>{cell.length ? (isZh ? '添加' : 'add') : ''}</span>
                       </button>
                     </div>
                   );
@@ -157,14 +162,16 @@ function CalendarView({ entries, onRemove, onClear, onAddSlot, onAddOpen, onOpen
               </React.Fragment>
             ))}
           </div>
-          <div className="cal-hint mono">Scroll sideways for all 10 days · click any ＋ to plan a screening</div>
+          <div className="cal-hint mono">{isZh ? '横向滑动查看 10 天 · 点击任意 ＋ 添加场次' : 'Scroll sideways for all 10 days · click any ＋ to plan a screening'}</div>
         </div>
       ) : (
         entries.length === 0 ? (
           <div className="wl-empty">
-            <div className="big">Your calendar is empty.</div>
-            <p>Use <b>Add screening</b>, or open any film and add it to a slot. Your plan builds up here day by day.</p>
-            <button className="wl-browse mono" onClick={() => onAddOpen()}><PlusIcon /> Add your first screening</button>
+            <div className="big">{isZh ? '日历还是空的。' : 'Your calendar is empty.'}</div>
+            {isZh
+              ? <p>点击 <b>添加场次</b>，或在影片弹窗里加入到某个时段。你的排片会在这里按天展开。</p>
+              : <p>Use <b>Add screening</b>, or open any film and add it to a slot. Your plan builds up here day by day.</p>}
+            <button className="wl-browse mono" onClick={() => onAddOpen()}><PlusIcon /> {isZh ? '添加第一场' : 'Add your first screening'}</button>
           </div>
         ) : (
           <div className="plan-days">
@@ -173,10 +180,10 @@ function CalendarView({ entries, onRemove, onClear, onAddSlot, onAddOpen, onOpen
               return (
                 <div key={di} className="plan-day">
                   <div className="plan-day-head">
-                    <span className="pd-dow mono">{d.dow}</span>
-                    <span className="pd-date">June {d.day}</span>
-                    <span className="pd-zh zh">周{d.dowZh}</span>
-                    <span className="pd-count mono">{list.length} {list.length === 1 ? 'film' : 'films'}</span>
+                    <span className="pd-dow mono">{isZh ? '周' + d.dowZh : d.dow}</span>
+                    <span className="pd-date">{isZh ? `6月${d.day}日` : `June ${d.day}`}</span>
+                    {!isZh && <span className="pd-zh zh">周{d.dowZh}</span>}
+                    <span className="pd-count mono">{isZh ? `${list.length} 部` : `${list.length} ${list.length === 1 ? 'film' : 'films'}`}</span>
                   </div>
                   <div className="plan-rows">
                     {list.map(e => {
@@ -210,7 +217,8 @@ function CalendarView({ entries, onRemove, onClear, onAddSlot, onAddOpen, onOpen
 }
 
 /* ============ Entry picker (manual film + day/slot + theatre) ============ */
-function EntryPicker({ preset, watchIds, onClose, onConfirm }) {
+function EntryPicker({ lang, preset, watchIds, onClose, onConfirm }) {
+  const isZh = lang === 'zh';
   const [filmId, setFilmId] = _useState(preset.film ? preset.film.id : null);
   const [dayIndex, setDayIndex] = _useState(preset.day != null ? preset.day : null);
   const [slot, setSlot] = _useState(preset.slot != null ? preset.slot : null);
@@ -256,8 +264,8 @@ function EntryPicker({ preset, watchIds, onClose, onConfirm }) {
         <button className="close" onClick={onClose} aria-label="Close">×</button>
         <div className="picker-head">
           <div className="pv-eyebrow mono">Plan a screening · 添加场次</div>
-          <h2>{film ? film.title_en : 'New screening'}</h2>
-          {film && <div className="picker-head-zh zh">{film.title_zh}</div>}
+          <h2>{film ? (isZh ? film.title_zh : film.title_en) : (isZh ? '新场次' : 'New screening')}</h2>
+          {film && <div className="picker-head-zh zh">{isZh ? film.title_en : film.title_zh}</div>}
         </div>
 
         <div className="picker-body">
@@ -267,7 +275,7 @@ function EntryPicker({ preset, watchIds, onClose, onConfirm }) {
               <PSearch />
               <input value={filmQ} onChange={e => setFilmQ(e.target.value)} placeholder={`Search ${P_FILMS.length} films…  搜索影片`} />
             </div>
-            {showingSaved && <div className="pk-listnote mono">From your list · 我的收藏</div>}
+            {showingSaved && <div className="pk-listnote mono">{isZh ? '来自我的收藏' : 'From your list · 我的收藏'}</div>}
             <div className="pk-film-list">
               {filmResults.map(f => {
                 const prog = P_PROG_BY_ID[f.program_id];
@@ -284,7 +292,7 @@ function EntryPicker({ preset, watchIds, onClose, onConfirm }) {
                   </button>
                 );
               })}
-              {filmResults.length === 0 && <div className="pk-empty mono">No films match “{filmQ}”.</div>}
+              {filmResults.length === 0 && <div className="pk-empty mono">{isZh ? `未找到匹配 “${filmQ}” 的影片。` : `No films match “${filmQ}”.`}</div>}
             </div>
           </section>
 
@@ -337,7 +345,7 @@ function EntryPicker({ preset, watchIds, onClose, onConfirm }) {
                   {t.id === theatreId && <span className="pk-thea-check"><CheckIcon /></span>}
                 </button>
               ))}
-              {theatreResults.length === 0 && <div className="pk-empty mono">No venues match.</div>}
+              {theatreResults.length === 0 && <div className="pk-empty mono">{isZh ? '未找到匹配的场馆。' : 'No venues match.'}</div>}
             </div>
           </section>
         </div>
@@ -346,16 +354,18 @@ function EntryPicker({ preset, watchIds, onClose, onConfirm }) {
           <div className="pk-summary">
             {ready ? (
               <span className="mono">
-                {film.title_en} · {P_DATES[dayIndex].dow} {P_DATES[dayIndex].day} · {slotTime(slot)} · {P_THEATRE[theatreId].nameEn}
+                {isZh ? film.title_zh : film.title_en} · {isZh ? '周'+P_DATES[dayIndex].dowZh : P_DATES[dayIndex].dow} {P_DATES[dayIndex].day} · {slotTime(slot)} · {isZh ? P_THEATRE[theatreId].nameZh : P_THEATRE[theatreId].nameEn}
               </span>
             ) : (
               <span className="pk-summary-todo mono">
-                {[!filmId && 'film', dayIndex == null && 'day', slot == null && 'time', !theatreId && 'theatre'].filter(Boolean).join(' · ') || ''} still to choose
+                {isZh
+                  ? ([!filmId && '影片', dayIndex == null && '日期', slot == null && '时段', !theatreId && '场馆'].filter(Boolean).join(' · ') + ' 待选择')
+                  : ([!filmId && 'film', dayIndex == null && 'day', slot == null && 'time', !theatreId && 'theatre'].filter(Boolean).join(' · ') + ' still to choose')}
               </span>
             )}
           </div>
           <button className={"pk-confirm" + (ready ? '' : ' off')} disabled={!ready} onClick={confirm}>
-            <TicketIcon filled /> Add to plan
+            <TicketIcon filled /> {isZh ? '加入排片' : 'Add to plan'}
           </button>
         </div>
       </div>
@@ -364,7 +374,8 @@ function EntryPicker({ preset, watchIds, onClose, onConfirm }) {
 }
 
 /* ============ Per-film plan section (inside the film modal) ============ */
-function FilmPlanSection({ film, entries, onRemove, onAdd }) {
+function FilmPlanSection({ lang, film, entries, onRemove, onAdd }) {
+  const isZh = lang === 'zh';
   const mine = entries.filter(e => e.filmId === film.id).sort((a, b) => (a.dayIndex - b.dayIndex) || (a.slot - b.slot));
   return (
     <div className="fps">
@@ -374,18 +385,20 @@ function FilmPlanSection({ film, entries, onRemove, onAdd }) {
             const d = P_DATES[e.dayIndex]; const t = P_THEATRE[e.theatreId];
             return (
               <div key={e.id} className="fps-row">
-                <span className="fps-when mono"><b>{d.dow}</b> {d.day} · {slotTime(e.slot)}</span>
-                <span className="fps-venue"><PinIcon /> {t ? t.nameEn : '—'}</span>
-                <button className="fps-x" title="Remove" onClick={() => onRemove(e.id)}>×</button>
+                <span className="fps-when mono"><b>{isZh ? '周' + d.dowZh : d.dow}</b> {d.day} · {slotTime(e.slot)}</span>
+                <span className="fps-venue"><PinIcon /> {t ? (isZh ? t.nameZh : t.nameEn) : '—'}</span>
+                <button className="fps-x" title={isZh ? '移除' : 'Remove'} onClick={() => onRemove(e.id)}>×</button>
               </div>
             );
           })}
         </div>
       )}
       <button className="fps-add" onClick={() => onAdd(film)}>
-        <PlusIcon /> {mine.length ? 'Add another screening' : 'Add to my plan'}
+        <PlusIcon /> {isZh
+          ? (mine.length ? '再加一场' : '加入我的排片')
+          : (mine.length ? 'Add another screening' : 'Add to my plan')}
       </button>
-      {mine.length === 0 && <div className="fps-note mono">Pick a day, time &amp; theatre — you set the schedule.</div>}
+      {mine.length === 0 && <div className="fps-note mono">{isZh ? '挑日期、时段与影院 —— 排片由你说了算。' : 'Pick a day, time & theatre — you set the schedule.'}</div>}
     </div>
   );
 }
