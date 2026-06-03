@@ -10,6 +10,7 @@ A fan-made bilingual showcase of the 28th Shanghai International Film Festival (
 ```bash
 cd site
 python3 scripts/parse_csv.py      # CSV → JSON
+python3 scripts/parse_schedule.py # cndata-*.json → public/schedule-data.js  (+ adds new films / programs / venues)
 python3 scripts/build_data.py     # JSON → public/data.js
 open public/index.html            # or `python3 -m http.server -d public 8000`
 ```

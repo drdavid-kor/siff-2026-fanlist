@@ -1,8 +1,8 @@
-/* SIFF 2026 — personal calendar planner.
-   No real showtimes exist, so the user fills the grid themselves: for any day × slot
-   they add one or more (film + theatre) entries. Everything persists on-device. */
+/* SIFF 2026 — schedule browser + conflict-aware personal plan.
+   Driven by the real festival grid (window.SIFF_SCREENINGS). The plan stores
+   real screening ids; overlaps are detected from runtimes. Persists on-device. */
 
-const { useState: _useState, useMemo: _useMemo, useCallback: _useCallback } = React;
+const { useState: _useState, useMemo: _useMemo, useCallback: _useCallback, useEffect: _useEffect, useRef: _useRef } = React;
 
 const P_FILMS = window.SIFF_DATA.films;
 const P_PROGS = window.SIFF_DATA.programs;
@@ -10,18 +10,58 @@ const P_FILM_BY_ID = Object.fromEntries(P_FILMS.map(f => [f.id, f]));
 const P_PROG_BY_ID = Object.fromEntries(P_PROGS.map(p => [p.id, p]));
 const P_DATES = window.SIFF_DATES;
 const P_SLOTS = window.SIFF_SLOTS;
-const P_THEATRES = window.SIFF_THEATRES;
 const P_THEATRE = window.SIFF_THEATRE_BY_ID;
-const P_FILMS_AZ = P_FILMS.slice().sort((a, b) => (a.title_en || '').localeCompare(b.title_en || ''));
+const P_SCREENINGS = window.SIFF_SCREENINGS || [];
+const P_SCR_BY_ID = Object.fromEntries(P_SCREENINGS.map(s => [s.id, s]));
+const P_SCR_BY_FILM = window.SIFF_SCREENINGS_BY_FILM || {};
 
-const slotTime = (s) => `${P_SLOTS[s].start}–${P_SLOTS[s].end}`;
-const entryId = (filmId, d, s, t) => `${filmId}@${d}-${s}-${t}`;
+const P_SCR_BY_DAY = (() => {
+  const m = {};
+  P_SCREENINGS.forEach(s => { (m[s.di] = m[s.di] || []).push(s); });
+  Object.values(m).forEach(l => l.sort((a, b) => a.m - b.m));
+  return m;
+})();
+const P_DAY_COUNT = P_DATES.map(d => (P_SCR_BY_DAY[d.index] || []).length);
 
 const P_REGIONS = (() => {
-  const seen = new Map();
-  P_THEATRES.forEach(t => { if (!seen.has(t.region)) seen.set(t.region, t.city); });
-  return [...seen.keys()];
+  const order = [];
+  P_SCREENINGS.forEach(s => {
+    const t = P_THEATRE[s.th];
+    if (t && !order.includes(t.region)) order.push(t.region);
+  });
+  return order.sort((a, b) => a.localeCompare(b));
 })();
+
+const FMT_OPTS = (() => {
+  const set = new Set();
+  P_SCREENINGS.forEach(s => { if (s.fmt) set.add(s.fmt); });
+  return [...set].sort();
+})();
+
+const runtimeOf = (filmId) => {
+  const f = P_FILM_BY_ID[filmId];
+  return (f && f.runtime) ? f.runtime : 120;
+};
+const endMin = (s) => s.m + runtimeOf(s.f);
+const fmtMin = (m) => `${String(Math.floor(m / 60) % 24).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+const bandOf = (m) => (m < 12 * 60 ? 0 : m < 15 * 60 ? 1 : m < 18 * 60 ? 2 : m < 21 * 60 ? 3 : 4);
+const overlaps = (a, b) => a.di === b.di && a.m < endMin(b) && b.m < endMin(a);
+
+/* set of screening ids in `ids` that clash with at least one other in `ids` */
+function clashSet(ids) {
+  const list = ids.map(id => P_SCR_BY_ID[id]).filter(Boolean);
+  const bad = new Set();
+  for (let i = 0; i < list.length; i++) {
+    for (let j = i + 1; j < list.length; j++) {
+      if (overlaps(list[i], list[j])) { bad.add(list[i].id); bad.add(list[j].id); }
+    }
+  }
+  return bad;
+}
+
+const titleEnOf = (f) => f.title_en || f.title_zh || '';
+const titleZhOf = (f) => f.title_zh || '';
+const shortProg = (p) => p.short_en || p.title_en || '';
 
 /* ---------- Icons ---------- */
 const TicketIcon = ({ filled }) => (
@@ -37,370 +77,445 @@ const PinIcon = () => (
 const PlusIcon = () => (
   <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M8 3v10M3 8h10"/></svg>
 );
-const PSearch = () => (
-  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4"><circle cx="7" cy="7" r="5"/><path d="M11 11l4 4"/></svg>
-);
 const CheckIcon = () => (
   <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M3 8.5l3.2 3L13 5"/></svg>
 );
+const WarnIcon = () => (
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M8 2l6 11H2z" strokeLinejoin="round"/><path d="M8 6.5v3M8 11.3v.1"/></svg>
+);
+const PSearchIcon = () => (
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4"><circle cx="7" cy="7" r="5"/><path d="M11 11l4 4"/></svg>
+);
 
-/* ---------- Persisted plan (array of entries) ---------- */
+/* ---------- Persisted plan (array of screening ids) ---------- */
 function usePlan() {
-  const KEY = 'siff2026-plan-v2';
-  const [entries, setEntries] = _useState(() => {
-    try { const a = JSON.parse(localStorage.getItem(KEY) || '[]'); return Array.isArray(a) ? a : []; }
-    catch (e) { return []; }
+  const KEY = 'siff2026-plan-v3';
+  const [ids, setIds] = _useState(() => {
+    try {
+      const a = JSON.parse(localStorage.getItem(KEY) || '[]');
+      return Array.isArray(a) ? a.filter(id => P_SCR_BY_ID[id]) : [];
+    } catch (e) { return []; }
   });
   const save = (next) => { try { localStorage.setItem(KEY, JSON.stringify(next)); } catch (e) {} };
-  const add = _useCallback((e) => {
-    const id = entryId(e.filmId, e.dayIndex, e.slot, e.theatreId);
-    setEntries(prev => {
-      if (prev.some(x => x.id === id)) return prev;
-      const next = [...prev, { id, filmId: e.filmId, dayIndex: e.dayIndex, slot: e.slot, theatreId: e.theatreId }];
-      save(next); return next;
+  const toggle = _useCallback((sid) => {
+    setIds(prev => {
+      const next = prev.includes(sid) ? prev.filter(x => x !== sid) : [...prev, sid];
+      save(next);
+      return next;
     });
   }, []);
-  const remove = _useCallback((id) => {
-    setEntries(prev => { const next = prev.filter(x => x.id !== id); save(next); return next; });
+  const remove = _useCallback((sid) => {
+    setIds(prev => { const next = prev.filter(x => x !== sid); save(next); return next; });
   }, []);
-  const clear = _useCallback(() => { setEntries([]); save([]); }, []);
-  return { entries, add, remove, clear };
+  const clear = _useCallback(() => { setIds([]); save([]); }, []);
+  const has = _useCallback((sid) => ids.includes(sid), [ids]);
+  return { ids, toggle, remove, clear, has };
 }
 
-/* ============ Entry chip (used in calendar cells) ============ */
-function EntryChip({ entry, onOpenFilm, onRemove }) {
-  const f = P_FILM_BY_ID[entry.filmId];
-  const t = P_THEATRE[entry.theatreId];
-  if (!f) return null;
+/* ============ Showtime list inside the film modal ============ */
+function FilmShowtimes({ film, planIds, onToggle, lang }) {
+  const list = (P_SCR_BY_FILM[film.id] || []).map(id => P_SCR_BY_ID[id]).filter(Boolean);
+  const planScr = planIds.map(id => P_SCR_BY_ID[id]).filter(Boolean);
+  const isZh = lang === 'zh';
+  if (list.length === 0) {
+    return (
+      <div className="fps-note mono" style={{ marginTop: 4 }}>
+        {isZh ? '暂无公开场次' : 'No public showtimes listed yet · 暂无公开场次'}
+      </div>
+    );
+  }
   return (
-    <div className="cal-chip" style={{ '--pc': f.color }}>
-      <button className="cal-chip-main" onClick={() => onOpenFilm(f)}>
-        <span className="cc-title">{f.title_en}</span>
-        <span className="cc-venue"><PinIcon /> {t ? t.nameEn : '—'}</span>
-      </button>
-      <button className="cal-chip-x" title="Remove" onClick={() => onRemove(entry.id)}>×</button>
+    <div className="sc-picks">
+      {list.map(s => {
+        const d = P_DATES[s.di];
+        const t = P_THEATRE[s.th];
+        const inPlan = planIds.includes(s.id);
+        const clash = !inPlan && planScr.some(p => p.f !== s.f && overlaps(p, s));
+        const clashWith = clash ? planScr.find(p => p.f !== s.f && overlaps(p, s)) : null;
+        const clashFilm = clashWith ? P_FILM_BY_ID[clashWith.f] : null;
+        return (
+          <div key={s.id} className={"sc-pick" + (inPlan ? ' in' : '')}>
+            <div className="sc-pick-when">
+              <span className="sc-date"><b>{d.dow}</b> {d.day}<span className="sc-jun">Jun</span></span>
+              <span className="sc-time mono">{s.t}–{fmtMin(endMin(s))}</span>
+            </div>
+            <div className="sc-pick-act">
+              {clash && (
+                <span className="sc-clash" title={'Overlaps ' + (clashFilm ? titleEnOf(clashFilm) : '')}>
+                  <WarnIcon /> {isZh ? '冲突' : 'clash'}
+                </span>
+              )}
+              <button className={"sc-add" + (inPlan ? ' on' : '')} onClick={() => onToggle(s.id)}>
+                {inPlan
+                  ? <><CheckIcon /> {isZh ? '已加入' : 'In plan'}</>
+                  : <><PlusIcon /> {isZh ? '加入' : 'Add'}</>}
+              </button>
+            </div>
+            <div className="sc-pick-mid">
+              <span className="sc-venue">
+                <PinIcon />
+                <span className="sc-venue-name">{t ? t.nameEn : '—'}</span>
+                <span className="sc-venue-region">{t ? t.region + (t.city !== 'Shanghai' ? ' · ' + t.city : '') : ''}</span>
+              </span>
+              {s.fmt && <span className="sc-fmt">{s.fmt}</span>}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
 
-/* ============ Calendar planner ============ */
-function CalendarView({ lang, entries, onRemove, onClear, onAddSlot, onAddOpen, onOpenFilm }) {
-  const [mode, setMode] = _useState('grid');
+/* ============ A single card in the schedule browser ============ */
+function ScheduleCard({ scr, inPlan, clash, onOpenFilm, onToggle }) {
+  const f = P_FILM_BY_ID[scr.f];
+  if (!f) return null;
+  const t = P_THEATRE[scr.th];
+  const prog = P_PROG_BY_ID[f.program_id];
+  const showImg = !!f.poster_url;
+  return (
+    <div className={"sc-card" + (inPlan ? ' in' : '') + (clash ? ' clash' : '')}>
+      <button className="sc-card-main" onClick={() => onOpenFilm(f)}>
+        <span className="sc-card-poster" style={{ backgroundColor: f.color }}>
+          {showImg && <img src={f.poster_url} alt="" loading="lazy" />}
+        </span>
+        <span className="sc-card-text">
+          <span className="sc-card-time mono">
+            {scr.t}
+            <span className="sct-end">→{fmtMin(endMin(scr))}</span>
+            {scr.fmt && <span className="sc-fmt">{scr.fmt}</span>}
+          </span>
+          <span className="sc-card-title">{titleEnOf(f)}</span>
+          <span className="sc-card-zh zh">{titleZhOf(f)}</span>
+          <span className="sc-card-venue"><PinIcon /> {t ? t.nameEn : '—'}</span>
+          <span className="sc-card-tags">
+            <span className="sc-card-region">{t ? t.region : ''}</span>
+            {prog && <span className="sc-card-prog">{shortProg(prog)}</span>}
+          </span>
+        </span>
+      </button>
+      <button
+        className={"sc-card-add" + (inPlan ? ' on' : '')}
+        title={inPlan ? 'Remove from plan' : (clash ? 'Add (overlaps a planned film)' : 'Add to plan')}
+        onClick={() => onToggle(scr.id)}
+      >
+        {inPlan ? <CheckIcon /> : <PlusIcon />}
+      </button>
+    </div>
+  );
+}
+
+/* ============ Today's-clash banner ============ */
+function TodaysClashBanner({ clashIds, dObj, isZh }) {
+  if (!clashIds || clashIds.size === 0) return null;
+  const n = Math.max(1, Math.ceil(clashIds.size / 2));
+  return (
+    <div className="plan-conflict-banner" style={{ margin: '0 var(--pad)' }}>
+      <WarnIcon />
+      <span>
+        <b>{n}</b>{' '}
+        {isZh
+          ? <>个时间冲突 · {dObj.dow} {dObj.day}</>
+          : <>overlap{n === 1 ? '' : 's'} in your plan on {dObj.dow} {dObj.day}</>}
+      </span>
+      {!isZh && <span className="pcb-zh zh">该日行程有时间冲突</span>}
+    </div>
+  );
+}
+
+/* ============ Schedule browser (browse by day) ============ */
+function ScheduleView({ lang, planIds, onToggle, onOpenFilm }) {
   const isZh = lang === 'zh';
-  const byCell = _useMemo(() => {
+  const [day, setDay] = _useState(() => {
+    const firstWith = P_DATES.find(d => (P_SCR_BY_DAY[d.index] || []).length);
+    return firstWith ? firstWith.index : 0;
+  });
+  const [region, setRegion] = _useState('');
+  const [fmt, setFmt] = _useState('');
+  const [listOnly, setListOnly] = _useState(false);
+  const [q, setQ] = _useState('');
+  const railRef = _useRef(null);
+
+  const planScr = _useMemo(() => planIds.map(id => P_SCR_BY_ID[id]).filter(Boolean), [planIds]);
+  const planByDay = _useMemo(() => {
     const m = {};
-    entries.forEach(e => { const k = e.dayIndex + '|' + e.slot; (m[k] = m[k] || []).push(e); });
+    planScr.forEach(s => { (m[s.di] = m[s.di] || []).push(s); });
     return m;
-  }, [entries]);
+  }, [planScr]);
 
-  const dayCount = _useMemo(() => new Set(entries.map(e => e.dayIndex)).size, [entries]);
-  const totalRuntime = entries.reduce((s, e) => s + (P_FILM_BY_ID[e.filmId]?.runtime || 0), 0);
-  const hours = Math.floor(totalRuntime / 60), mins = totalRuntime % 60;
+  const dayScr = P_SCR_BY_DAY[day] || [];
+  const filtered = _useMemo(() => {
+    const query = q.trim().toLowerCase();
+    return dayScr.filter(s => {
+      const t = P_THEATRE[s.th];
+      const f = P_FILM_BY_ID[s.f];
+      if (!f) return false;
+      if (region && (!t || t.region !== region)) return false;
+      if (fmt && s.fmt !== fmt) return false;
+      if (listOnly && !planIds.includes(s.id)) return false;
+      if (query) {
+        const prog = P_PROG_BY_ID[f.program_id];
+        const hay = [
+          f.title_en, f.title_zh, f.director, f.director_zh,
+          t && t.nameEn, t && t.nameZh,
+          prog && shortProg(prog),
+        ].filter(Boolean).join(' ').toLowerCase();
+        if (!hay.includes(query)) return false;
+      }
+      return true;
+    });
+  }, [dayScr, region, fmt, listOnly, q, planIds]);
 
-  const agendaDays = _useMemo(() => {
-    const m = {};
-    entries.forEach(e => { (m[e.dayIndex] = m[e.dayIndex] || []).push(e); });
-    return Object.keys(m).map(Number).sort((a, b) => a - b)
-      .map(di => ({ di, list: m[di].slice().sort((a, b) => a.slot - b.slot) }));
-  }, [entries]);
+  const bands = _useMemo(() => {
+    const b = P_SLOTS.map(s => ({ slot: s, list: [] }));
+    filtered.forEach(s => b[bandOf(s.m)].list.push(s));
+    b.forEach(x => x.list.sort((a, c) => a.m - c.m || titleEnOf(P_FILM_BY_ID[a.f]).localeCompare(titleEnOf(P_FILM_BY_ID[c.f]))));
+    return b;
+  }, [filtered]);
+
+  const dObj = P_DATES[day];
+  const todaysPlanClash = _useMemo(
+    () => clashSet((planByDay[day] || []).map(s => s.id)),
+    [planByDay, day],
+  );
+  const cardClash = (s) => !planIds.includes(s.id) && (planByDay[day] || []).some(p => p.f !== s.f && overlaps(p, s));
+
+  const anyFilter = region || fmt || listOnly || q.trim();
+
+  const totalFilms = Object.keys(P_SCR_BY_FILM).length;
 
   return (
-    <section className="cal-view">
-      <div className="wl-head">
-        <div className="wl-head-left">
-          <div className="pv-eyebrow mono">Build your own schedule · 自定义排片</div>
-          <h1>My Plan<span className="pv-zh">行程</span></h1>
-          <p className="pv-lead">
-            {entries.length === 0
-              ? (isZh
-                  ? <>在下方任意时段添加影片 + 影院。官方排片尚未公布 —— <b>这张日历由你自己填写</b>。</>
-                  : <>Add a film + theatre to any slot below. We don't have the official grid — <b>this calendar is yours to fill</b>.</>)
-              : (isZh
-                  ? <>已排 {entries.length} 场，共 {dayCount} 天{totalRuntime > 0 && <> · 约 {hours > 0 && `${hours}小时`}{mins}分钟</>}<span className="wl-note"> · 仅保存在本设备</span></>
-                  : <>{entries.length} {entries.length === 1 ? 'screening' : 'screenings'} across {dayCount} {dayCount === 1 ? 'day' : 'days'}{totalRuntime > 0 && <> · {hours > 0 && `${hours}h `}{mins}m of cinema</>}<span className="wl-note"> · saved on this device</span></>)}
-          </p>
+    <section className="sched-view">
+      <div className="sched-intro">
+        <div className="pv-eyebrow mono">{isZh ? '全部场次 · 排片表' : 'The festival grid · 全部场次'}</div>
+        <h1>Schedule<span className="pv-zh">排片表</span></h1>
+        <p className="pv-lead">
+          {isZh
+            ? <>{P_SCREENINGS.length.toLocaleString()} 场放映 · {totalFilms} 部影片 · 共 {P_DATES.length} 天。选择日期，点击 ＋ 加入排片。冲突会自动标记。</>
+            : <>{P_SCREENINGS.length.toLocaleString()} screenings of {totalFilms} films across {P_DATES.length} days. Browse a day, then tap ＋ to build your plan — overlaps are flagged automatically.</>}
+        </p>
+      </div>
+
+      {/* Day rail */}
+      <div className="day-pills" ref={railRef}>
+        {P_DATES.map(d => {
+          const planned = (planByDay[d.index] || []).length;
+          return (
+            <button
+              key={d.index}
+              className={"day-pill" + (d.index === day ? ' on' : '')}
+              onClick={() => setDay(d.index)}
+            >
+              <span className="dp-dow">{d.dow}</span>
+              <span className="dp-d">{d.day}</span>
+              <span className="dp-n">{P_DAY_COUNT[d.index]}{planned ? ' · ★' + planned : ''}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Sticky filters */}
+      <div className="sched-filters">
+        <div className="sched-day-label">
+          <span className="sdl-dow mono">{dObj.dow}</span>
+          <span className="sdl-d">{isZh ? `6月${dObj.day}日` : `June ${dObj.day}`}</span>
+          <span className="sdl-n">
+            {isZh
+              ? <>{filtered.length} / {dayScr.length} 场</>
+              : <>{filtered.length} of {dayScr.length} screenings</>}
+          </span>
         </div>
-        <div className="cal-head-actions">
-          <div className="cal-modes">
-            <button className={mode === 'grid' ? 'on' : ''} onClick={() => setMode('grid')}>{isZh ? '日历' : 'Grid'}</button>
-            <button className={mode === 'agenda' ? 'on' : ''} onClick={() => setMode('agenda')}>{isZh ? '行程' : 'Agenda'}</button>
+        <div className="sched-filter-controls">
+          <div className="search sched-search">
+            <PSearchIcon />
+            <input
+              value={q} onChange={e => setQ(e.target.value)}
+              placeholder={isZh ? '搜索影片、导演、影院…' : 'Film, director, venue…  搜索'}
+            />
           </div>
-          <button className="cal-add-btn" onClick={() => onAddOpen()}><PlusIcon /> {isZh ? '添加场次' : 'Add screening'}</button>
-          {entries.length > 0 && <button className="wl-clear mono" onClick={onClear}>{isZh ? '清空 ×' : 'Clear ×'}</button>}
+          <div className="select">
+            <select value={region} onChange={e => setRegion(e.target.value)}>
+              <option value="">{isZh ? '全部区域' : 'All districts / 全部区域'}</option>
+              {P_REGIONS.map(r => <option key={r} value={r}>{r}</option>)}
+            </select>
+          </div>
+          <div className="select">
+            <select value={fmt} onChange={e => setFmt(e.target.value)}>
+              <option value="">{isZh ? '全部格式' : 'Any format / 全部格式'}</option>
+              {FMT_OPTS.map(o => <option key={o} value={o}>{o}</option>)}
+            </select>
+          </div>
+          <button className={"sched-toggle" + (listOnly ? ' on' : '')} onClick={() => setListOnly(v => !v)}>
+            <TicketIcon filled={listOnly} /> {isZh ? '只看排片' : 'In my plan'}
+          </button>
+          {anyFilter && (
+            <button className="clear" onClick={() => { setRegion(''); setFmt(''); setListOnly(false); setQ(''); }}>
+              {isZh ? '清除 ×' : 'Clear ×'}
+            </button>
+          )}
         </div>
       </div>
 
-      {mode === 'grid' ? (
-        <div className="cal-wrap">
-          <div className="cal-grid" style={{ gridTemplateColumns: `78px repeat(${P_DATES.length}, minmax(148px, 1fr))` }}>
-            <div className="cal-corner mono">SIFF</div>
-            {P_DATES.map(d => (
-              <div key={d.index} className={"cal-dayhead" + (d.weekend ? ' weekend' : '')}>
-                <span className="cdh-dow mono">{isZh ? '周' + d.dowZh : d.dow}</span>
-                <span className="cdh-d">{d.day}</span>
-                <span className="cdh-mon mono">{isZh ? '6月' : 'Jun'}</span>
-              </div>
-            ))}
-            {P_SLOTS.map(s => (
-              <React.Fragment key={s.index}>
-                <div className="cal-slotlabel">
-                  <span className="csl-time mono">{s.start}</span>
-                  <span className="csl-time-end mono">{s.end}</span>
-                  <span className="csl-label">{isZh ? s.labelZh : s.label}</span>
-                </div>
-                {P_DATES.map(d => {
-                  const cell = byCell[d.index + '|' + s.index] || [];
-                  return (
-                    <div key={d.index} className={"cal-cell" + (cell.length ? ' filled' : '') + (d.weekend ? ' weekend' : '')}>
-                      {cell.map(e => <EntryChip key={e.id} entry={e} onOpenFilm={onOpenFilm} onRemove={onRemove} />)}
-                      <button className="cal-add" onClick={() => onAddSlot(d.index, s.index)}>
-                        <PlusIcon /><span>{cell.length ? (isZh ? '添加' : 'add') : ''}</span>
-                      </button>
-                    </div>
-                  );
-                })}
-              </React.Fragment>
-            ))}
+      <TodaysClashBanner clashIds={todaysPlanClash} dObj={dObj} isZh={isZh} />
+
+      {filtered.length === 0 ? (
+        <div className="sched-empty">
+          <div className="big">{isZh ? '今日无匹配。' : 'Nothing here.'}</div>
+          <div className="mono">
+            {listOnly
+              ? (isZh ? '该日尚未加入排片 · 无匹配场次' : 'No planned films on this day · 无匹配场次')
+              : (isZh ? '无匹配场次 · No screenings match your filters' : 'No screenings match your filters · 无匹配场次')}
           </div>
-          <div className="cal-hint mono">{isZh ? '横向滑动查看 10 天 · 点击任意 ＋ 添加场次' : 'Scroll sideways for all 10 days · click any ＋ to plan a screening'}</div>
         </div>
       ) : (
-        entries.length === 0 ? (
-          <div className="wl-empty">
-            <div className="big">{isZh ? '日历还是空的。' : 'Your calendar is empty.'}</div>
-            {isZh
-              ? <p>点击 <b>添加场次</b>，或在影片弹窗里加入到某个时段。你的排片会在这里按天展开。</p>
-              : <p>Use <b>Add screening</b>, or open any film and add it to a slot. Your plan builds up here day by day.</p>}
-            <button className="wl-browse mono" onClick={() => onAddOpen()}><PlusIcon /> {isZh ? '添加第一场' : 'Add your first screening'}</button>
+        bands.map(b => (
+          <div key={b.slot.index} className={"slot-band" + (b.list.length ? '' : ' empty')}>
+            <div className="slot-band-head">
+              <span className="sb-time mono">{b.slot.start}–{b.slot.end}</span>
+              <span className="sb-label">
+                {isZh ? b.slot.labelZh : <>{b.slot.label} <span className="zh">{b.slot.labelZh}</span></>}
+              </span>
+              <span className="sb-count mono">{b.list.length}</span>
+            </div>
+            {b.list.length === 0 ? (
+              <div className="slot-band-empty mono">— · —</div>
+            ) : (
+              <div className="sc-grid">
+                {b.list.map(s => (
+                  <ScheduleCard
+                    key={s.id} scr={s}
+                    inPlan={planIds.includes(s.id)}
+                    clash={cardClash(s)}
+                    onOpenFilm={onOpenFilm} onToggle={onToggle}
+                  />
+                ))}
+              </div>
+            )}
           </div>
-        ) : (
-          <div className="plan-days">
-            {agendaDays.map(({ di, list }) => {
-              const d = P_DATES[di];
-              return (
-                <div key={di} className="plan-day">
-                  <div className="plan-day-head">
-                    <span className="pd-dow mono">{isZh ? '周' + d.dowZh : d.dow}</span>
-                    <span className="pd-date">{isZh ? `6月${d.day}日` : `June ${d.day}`}</span>
-                    {!isZh && <span className="pd-zh zh">周{d.dowZh}</span>}
-                    <span className="pd-count mono">{isZh ? `${list.length} 部` : `${list.length} ${list.length === 1 ? 'film' : 'films'}`}</span>
-                  </div>
-                  <div className="plan-rows">
-                    {list.map(e => {
-                      const f = P_FILM_BY_ID[e.filmId]; const t = P_THEATRE[e.theatreId];
-                      const prog = P_PROG_BY_ID[f.program_id];
-                      return (
-                        <div key={e.id} className="plan-row">
-                          <div className="pr-time mono"><span className="pr-range">{slotTime(e.slot)}</span></div>
-                          <button className="pr-poster" onClick={() => onOpenFilm(f)} style={{ backgroundColor: f.color }}>
-                            {f.poster_url && <img src={f.poster_url} alt="" loading="lazy" />}
-                          </button>
-                          <button className="pr-body" onClick={() => onOpenFilm(f)}>
-                            <div className="pr-title">{f.title_en}</div>
-                            <div className="pr-zh zh">{f.title_zh}</div>
-                            <div className="pr-venue mono"><PinIcon /> {t ? t.nameEn : '—'} · {t ? t.region : ''}{t && t.city !== 'Shanghai' ? ' · ' + t.city : ''}</div>
-                            <div className="pr-meta">{prog && <span className="pr-prog">{prog.short_en}</span>}{f.runtime != null && <span className="mono">{f.runtime}′</span>}</div>
-                          </button>
-                          <button className="pr-remove" title="Remove" onClick={() => onRemove(e.id)}>×</button>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )
+        ))
       )}
     </section>
   );
 }
 
-/* ============ Entry picker (manual film + day/slot + theatre) ============ */
-function EntryPicker({ lang, preset, watchIds, onClose, onConfirm }) {
+/* ============ My Plan (agenda, conflict-aware) ============ */
+function PlanView({ lang, planIds, onRemove, onClear, onOpenFilm, onBrowse }) {
   const isZh = lang === 'zh';
-  const [filmId, setFilmId] = _useState(preset.film ? preset.film.id : null);
-  const [dayIndex, setDayIndex] = _useState(preset.day != null ? preset.day : null);
-  const [slot, setSlot] = _useState(preset.slot != null ? preset.slot : null);
-  const [theatreId, setTheatreId] = _useState(null);
-  const [filmQ, setFilmQ] = _useState('');
-  const [theaQ, setTheaQ] = _useState('');
-  const [region, setRegion] = _useState('');
+  const scr = _useMemo(() => planIds.map(id => P_SCR_BY_ID[id]).filter(Boolean), [planIds]);
+  const clash = _useMemo(() => clashSet(planIds), [planIds]);
+  const totalRuntime = scr.reduce((s, x) => s + runtimeOf(x.f), 0);
+  const hours = Math.floor(totalRuntime / 60), mins = totalRuntime % 60;
+  const dayCount = new Set(scr.map(s => s.di)).size;
+  const conflictPairs = Math.ceil(clash.size / 2);
 
-  React.useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
-    document.addEventListener('keydown', onKey);
-    document.body.style.overflow = 'hidden';
-    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
-  }, [onClose]);
-
-  const filmResults = _useMemo(() => {
-    const q = filmQ.trim().toLowerCase();
-    if (q) {
-      return P_FILMS_AZ.filter(f => [f.title_en, f.title_zh, f.director, f.country, P_PROG_BY_ID[f.program_id]?.short_en]
-        .filter(Boolean).join(' ').toLowerCase().includes(q)).slice(0, 80);
-    }
-    const saved = P_FILMS_AZ.filter(f => watchIds.has(f.id));
-    return (saved.length ? saved : P_FILMS_AZ).slice(0, 60);
-  }, [filmQ, watchIds]);
-  const showingSaved = !filmQ.trim() && P_FILMS_AZ.some(f => watchIds.has(f.id));
-
-  const theatreResults = _useMemo(() => {
-    const q = theaQ.trim().toLowerCase();
-    return P_THEATRES.filter(t => {
-      if (region && t.region !== region) return false;
-      if (q && !`${t.nameEn} ${t.nameZh} ${t.region} ${t.city}`.toLowerCase().includes(q)) return false;
-      return true;
-    });
-  }, [theaQ, region]);
-
-  const film = filmId ? P_FILM_BY_ID[filmId] : null;
-  const ready = filmId && dayIndex != null && slot != null && theatreId;
-  const confirm = () => { if (ready) onConfirm({ filmId, dayIndex, slot, theatreId }); };
+  const days = _useMemo(() => {
+    const m = {};
+    scr.forEach(s => { (m[s.di] = m[s.di] || []).push(s); });
+    return Object.keys(m).map(Number).sort((a, b) => a - b)
+      .map(di => ({ di, list: m[di].slice().sort((a, b) => a.m - b.m) }));
+  }, [scr]);
 
   return (
-    <div className="picker-scrim" onClick={onClose}>
-      <div className="picker" onClick={(e) => e.stopPropagation()}>
-        <button className="close" onClick={onClose} aria-label="Close">×</button>
-        <div className="picker-head">
-          <div className="pv-eyebrow mono">Plan a screening · 添加场次</div>
-          <h2>{film ? (isZh ? film.title_zh : film.title_en) : (isZh ? '新场次' : 'New screening')}</h2>
-          {film && <div className="picker-head-zh zh">{isZh ? film.title_en : film.title_zh}</div>}
+    <section className="plan-view">
+      <div className="wl-head">
+        <div className="wl-head-left">
+          <div className="pv-eyebrow mono">{isZh ? '我的排片 · 行程' : 'Your festival schedule · 我的排片'}</div>
+          <h1>My Plan<span className="pv-zh">行程</span></h1>
+          <p className="pv-lead">
+            {scr.length === 0
+              ? (isZh
+                  ? <>打开 <b>排片表</b>，点击任意场次旁的 ＋ 加入你的行程。</>
+                  : <>Browse the <b>Schedule</b> and tap ＋ on any showtime to build your festival here.</>)
+              : (isZh
+                  ? <>{scr.length} 场 · 共 {dayCount} 天{totalRuntime > 0 && <> · 影院中 {hours > 0 && `${hours}小时`}{mins}分钟</>}<span className="wl-note"> · 仅保存在本设备</span></>
+                  : <>{scr.length} {scr.length === 1 ? 'screening' : 'screenings'} across {dayCount} {dayCount === 1 ? 'day' : 'days'}{totalRuntime > 0 && <> · {hours > 0 && `${hours}h `}{mins}m in the dark</>}<span className="wl-note"> · saved on this device</span></>)}
+          </p>
         </div>
-
-        <div className="picker-body">
-          <section className="pk-sec">
-            <h3><span className="pk-n">1</span> Film <span className="pk-zh">影片</span>{film && <span className="pk-chosen mono">✓ {film.title_en}</span>}</h3>
-            <div className="pk-search">
-              <PSearch />
-              <input value={filmQ} onChange={e => setFilmQ(e.target.value)} placeholder={`Search ${P_FILMS.length} films…  搜索影片`} />
-            </div>
-            {showingSaved && <div className="pk-listnote mono">{isZh ? '来自我的收藏' : 'From your list · 我的收藏'}</div>}
-            <div className="pk-film-list">
-              {filmResults.map(f => {
-                const prog = P_PROG_BY_ID[f.program_id];
-                return (
-                  <button key={f.id} className={"pk-film" + (f.id === filmId ? ' on' : '')} onClick={() => setFilmId(f.id)}>
-                    <span className="pk-film-poster" style={{ backgroundColor: f.color }}>
-                      {f.poster_url && <img src={f.poster_url} alt="" loading="lazy" />}
-                    </span>
-                    <span className="pk-film-text">
-                      <span className="pk-film-title">{f.title_en}</span>
-                      <span className="pk-film-sub zh">{f.title_zh}{prog ? ' · ' + prog.short_en : ''}</span>
-                    </span>
-                    {f.id === filmId && <span className="pk-film-check"><CheckIcon /></span>}
-                  </button>
-                );
-              })}
-              {filmResults.length === 0 && <div className="pk-empty mono">{isZh ? `未找到匹配 “${filmQ}” 的影片。` : `No films match “${filmQ}”.`}</div>}
-            </div>
-          </section>
-
-          <section className="pk-sec">
-            <h3><span className="pk-n">2</span> Day &amp; time <span className="pk-zh">日期时间</span></h3>
-            <div className="pk-days">
-              {P_DATES.map(d => (
-                <button key={d.index} className={"pk-day" + (d.index === dayIndex ? ' on' : '') + (d.weekend ? ' weekend' : '')} onClick={() => setDayIndex(d.index)}>
-                  <span className="pk-day-dow mono">{d.dow}</span>
-                  <span className="pk-day-d">{d.day}</span>
-                </button>
-              ))}
-            </div>
-            <div className="pk-slots">
-              {P_SLOTS.map(s => (
-                <button key={s.index} className={"pk-slot" + (s.index === slot ? ' on' : '')} onClick={() => setSlot(s.index)}>
-                  <span className="pk-slot-time mono">{s.start}–{s.end}</span>
-                  <span className="pk-slot-label">{s.label}</span>
-                </button>
-              ))}
-            </div>
-          </section>
-
-          <section className="pk-sec">
-            <h3><span className="pk-n">3</span> Theatre <span className="pk-zh">场馆</span>{theatreId && <span className="pk-chosen mono">✓ {P_THEATRE[theatreId].nameEn}</span>}</h3>
-            <div className="pk-thea-filters">
-              <div className="select">
-                <select value={region} onChange={e => setRegion(e.target.value)}>
-                  <option value="">All districts / 全部区域</option>
-                  {P_REGIONS.map(r => <option key={r} value={r}>{r}</option>)}
-                </select>
-              </div>
-              <div className="pk-search pk-search-sm">
-                <PSearch />
-                <input value={theaQ} onChange={e => setTheaQ(e.target.value)} placeholder="Search venues…  搜索场馆" />
-              </div>
-            </div>
-            <div className="pk-thea-list">
-              {theatreResults.map(t => (
-                <button key={t.id} className={"pk-thea" + (t.id === theatreId ? ' on' : '')} onClick={() => setTheatreId(t.id)}>
-                  <span className="pk-thea-text">
-                    <span className="pk-thea-name">{t.nameEn}</span>
-                    <span className="pk-thea-zh zh">{t.nameZh}</span>
-                  </span>
-                  <span className="pk-thea-tags">
-                    <span className="pk-thea-region mono">{t.region}{t.city !== 'Shanghai' ? ' · ' + t.city : ''}</span>
-                    {t.imax && <span className="pk-thea-flag">IMAX</span>}
-                    {t.flagship && <span className="pk-thea-flag">FLAGSHIP</span>}
-                  </span>
-                  {t.id === theatreId && <span className="pk-thea-check"><CheckIcon /></span>}
-                </button>
-              ))}
-              {theatreResults.length === 0 && <div className="pk-empty mono">{isZh ? '未找到匹配的场馆。' : 'No venues match.'}</div>}
-            </div>
-          </section>
-        </div>
-
-        <div className="picker-foot">
-          <div className="pk-summary">
-            {ready ? (
-              <span className="mono">
-                {isZh ? film.title_zh : film.title_en} · {isZh ? '周'+P_DATES[dayIndex].dowZh : P_DATES[dayIndex].dow} {P_DATES[dayIndex].day} · {slotTime(slot)} · {isZh ? P_THEATRE[theatreId].nameZh : P_THEATRE[theatreId].nameEn}
-              </span>
-            ) : (
-              <span className="pk-summary-todo mono">
-                {isZh
-                  ? ([!filmId && '影片', dayIndex == null && '日期', slot == null && '时段', !theatreId && '场馆'].filter(Boolean).join(' · ') + ' 待选择')
-                  : ([!filmId && 'film', dayIndex == null && 'day', slot == null && 'time', !theatreId && 'theatre'].filter(Boolean).join(' · ') + ' still to choose')}
-              </span>
-            )}
-          </div>
-          <button className={"pk-confirm" + (ready ? '' : ' off')} disabled={!ready} onClick={confirm}>
-            <TicketIcon filled /> {isZh ? '加入排片' : 'Add to plan'}
-          </button>
+        <div className="cal-head-actions">
+          <button className="cal-add-btn" onClick={onBrowse}><PlusIcon /> {isZh ? '浏览排片表' : 'Browse schedule'}</button>
+          {scr.length > 0 && <button className="wl-clear mono" onClick={onClear}>{isZh ? '清空 ×' : 'Clear ×'}</button>}
         </div>
       </div>
-    </div>
-  );
-}
 
-/* ============ Per-film plan section (inside the film modal) ============ */
-function FilmPlanSection({ lang, film, entries, onRemove, onAdd }) {
-  const isZh = lang === 'zh';
-  const mine = entries.filter(e => e.filmId === film.id).sort((a, b) => (a.dayIndex - b.dayIndex) || (a.slot - b.slot));
-  return (
-    <div className="fps">
-      {mine.length > 0 && (
-        <div className="fps-list">
-          {mine.map(e => {
-            const d = P_DATES[e.dayIndex]; const t = P_THEATRE[e.theatreId];
+      {conflictPairs > 0 && (
+        <div className="plan-conflict-banner">
+          <WarnIcon />
+          <span>
+            <b>{conflictPairs}</b>{' '}
+            {isZh
+              ? <>处时间冲突 · 行程内场次时间重叠，移除其一即可解决。</>
+              : <>time {conflictPairs === 1 ? 'conflict' : 'conflicts'} — two films overlap. Drop one to resolve.</>}
+          </span>
+          {!isZh && <span className="pcb-zh zh">行程存在时间冲突</span>}
+        </div>
+      )}
+
+      {scr.length === 0 ? (
+        <div className="wl-empty">
+          <div className="big">{isZh ? '行程还是空的。' : 'Your plan is empty.'}</div>
+          <p>
+            {isZh
+              ? <>打开 <b>排片表</b> 浏览十天的所有场次，或直接在影片页加入。</>
+              : <>Open the <b>Schedule</b> to see every showtime across the ten days, or add screenings straight from any film.</>}
+          </p>
+          <div className="plan-empty-actions">
+            <button className="wl-browse mono" onClick={onBrowse}><PlusIcon /> {isZh ? '打开排片表' : 'Open the schedule'}</button>
+          </div>
+        </div>
+      ) : (
+        <div className="plan-days">
+          {days.map(({ di, list }) => {
+            const d = P_DATES[di];
             return (
-              <div key={e.id} className="fps-row">
-                <span className="fps-when mono"><b>{isZh ? '周' + d.dowZh : d.dow}</b> {d.day} · {slotTime(e.slot)}</span>
-                <span className="fps-venue"><PinIcon /> {t ? (isZh ? t.nameZh : t.nameEn) : '—'}</span>
-                <button className="fps-x" title={isZh ? '移除' : 'Remove'} onClick={() => onRemove(e.id)}>×</button>
+              <div key={di} className="plan-day">
+                <div className="plan-day-head">
+                  <span className="pd-dow mono">{d.dow}</span>
+                  <span className="pd-date">{isZh ? `6月${d.day}日` : `June ${d.day}`}</span>
+                  <span className="pd-zh zh">周{d.dowZh}</span>
+                  <span className="pd-count mono">
+                    {isZh ? `${list.length} 部` : `${list.length} ${list.length === 1 ? 'film' : 'films'}`}
+                  </span>
+                </div>
+                <div className="plan-rows">
+                  {list.map(s => {
+                    const f = P_FILM_BY_ID[s.f];
+                    const t = P_THEATRE[s.th];
+                    const prog = P_PROG_BY_ID[f.program_id];
+                    const isClash = clash.has(s.id);
+                    const showImg = !!f.poster_url;
+                    return (
+                      <div key={s.id} className={"plan-row" + (isClash ? ' conflict' : '')}>
+                        <div className="pr-time">
+                          <span className="pr-range mono">{s.t}–{fmtMin(endMin(s))}</span>
+                          {isClash && <span className="pr-clash"><WarnIcon /> {isZh ? '冲突' : 'overlap'}</span>}
+                        </div>
+                        <button className="pr-poster" onClick={() => onOpenFilm(f)} style={{ backgroundColor: f.color }}>
+                          {showImg && <img src={f.poster_url} alt="" loading="lazy" />}
+                        </button>
+                        <button className="pr-body" onClick={() => onOpenFilm(f)}>
+                          <div className="pr-title">{titleEnOf(f)}</div>
+                          <div className="pr-zh zh">{titleZhOf(f)}</div>
+                          <div className="pr-venue mono">
+                            <PinIcon /> {t ? t.nameEn : '—'} · {t ? t.region : ''}{t && t.city !== 'Shanghai' ? ' · ' + t.city : ''}
+                          </div>
+                          <div className="pr-meta">
+                            {prog && <span className="pr-prog">{shortProg(prog)}</span>}
+                            {s.fmt && <span className="sc-fmt">{s.fmt}</span>}
+                            {f.runtime != null && <span className="mono">{f.runtime}′</span>}
+                          </div>
+                        </button>
+                        <button className="pr-remove" title={isZh ? '移除' : 'Remove'} onClick={() => onRemove(s.id)}>×</button>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             );
           })}
         </div>
       )}
-      <button className="fps-add" onClick={() => onAdd(film)}>
-        <PlusIcon /> {isZh
-          ? (mine.length ? '再加一场' : '加入我的排片')
-          : (mine.length ? 'Add another screening' : 'Add to my plan')}
-      </button>
-      {mine.length === 0 && <div className="fps-note mono">{isZh ? '挑日期、时段与影院 —— 排片由你说了算。' : 'Pick a day, time & theatre — you set the schedule.'}</div>}
-    </div>
+    </section>
   );
 }
 
-Object.assign(window, { usePlan, CalendarView, EntryPicker, FilmPlanSection, TicketIcon });
+Object.assign(window, { usePlan, ScheduleView, PlanView, FilmShowtimes, TicketIcon });

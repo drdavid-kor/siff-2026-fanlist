@@ -102,6 +102,7 @@ function Header({ active, onNavigate, lang, setLang, watchCount, planCount }) {
         <nav className="top">
           <a className={active==='programs'?'active':''} href="#" onClick={(e)=>{e.preventDefault(); onNavigate('programs');}}>Programme <span className="nav-zh">单元</span></a>
           <a className={active==='films'?'active':''} href="#" onClick={(e)=>{e.preventDefault(); onNavigate('films');}}>All Films <span className="nav-zh">影片</span></a>
+          <a className={active==='schedule'?'active':''} href="#" onClick={(e)=>{e.preventDefault(); onNavigate('schedule');}}>Schedule <span className="nav-zh">排片</span></a>
         </nav>
         <button className={"wl-pill" + (active==='watchlist'?' on':'')} onClick={()=>onNavigate('watchlist')}>
           <BookmarkIcon filled={watchCount>0} />
@@ -148,9 +149,10 @@ function PosterWall({ onOpen }) {
 }
 
 /* ---------- Programme landing (default view) ---------- */
+const TOTAL_SCREENINGS = (window.SIFF_SCREENINGS || []).length;
+
 function ProgramsView({ onPick, onSearch, onOpen }) {
   const [q, setQ] = useState('');
-  const countries = new Set(FILMS.map(f => f.country).filter(Boolean)).size;
   const submit = (e) => { e.preventDefault(); if (q.trim()) onSearch(q.trim()); };
   return (
     <section className="programs-view">
@@ -160,7 +162,7 @@ function ProgramsView({ onPick, onSearch, onOpen }) {
           <div className="pv-eyebrow mono">{FESTIVAL.edition} · {FESTIVAL.dates}</div>
           <h1>The Programme<span className="pv-zh">展映单元</span></h1>
           <p className="pw-lead">
-            {FILMS.length} films · {PROGRAMS.length} programs · {countries} countries — the full 2026 selection.
+            {FILMS.length} films · {PROGRAMS.length} programs · {TOTAL_SCREENINGS.toLocaleString()} screenings — the full 2026 grid.
           </p>
         </div>
       </div>
@@ -175,7 +177,7 @@ function ProgramsView({ onPick, onSearch, onOpen }) {
         <div className="pv-bar-stats mono">
           <span><b>{FILMS.length}</b> films</span>
           <span><b>{PROGRAMS.length}</b> programs</span>
-          <span><b>{KIND_GROUPS.length}</b> strands</span>
+          <span><b>{TOTAL_SCREENINGS.toLocaleString()}</b> screenings</span>
         </div>
       </div>
 
@@ -424,7 +426,7 @@ function WatchlistView({ lang, onOpen, watchlist, onToggle, onClear, onBrowse })
 }
 
 /* ---------- Modal ---------- */
-function Modal({ lang, film, onClose, onPickProgram, saved, onToggle, planEntries, onRemovePlan, onAddPlan }) {
+function Modal({ lang, film, onClose, onPickProgram, saved, onToggle, planIds, onTogglePlan }) {
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', onKey);
@@ -490,8 +492,8 @@ function Modal({ lang, film, onClose, onPickProgram, saved, onToggle, planEntrie
               </a>
             )}
 
-            <h3 style={{marginTop:24}}>My plan · 我的排片</h3>
-            <FilmPlanSection lang={lang} film={film} entries={planEntries} onRemove={onRemovePlan} onAdd={onAddPlan} />
+            <h3 style={{marginTop:24}}>Showtimes · 场次</h3>
+            <FilmShowtimes lang={lang} film={film} planIds={planIds} onToggle={onTogglePlan} />
           </div>
         </div>
       </div>
@@ -557,11 +559,8 @@ function App() {
   const [sort, setSort] = useState('program');
   const [openFilm, setOpenFilm] = useState(null);
   const [active, setActive] = useState('programs');
-  const [picker, setPicker] = useState(null);
   const watch = useWatchlist();
   const plan = usePlan();
-
-  const openPicker = (preset) => setPicker(preset || {});
 
   useEffect(() => {
     document.body.dataset.langEmphasis = lang;
@@ -595,9 +594,24 @@ function App() {
   return (
     <>
       <Header active={active} onNavigate={navigate} lang={lang} setLang={setLang}
-              watchCount={watch.ids.size} planCount={plan.entries.length} />
+              watchCount={watch.ids.size} planCount={plan.ids.length} />
 
       {active === 'programs' && <ProgramsView onPick={pickProgram} onSearch={searchAll} onOpen={setOpenFilm} />}
+
+      {active === 'schedule' && (
+        <ScheduleView lang={lang} planIds={plan.ids} onToggle={plan.toggle} onOpenFilm={setOpenFilm} />
+      )}
+
+      {active === 'plan' && (
+        <PlanView
+          lang={lang}
+          planIds={plan.ids}
+          onRemove={plan.remove}
+          onClear={plan.clear}
+          onOpenFilm={setOpenFilm}
+          onBrowse={() => navigate('schedule')}
+        />
+      )}
 
       {active === 'films' && (
         <>
@@ -618,32 +632,10 @@ function App() {
                        onClear={watch.clear} onBrowse={() => navigate('programs')} />
       )}
 
-      {active === 'plan' && (
-        <CalendarView
-          lang={lang}
-          entries={plan.entries}
-          onRemove={plan.remove}
-          onClear={plan.clear}
-          onAddSlot={(d, s) => openPicker({ day: d, slot: s })}
-          onAddOpen={() => openPicker()}
-          onOpenFilm={setOpenFilm}
-        />
-      )}
-
       <Footer />
       {openFilm && <Modal lang={lang} film={openFilm} onClose={() => setOpenFilm(null)} onPickProgram={pickProgram}
                           saved={watch.ids.has(openFilm.id)} onToggle={watch.toggle}
-                          planEntries={plan.entries} onRemovePlan={plan.remove}
-                          onAddPlan={(f) => openPicker({ film: f })} />}
-      {picker && (
-        <EntryPicker
-          lang={lang}
-          preset={picker}
-          watchIds={watch.ids}
-          onClose={() => setPicker(null)}
-          onConfirm={(entry) => { plan.add(entry); setPicker(null); if (active !== 'plan' && !openFilm) navigate('plan'); }}
-        />
-      )}
+                          planIds={plan.ids} onTogglePlan={plan.toggle} />}
     </>
   );
 }
