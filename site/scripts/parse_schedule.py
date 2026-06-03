@@ -199,6 +199,30 @@ NEW_PROGRAMS: dict[str, dict] = {
 
 
 # --------------------------------------------------------------------------
+# Per-film program overrides: when the schedule lumps multiple sub-programs
+# under one `group` (e.g. all Goblet shorts come in as "金爵奖参赛片-短片"),
+# this remaps specific source filmIds to the correct sub-program.
+# --------------------------------------------------------------------------
+FILM_PROGRAM_OVERRIDES: dict[str, str] = {
+    # 2026 金爵奖动画短片合集 — title says ANIMATED, schedule group doesn't.
+    "116181": "goblet-short-animation",
+}
+
+
+# --------------------------------------------------------------------------
+# Double features: one schedule filmId fans out to multiple catalogue films.
+# (The festival sells a single ticket for back-to-back screenings.)
+# --------------------------------------------------------------------------
+DOUBLE_FEATURES: dict[str, list[str]] = {
+    # filmId 116112  "沙丘 (IMAX/4K) & 沙丘 2 (IMAX/4K)"  -> both Dune films
+    "116112": [
+        "new-horizons-imax-dune-part-one",
+        "new-horizons-imax-dune-part-two",
+    ],
+}
+
+
+# --------------------------------------------------------------------------
 # Schedule cinema ZH name  ->  catalogue theatre id (typos / variant naming)
 # --------------------------------------------------------------------------
 CINEMA_OVERRIDES: dict[str, str] = {
@@ -439,19 +463,37 @@ def main() -> None:
     # ------------------------------------------------------------------
     # 2) Resolve each schedule filmId to a catalogue film id (or add new).
     # ------------------------------------------------------------------
-    siff_to_film: dict[str, str] = {}  # numeric SIFF filmId -> catalogue id
+    # A schedule filmId can map to multiple catalogue films (double-features).
+    siff_to_films: dict[str, list[str]] = {}
     appended_films: list[dict] = []
     seen_film_ids: dict[str, dict] = {}
     for r in rows:
         if r["filmId"] not in seen_film_ids:
             seen_film_ids[r["filmId"]] = r
 
+    catalogue_ids = {f["id"] for f in films}
+
     for sid, sample in seen_film_ids.items():
+        # Per-film override: re-tag the source row's program before resolving.
+        if sid in FILM_PROGRAM_OVERRIDES:
+            sample["group"] = "__override__"
+            sample["_override_pid"] = FILM_PROGRAM_OVERRIDES[sid]
+
+        # Explicit double-feature override always wins.
+        if sid in DOUBLE_FEATURES:
+            mapped = [fid for fid in DOUBLE_FEATURES[sid] if fid in catalogue_ids]
+            if mapped:
+                siff_to_films[sid] = mapped
+                continue
+            # Fall through if no mapped ids exist — surface the issue.
+            raise SystemExit(
+                f"DOUBLE_FEATURES[{sid!r}] points to ids missing from films.json"
+            )
         cz = films_by_zh.get(_norm_title(sample["nameCn"]), [])
         ce = films_by_en.get(_norm_title(sample["nameEn"]), [])
         cand = cz[0] if cz else (ce[0] if ce else None)
         if cand:
-            siff_to_film[sid] = cand["id"]
+            siff_to_films[sid] = [cand["id"]]
             # Backfill metadata when the catalogue had blanks
             for src_key, dest_key in (
                 ("director", "director"),
@@ -465,7 +507,7 @@ def main() -> None:
                 cand["runtime"] = rt
             continue
         # Add a brand-new catalogue film for this schedule filmId
-        pid = group_to_pid[sample["group"]]
+        pid = sample.get("_override_pid") or group_to_pid[sample["group"]]
         new_id = f"sched-{sid}-{_slugify(sample['nameEn'] or sample['nameCn'])[:40]}"
         prog = prog_by_id[pid]
         film: dict = {
@@ -494,7 +536,8 @@ def main() -> None:
         }
         films.append(film)
         appended_films.append(film)
-        siff_to_film[sid] = new_id
+        catalogue_ids.add(new_id)
+        siff_to_films[sid] = [new_id]
         films_by_zh.setdefault(_norm_title(film["title_zh"]), []).append(film)
         films_by_en.setdefault(_norm_title(film["title_en"]), []).append(film)
 
@@ -548,27 +591,39 @@ def main() -> None:
             continue
         h, mm = t.split(":")
         mins = int(h) * 60 + int(mm)
-        film_id = siff_to_film.get(r["filmId"])
+        film_ids = siff_to_films.get(r["filmId"]) or []
         th_id = cinema_to_tid[r["cinema"]]
-        if not film_id:
+        if not film_ids:
             continue
         fmt = _detect_format(r.get("nameCn"), r.get("hallsName"), r.get("format"))
-        # Use the SIFF record id when possible (stable, deterministic).
-        scr_id = f"s-{r.get('id') or i}"
-        if scr_id in seen_ids:
-            scr_id = f"s-{r.get('id') or i}-{i}"
-        seen_ids.add(scr_id)
-        screening = {
-            "id": scr_id,
-            "f": film_id,
-            "di": di,
-            "t": t,
-            "m": mins,
-            "th": th_id,
-            "fmt": fmt,
-        }
-        screenings.append(screening)
-        by_film.setdefault(film_id, []).append(scr_id)
+        base = f"s-{r.get('id') or i}"
+        for k, film_id in enumerate(film_ids):
+            scr_id = base if len(film_ids) == 1 else f"{base}-{k + 1}"
+            if scr_id in seen_ids:
+                scr_id = f"{scr_id}-{i}"
+            seen_ids.add(scr_id)
+            screenings.append({
+                "id": scr_id,
+                "f": film_id,
+                "di": di,
+                "t": t,
+                "m": mins,
+                "th": th_id,
+                "fmt": fmt,
+            })
+            by_film.setdefault(film_id, []).append(scr_id)
+
+    # Prune the orphaned synthetic films that double-feature mapping replaces.
+    # (E.g. a previous run produced "sched-116112-..." for Dune; now that
+    # screenings go to Part 1 & Part 2, that placeholder is dead.)
+    used_film_ids = set(by_film.keys())
+    orphans = [
+        f for f in films
+        if f["id"].startswith("sched-") and f["id"] not in used_film_ids
+    ]
+    if orphans:
+        orphan_ids = {f["id"] for f in orphans}
+        films[:] = [f for f in films if f["id"] not in orphan_ids]
 
     # Sort each film's screenings chronologically
     scr_by_id = {s["id"]: s for s in screenings}

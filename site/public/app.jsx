@@ -5,9 +5,14 @@
 const { useState, useMemo, useEffect, useCallback } = React;
 
 const DATA = window.SIFF_DATA;
-const PROGRAMS = DATA.programs;
-const FILMS = DATA.films;
 const FESTIVAL = DATA.festival;
+
+/* Only surface films that actually have public showtimes. Unscheduled
+   films are hidden from every view (Programme, All Films, modal, list). */
+const SCHEDULED_FILM_IDS = new Set(Object.keys(window.SIFF_SCREENINGS_BY_FILM || {}));
+const FILMS = DATA.films.filter(f => SCHEDULED_FILM_IDS.has(f.id));
+const SCHEDULED_FILM_ID_SET = new Set(FILMS.map(f => f.id));
+const PROGRAMS = DATA.programs.filter(p => FILMS.some(f => f.program_id === p.id));
 
 const PROG_BY_ID = Object.fromEntries(PROGRAMS.map(p => [p.id, p]));
 

@@ -4,7 +4,9 @@
 
 const { useState: _useState, useMemo: _useMemo, useCallback: _useCallback, useEffect: _useEffect, useRef: _useRef } = React;
 
-const P_FILMS = window.SIFF_DATA.films;
+/* Mirror app.jsx: hide films without public showtimes. */
+const _SCHED_BY_FILM = window.SIFF_SCREENINGS_BY_FILM || {};
+const P_FILMS = window.SIFF_DATA.films.filter(f => _SCHED_BY_FILM[f.id]);
 const P_PROGS = window.SIFF_DATA.programs;
 const P_FILM_BY_ID = Object.fromEntries(P_FILMS.map(f => [f.id, f]));
 const P_PROG_BY_ID = Object.fromEntries(P_PROGS.map(p => [p.id, p]));
