@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "siff-2026-fanlist",
+  "compatibility_date": "2026-05-17",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "sample_design"
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
